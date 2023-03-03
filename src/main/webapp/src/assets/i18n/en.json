@@ -1,0 +1,10 @@
+{
+  "version" : "Version",
+  "english" : "English",
+  "polish" : "Polish",
+  "url" : "Url",
+  "name" : "Name",
+  "company-name" : "Company name",
+  "please-login" : "You're not loggged, please login",
+  "login" : "Login"
+}

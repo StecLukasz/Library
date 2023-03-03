@@ -1,0 +1,38 @@
+
+$avatarSize: 30px;
+
+.container {
+  align-items: center;
+  display: flex;
+}
+
+.avatar {
+  align-items: center;
+  border: 1px solid var(--txt-muted);
+  border-radius: 50%;
+  display: flex;
+  height: $avatarSize;
+  justify-content: center;
+  margin-right: 4px;
+  overflow: hidden;
+  width: $avatarSize;
+
+  & .default-avatar {
+    fill: var(--txt-muted);
+    height: $avatarSize - 4px;
+    margin-top: -2px;
+    width: $avatarSize - 4px;
+  }
+
+  & img {
+    height: $avatarSize;
+    width: $avatarSize;
+  }
+}
+
+.username {
+  font-weight: 300;
+  margin-right: 2px;
+  padding-right: 8px;
+  position: relative;
+}

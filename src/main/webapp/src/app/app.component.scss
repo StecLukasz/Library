@@ -1,0 +1,31 @@
+.l-page {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'content'
+    'footer';
+
+  grid-template-columns: 1fr;
+  grid-template-rows: 56px 1fr 42px;
+  min-height: 100%;
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__content {
+    grid-area: content;
+  }
+
+  &__footer {
+    grid-area: footer;
+  }
+
+}
+
+
+
+
+//.list-item:hover {
+//  background-color: #b9b9b9;
+//}

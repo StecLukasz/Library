@@ -1,0 +1,29 @@
+<div class="container">
+  <ng-container *ngIf="user; then logged; else anonymous "></ng-container>
+</div>
+
+<ng-template #logged>
+  <div class="avatar">
+    <img *ngIf="user?.photo; else defaultAvatar" [src]="user?.photo" [alt]="'user-photo' | translate">
+  </div>
+  <div class="pos-r">
+    <span class="username">{{user?.firstName}} {{user?.lastName}}</span>
+  </div>
+
+  <div class="separator" aria-hidden="true"></div>
+  <button class="btn-ico" mat-button (click)="logout()" [matTooltip]="'logout' | translate">
+    <span class="material-icons-round">logout</span>
+  </button>
+
+</ng-template>
+
+<ng-template #anonymous>
+  <button mat-button (click)="login()">Login</button>
+</ng-template>
+
+<ng-template #defaultAvatar>
+  <svg class="default-avatar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path fill-rule="evenodd"
+          d="M12 2.5a5.5 5.5 0 00-3.096 10.047 9.005 9.005 0 00-5.9 8.18.75.75 0 001.5.045 7.5 7.5 0 0114.993 0 .75.75 0 101.499-.044 9.005 9.005 0 00-5.9-8.181A5.5 5.5 0 0012 2.5zM8 8a4 4 0 118 0 4 4 0 01-8 0z"></path>
+  </svg>
+</ng-template>

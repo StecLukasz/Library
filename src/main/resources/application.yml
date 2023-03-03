@@ -1,0 +1,55 @@
+server:
+  port: 10090
+  servlet:
+    context-path: @baseHref@
+
+spring:
+  profiles:
+    active: @activatedProfile@
+
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+
+    # running without database
+#    properties:
+#      hibernate:
+#        temp:
+#          use_jdbc_metadata_defaults: false
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    locations: classpath:db/migration
+    table: _schema_version
+    validate-on-migrate: true
+    baseline-on-migrate: true
+    default-schema: books
+    schemas: books
+
+
+app:
+  url: https://intranet.softsystem.pl@baseHref@
+  build:
+    name: '@project.name@'
+    version: '@project.version@'
+    revision: '@buildNumber@'
+    time: '@buildTime@'
+    by: '@buildBy@'
+  info:
+    company-name: SoftSystem
+    company-full-name: SoftSystem Sp. z o.o.
+    company-address-1: Leszka Czarnego 6A
+    company-address-2: 35-615 Rzeszow, Poland
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: INFO
+
+oauth:
+  clientId: BooksClient
+  clientPassword: fsqwe34xklad7564381243912fsfh734612hfksy7824393fkdshf78634sxw

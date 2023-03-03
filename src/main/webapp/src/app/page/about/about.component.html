@@ -1,0 +1,13 @@
+<dl>
+  <dt class="font-medium">{{ 'url' | translate }}</dt>
+  <dd class="pl-4 mb-2 hover:text-blue-800"><a [href]="appInfo?.url">{{ appInfo?.url}}</a></dd>
+
+  <dt class="font-medium">{{ 'name' | translate }}</dt>
+  <dd class="pl-4 mb-2">{{appInfo?.name }}</dd>
+
+  <dt class="font-medium">{{ 'version' | translate }}</dt>
+  <dd class="pl-4 mb-2">{{appInfo?.version }}</dd>
+
+  <dt class="font-medium">{{ 'company-name' | translate }}</dt>
+  <dd class="pl-4 mb-2">{{appInfo?.companyName }}</dd>
+</dl>

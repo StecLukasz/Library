@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://intranet3:5432/development?currentSchema=books
+    username: books
+    password: rJ12pw83T8
+
+oauth:
+  baseUrl: https://intranet3.softsystem.pl/oauth

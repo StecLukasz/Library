@@ -1,0 +1,8 @@
+.nav-item {
+  @apply  mr-2 px-4 py-1 border rounded flex justify-center;
+  min-width: 100px !important;
+
+  &.active {
+    @apply bg-gray-100;
+  }
+}

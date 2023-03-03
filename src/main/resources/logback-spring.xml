@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration profile="real">
+    <appender name="CON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CON_TO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./log/console.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>./log/history/console-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./log/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>./log/history/error-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-1level %logger.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="MAIL_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./log/mail.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>./log/history/mail-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-1level %logger.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SCHEDULE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./log/schedule.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>./log/history/schedule-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-1level %logger.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CON" />
+        <appender-ref ref="CON_TO_FILE"/>
+    </root>
+
+    <logger name="ERROR" level="error">
+        <appender-ref ref="ERROR_APPENDER"/>
+    </logger>
+
+    <logger name="MAIL" level="info">
+        <appender-ref ref="MAIL_APPENDER"/>
+    </logger>
+
+    <logger name="SCHEDULE" level="info">
+        <appender-ref ref="SCHEDULE_APPENDER"/>
+    </logger>
+
+</configuration>

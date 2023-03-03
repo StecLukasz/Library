@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pl.softsystem</groupId>
+    <artifactId>books</artifactId>
+    <version>0.0.2</version>
+    <name>Books</name>
+    <description>Library books app</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <buildTime>${maven.build.timestamp}</buildTime>
+        <buildBy>${user.name}</buildBy>
+        <front-source-dir>${basedir}/src/main/webapp</front-source-dir>
+        <front-dist-dir>${front-source-dir}/dist</front-dist-dir>
+        <resource.delimiter>@</resource.delimiter>
+    </properties>
+
+    <dependencies>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Database -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>7.7.3</version>
+        </dependency>
+
+        <!-- Tools -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Intranet -->
+        <dependency>
+            <groupId>pl.softsystem.oauth</groupId>
+            <artifactId>security</artifactId>
+            <version>8.0.3</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <activatedProfile>dev</activatedProfile>
+                <baseHref>/</baseHref>
+                <frontBuildCommand>build</frontBuildCommand>
+            </properties>
+        </profile>
+        <profile>
+            <id>demo</id>
+            <properties>
+                <activatedProfile>demo</activatedProfile>
+                <baseHref>/books</baseHref>
+                <frontBuildCommand>build-demo</frontBuildCommand>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <activatedProfile>prod</activatedProfile>
+                <baseHref>/books</baseHref>
+                <frontBuildCommand>build-prod</frontBuildCommand>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <configuration>
+                            <additionalProperties>
+                                <!--                                <revision>${buildNumber}</revision>-->
+                                <by>${buildBy}</by>
+                                <version>${project.version}}</version>
+                            </additionalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <executable>npm</executable>
+                            <workingDirectory>${front-source-dir}</workingDirectory>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm run build (compile)</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                        <configuration>
+                            <executable>npm</executable>
+                            <workingDirectory>${front-source-dir}</workingDirectory>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>${frontBuildCommand}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-frontend</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes/static</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${front-dist-dir}</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>research-maven-public</id>
+            <url>http://rndnexus.softsystem.pl/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <scm>
+        <connection>scm:git:https://gitlab.softsystem.pl/intranet/books.git</connection>
+        <url>https://gitlab.softsystem.pl/intranet/books.git</url>
+    </scm>
+</project>

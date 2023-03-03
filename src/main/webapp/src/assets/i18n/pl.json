@@ -1,0 +1,10 @@
+{
+  "version" : "Wersja",
+  "english" : "Angielski",
+  "polish" : "Polski",
+  "url" : "Adres",
+  "name" : "Nazwa",
+  "company-name" : "Nazwa firmy",
+  "please-login" : "Jesteś niezalogowany, zaloguj się",
+  "login" : "Zaloguj"
+}
