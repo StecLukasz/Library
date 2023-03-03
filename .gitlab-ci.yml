@@ -1,0 +1,63 @@
+stages:
+  - build
+  - deploy
+
+# DEV
+build-demo:
+  stage: build
+  tags:
+    - intranet3
+  script:
+    - mvn -Pdemo clean package 
+  except:
+    - master
+  artifacts:
+    expire_in: 24h
+    paths:
+      - target/books.jar
+
+deploy-demo:
+  stage: deploy
+  tags:
+    - intranet3
+  environment:
+    name: demo
+    url: http://intranet3.softsystem.pl
+  except:
+    - master
+  script:
+    - sudo /data/books/start_boot stop
+    - sudo cp target/books.jar /data/books/
+    - sudo /data/books/start_boot start
+  when: manual
+
+# PRODUCTION
+build-prod:
+  stage: build
+  tags:
+    - intranet3
+  script:
+    - mvn -Pprod clean package
+  only:
+    - master
+  artifacts:
+    expire_in: 24h
+    paths:
+      - target/books.jar
+
+
+deploy-prod:
+  stage: deploy
+  tags:
+    - intranet3
+  environment:
+    name: production
+    url: http://intranet.softsystem.pl
+  only:
+    - master
+  script:
+    - ssh root@intranet '/data/books/start_boot stop'
+    - ssh root@intranet 'cp /data/books/books.jar /data/books/old.jar'
+    - scp target/books.jar root@intranet:/data/books/
+    - ssh root@intranet '/data/books/start_boot start'
+  when: manual
