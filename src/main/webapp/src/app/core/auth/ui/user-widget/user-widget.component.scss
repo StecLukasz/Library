@@ -8,7 +8,7 @@ $avatarSize: 30px;
 
 .avatar {
   align-items: center;
-  border: 1px solid var(--txt-muted);
+  border: 1px solid #ababab;
   border-radius: 50%;
   display: flex;
   height: $avatarSize;
@@ -18,7 +18,7 @@ $avatarSize: 30px;
   width: $avatarSize;
 
   & .default-avatar {
-    fill: var(--txt-muted);
+    fill: gray;
     height: $avatarSize - 4px;
     margin-top: -2px;
     width: $avatarSize - 4px;
