@@ -18,4 +18,10 @@ public class Book {
     private String title;
     private String isbn;
     private int pages;
+    private int quantity;
+    private int availability;
+    private String genre;
+
+
+//    private List<Author> authors ;
 }
