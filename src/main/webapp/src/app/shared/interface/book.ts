@@ -3,4 +3,7 @@ export interface Book {
   title: string;
   isbn: string;
   pages: number;
+  quantity: number;
+  availability: number;
+  genre: string;
 }

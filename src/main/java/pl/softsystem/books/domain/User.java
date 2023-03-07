@@ -5,14 +5,17 @@ import lombok.NoArgsConstructor;
 import pl.softsystem.books.shared.type.RoleType;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "newhr_employee_view")
+@Table(name = "customer")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "customer_id")
     private Long id;
 
     private String username;
@@ -41,5 +44,20 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private RoleType role;
+
+    @OneToMany(targetEntity = Borrowed.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "borrowed_id", referencedColumnName = "id")
+    private List<Borrowed> borrowedList;
+
+
+
+
+
+
+
+
+
+
+
 
 }

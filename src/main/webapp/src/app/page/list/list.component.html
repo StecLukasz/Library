@@ -1,14 +1,20 @@
 <table class="w-full">
   <tr class="border-b-2 border-gray-400">
-    <th class="font-medium p-2 text-left" >Id</th>
-    <th class="font-medium p-2 text-left" >Title</th>
-    <th class="font-medium p-2 text-left" >ISBN</th>
-    <th class="font-medium p-2 text-left" >Pages</th>
+    <th class="font-medium p-2 text-left">Id</th>
+    <th class="font-medium p-2 text-left">Title</th>
+    <th class="font-medium p-2 text-left">ISBN</th>
+    <th class="font-medium p-2 text-left">Pages</th>
+    <th class="font-medium p-2 text-left">Quantity</th>
+    <th class="font-medium p-2 text-left">Availability</th>
+    <th class="font-medium p-2 text-left">Genre</th>
   </tr>
   <tr class="border-b hover:bg-gray-50" *ngFor="let book of books">
     <td class="p-2">{{ book.id }}</td>
-    <td class="p-2">{{ book.title}}</td>
-    <td class="p-2">{{ book.isbn}}</td>
-    <td class="p-2">{{ book.pages}}</td>
+    <td class="p-2">{{ book.title }}</td>
+    <td class="p-2">{{ book.isbn }}</td>
+    <td class="p-2">{{ book.pages }}</td>
+    <td class="p-2">{{ book.quantity }}</td>
+    <td class="p-2">{{ book.availability }}</td>
+    <td class="p-2">{{ book.genre }}</td>
   </tr>
 </table>
