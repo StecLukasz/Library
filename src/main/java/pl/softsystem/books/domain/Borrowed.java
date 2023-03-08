@@ -20,16 +20,20 @@ public class Borrowed {
     @Column(name = "borrowed_id")
     private Long borrowedId;
 
-    @Column(name = "User_id")
-    private Long userId;
+    private String role;
+
+    @Column(name = "signature_id")
+    private String signatureId;
 
     @Column(name = "borrowed_date")
     private Date borrowedDate;
+    
+    @Column(name = "overdue_date")
+    private Date overdueDate;
 
     @Column(name = "returnt_date")
     private Date returntDate;
+    
+    private String status;
 
-    @OneToMany(targetEntity = Book.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id", referencedColumnName = "borrowed_id")
-    private List<Book> bookList;
 }

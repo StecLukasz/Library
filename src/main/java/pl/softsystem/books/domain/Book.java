@@ -22,26 +22,24 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
+
     private Long id;
 
     private String title;
     private String isbn;
     private int pages;
-    private int quantity;
-    private int availability;
     private String genre;
-    private String status;
-    private String signature;
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_author",
-            joinColumns = @JoinColumn(name = "book_id"),
+            joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private Set<Author> authors = new HashSet<>();
 
-    // constructors, getters and setters, and other methods
+    @OneToMany(targetEntity = Signature.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private List<Signature> signatures;
 }
