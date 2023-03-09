@@ -33,12 +33,13 @@ public class Book {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_author",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id")
     )
     private Set<Author> authors = new HashSet<>();
 
     @OneToMany(targetEntity = Signature.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "id")
     private List<Signature> signatures;
+
 }
