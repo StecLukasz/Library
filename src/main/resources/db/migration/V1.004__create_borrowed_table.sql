@@ -1,6 +1,6 @@
 CREATE TABLE borrowed
 (
-    borrowed_id   INT          NOT NULL,
+    id   INT          NOT NULL,
     login         VARCHAR(255) NOT NULL,
     signature_id  INT          NOT NULL,
     borrowed_date DATE         NOT NULL,
@@ -8,6 +8,6 @@ CREATE TABLE borrowed
     return_date   DATE         NOT NULL,
     status        VARCHAR(255) NOT NULL,
 
-    PRIMARY KEY (borrowed_id),
+    PRIMARY KEY (id),
     FOREIGN KEY (signature_id) REFERENCES signature (id)
 );

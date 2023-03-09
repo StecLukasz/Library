@@ -17,23 +17,24 @@ public class Borrowed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "borrowed_id")
-    private Long borrowedId;
+    private Long id;
 
     private String role;
 
     @Column(name = "signature_id")
     private String signatureId;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "borrowed_date")
-    private Date borrowedDate;
-    
+    final private Date borrowedDate = new Date(System.currentTimeMillis());
+
     @Column(name = "overdue_date")
     private Date overdueDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "returnt_date")
-    private Date returntDate;
-    
+    final private Date returnDate = new Date(System.currentTimeMillis());
+
     private String status;
 
 }
