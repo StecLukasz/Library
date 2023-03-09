@@ -1,5 +1,6 @@
 package pl.softsystem.books.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class Borrowed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String role;
+    private String login;
 
     @Column(name = "signature_id")
     private String signatureId;
@@ -32,9 +33,8 @@ public class Borrowed {
     private Date overdueDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "returnt_date")
+    @Column(name = "return_date")
     final private Date returnDate = new Date(System.currentTimeMillis());
 
     private String status;
-
 }

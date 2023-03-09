@@ -8,3 +8,8 @@ CREATE TABLE signature
     FOREIGN KEY (book_id) REFERENCES book (id)
 );
 
+INSERT INTO signature (id, book_id, book_signature)
+VALUES (1, 4, 'yyy'),
+       (2, 3, 'xxx'),
+       (3, 2, 'eee'),
+       (4, 1, 'hhh');
