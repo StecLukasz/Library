@@ -20,4 +20,9 @@ public class BookController {
     public List<Book> getBooks() {
         return bookService.getAll();
     }
+
+    @GetMapping("/search")
+    public List<Book> findBooks(@RequestParam(required = false) String title, @RequestParam(required = false) String genre) {
+        return bookService.findBooksByTitleAndGenre(title, genre);
+    }
 }

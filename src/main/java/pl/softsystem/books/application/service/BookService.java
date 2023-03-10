@@ -16,5 +16,9 @@ public class BookService {
     public List<Book> getAll() {
         return bookRepository.findAllByOrderByTitle();
     }
+
+    public List<Book> findBooksByTitleAndGenre(String title, String genre) {
+        return bookRepository.findByTitleContainingIgnoreCaseAndGenreContainingIgnoreCase(title, genre);
+    }
 }
 
