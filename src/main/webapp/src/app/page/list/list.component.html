@@ -2,9 +2,19 @@
   <tr class="border-b-2 border-gray-400">
     <th class="font-medium p-2 text-left">Id</th>
     <th class="font-medium p-2 text-left">Title</th>
+    <th class="font-medium p-2 text-left">Author</th>
+    <th class="font-medium p-2 text-left">Genre</th>
+    <th class="font-medium p-2 text-left">Available</th>
   </tr>
   <tr class="border-b hover:bg-gray-50" *ngFor="let book of books">
     <td class="p-2">{{ book.id }}</td>
     <td class="p-2">{{ book.title }}</td>
+    <td class="p-2">
+      {{ book.authors[0].firstName }} {{ book.authors[0].lastName }}, {{ book.authors[1].firstName }}
+      {{ book.authors[1].lastName }}, {{ book.authors[2]?.firstName }} {{ book.authors[2]?.lastName }}
+    </td>
+    <td class="p-2">{{ book.genre }}</td>
+    <!--    <td class="p-2">{{ book.available }}</td>-->
+    <td class="p-2"></td>
   </tr>
 </table>
