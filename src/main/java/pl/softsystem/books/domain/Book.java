@@ -39,7 +39,7 @@ public class Book {
     private Set<Author> authors = new HashSet<>();
 
     @OneToMany(targetEntity = Signature.class, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
     private List<Signature> signatures;
 
 }
