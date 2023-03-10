@@ -1,13 +1,17 @@
 <header class="flex items-center">
-
   <div class="font-medium py-2 px-4 text-xl flex items-center mr-4">
     <span class="material-icons-round mr-2">auto_stories</span>
-    <span>{{title}}</span>
+    <span>{{ title }}</span>
   </div>
 
   <nav class="">
     <ul class="flex">
       <li><a class="nav-item" routerLink="list" routerLinkActive="active">List</a></li>
+      <li><a class="nav-item" routerLink="list" routerLinkActive="active">Reserved</a></li>
+      <li><a class="nav-item" routerLink="list" routerLinkActive="active">Borrowed</a></li>
+      <li><a class="nav-item" routerLink="list" routerLinkActive="active">Admin List</a></li>
+      <li><a class="nav-item" routerLink="list" routerLinkActive="active">Admin Reserved</a></li>
+      <li><a class="nav-item" routerLink="list" routerLinkActive="active">Admin Borrowed</a></li>
       <li><a class="nav-item" routerLink="about" routerLinkActive="active">About</a></li>
     </ul>
   </nav>
@@ -17,6 +21,4 @@
   <app-user-widget></app-user-widget>
 
   <app-language-select></app-language-select>
-
-
 </header>
