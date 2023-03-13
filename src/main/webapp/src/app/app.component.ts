@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './core/auth/auth.service';
 import { FooterComponent } from './ui/footer/footer.component';
@@ -7,7 +8,7 @@ import { TopBarComponent } from './ui/top-bar/top-bar.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, TopBarComponent, FooterComponent, RouterOutlet],
+  imports: [CommonModule, TopBarComponent, FooterComponent, RouterOutlet, FormsModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

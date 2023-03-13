@@ -1,4 +1,4 @@
-export interface borrowed {
+export interface Borrowed {
   id: number;
   login: string;
   signatureId: string;

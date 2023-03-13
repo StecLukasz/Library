@@ -1,3 +1,10 @@
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <input type="text" id="text" style="border: 1px solid black" [(ngModel)]="search" name="text" />
+    <button type="submit">Search</button>
+  </div>
+</form>
+
 <table class="w-full">
   <tr class="border-b-2 border-gray-400">
     <th class="font-medium p-2 text-left">Id</th>

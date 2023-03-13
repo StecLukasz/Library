@@ -24,4 +24,8 @@ export class ApiService {
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(api.books.url);
   }
+
+  getBooksSearch(text: string): Observable<Book[]> {
+    return this.http.get<Book[]>(api.books.url + `/search?title=${text}&genre=${text}`);
+  }
 }

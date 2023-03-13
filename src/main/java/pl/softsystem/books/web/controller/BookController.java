@@ -1,7 +1,6 @@
 package pl.softsystem.books.web.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
 import pl.softsystem.books.domain.Book;
@@ -22,7 +21,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public List<Book> findBooks(@RequestParam(required = false) String title, @RequestParam(required = false) String genre) {
+    public List<Book> findBooks(String title, String genre) {
         return bookService.findBooksByTitleAndGenre(title, genre);
     }
 }
