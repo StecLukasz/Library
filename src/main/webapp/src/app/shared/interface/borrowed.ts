@@ -1,6 +1,6 @@
 export interface Borrowed {
   id: number;
-  login: string;
+  username: string;
   signatureId: string;
   borrowedDate: string;
   overdueDate: string;
