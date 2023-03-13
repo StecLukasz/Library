@@ -20,7 +20,7 @@ public class Borrowed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String login;
+    private String username;
 
     @Column(name = "signature_id")
     private String signatureId;

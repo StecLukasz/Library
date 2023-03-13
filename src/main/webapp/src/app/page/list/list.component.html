@@ -1,6 +1,13 @@
 <form (ngSubmit)="onSubmit()">
   <div>
-    <input type="text" id="text" style="border: 1px solid black" [(ngModel)]="search" name="text" />
+    <input
+      type="text"
+      id="text"
+      placeholder="Search"
+      style="border: 1px solid black"
+      [(ngModel)]="search"
+      name="text"
+    />
     <button type="submit">Search</button>
   </div>
 </form>
