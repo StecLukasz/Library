@@ -6,6 +6,7 @@ import pl.softsystem.books.domain.Author;
 import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.BookRepository;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -30,8 +31,13 @@ public class BookService {
         return sortAuthorsByLastName(books);
     }
 
-    public List<Book> findBooksByTitleAndGenre(String title, String genre) {
-        return bookRepository.findByTitleContainingIgnoreCaseOrGenreContainingIgnoreCase(title, genre);
+    private static List<Book> sortAuthorsByLastName(List<Book> books) {
+        books.forEach(book -> {
+            List<Author> sortedAuthors = new ArrayList<>(book.getAuthors());
+            sortedAuthors.sort(Comparator.comparing(Author::getLastName));
+            book.setAuthors(new LinkedHashSet<>(sortedAuthors));
+        });
+        return books;
     }
 
     public List<Book> getBooksBorrowedByUser(String login) {
