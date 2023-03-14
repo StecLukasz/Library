@@ -6,6 +6,7 @@ const apiBase = {
   },
   books: {
     url: '/books',
+    userBooks: '/books-for-user',
   },
 };
 

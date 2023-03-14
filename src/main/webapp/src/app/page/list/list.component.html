@@ -24,8 +24,7 @@
     <td class="p-2">{{ book.id }}</td>
     <td class="p-2">{{ book.title }}</td>
     <td class="p-2">
-      {{ book.authors[0].firstName }} {{ book.authors[0].lastName }}, {{ book.authors[1].firstName }}
-      {{ book.authors[1].lastName }}, {{ book.authors[2]?.firstName }} {{ book.authors[2]?.lastName }}
+      <span *ngFor="let author of book.authors">{{ author.firstName }}, {{ author.lastName }}</span>
     </td>
     <td class="p-2">{{ book.genre }}</td>
     <!--    <td class="p-2">{{ book.available }}</td>-->

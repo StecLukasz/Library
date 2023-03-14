@@ -20,6 +20,12 @@ public class BookController {
         return bookService.getAll();
     }
 
+    @GetMapping(ApiUrl.Book.FOR_USER)
+    public List<Book> getBooksForUser(@RequestParam String login) {
+        return bookService.getBooksBorrowedByUser(login);
+    }
+
+
     @GetMapping("/search")
     public List<Book> findBooks(String title, String genre) {
         return bookService.findBooksByTitleAndGenre(title, genre);
