@@ -3,6 +3,7 @@ spring:
     url: jdbc:postgresql://intranet3:5432/development?currentSchema=books
     username: books
     password: rJ12pw83T8
+    jpa: show-sql=true
 
 oauth:
   baseUrl: https://intranet3.softsystem.pl/oauth

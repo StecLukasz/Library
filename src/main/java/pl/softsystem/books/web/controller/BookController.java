@@ -21,7 +21,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public List<Book> findBooks(String title, String genre) {
-        return bookService.findBooksByTitleAndGenre(title, genre);
+    public List<Book> findBooks(String title, String genre, String authorLastName) {
+        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName);
     }
 }

@@ -35,5 +35,4 @@ public class Author {
     @JsonBackReference
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
-
 }
