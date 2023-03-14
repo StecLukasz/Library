@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 
-
 @Transactional
 @Getter
 @Setter
@@ -22,9 +21,7 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-
     private String title;
     private int pages;
     private String genre;
@@ -38,8 +35,7 @@ public class Book {
     )
     private Set<Author> authors = new HashSet<>();
 
-    @OneToMany(targetEntity = Signature.class, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Signature.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private List<Signature> signatures;
-
 }

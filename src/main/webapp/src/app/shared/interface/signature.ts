@@ -4,5 +4,5 @@ export interface Signature {
   id: number;
   bookId: number;
   bookSignature: string;
-  borrowed: Borrowed[];
+  borroweds: Borrowed[];
 }
