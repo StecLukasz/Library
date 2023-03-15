@@ -46,6 +46,11 @@ export class ListComponent implements OnInit {
 
   // private async getBooksForUser(user: User): Promise<void> {
   //   this.books = await firstValueFrom(this.api.getBooksForUser(user.username));
+  //
+  //   console.log(this.books);
+  // }
+  // private async getBooksForUser(user: User): Promise<void> {
+  //   this.books = await firstValueFrom(this.api.getBooksForUser(user.username));
   //   console.log(this.books);
   // }
 

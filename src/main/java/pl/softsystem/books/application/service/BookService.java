@@ -31,6 +31,48 @@ public class BookService {
         return books;
     }
 
+
+    public boolean isLatestStatusBorrowed(List<Borrowed> borrowedList) {
+        if (borrowedList == null || borrowedList.isEmpty()) {
+            return false;
+        }
+        Optional<Borrowed> latestBorrowed = borrowedList.stream().max(Comparator.comparing(Borrowed::getStatusDate));
+        return latestBorrowed.get().getStatus().equals("borrowed");
+    }
+
+    public List<Book> getBorrowedDate(String login) {
+        List<Book> borrowedBooks = new ArrayList<>();
+        List<Book> allBooks = bookRepository.findAllByOrderByTitle();
+        allBooks.forEach(book -> {
+            Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, login);
+            if (latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("borrowed")) {
+                Borrowed borrowedBook = new Borrowed();
+                borrowedBook.getBorrowedDate();
+//                borrowedBooks.add(borrowedBook);
+            }
+        });
+        return borrowedBooks;
+    }
+
+    public List<BookDTO> getBooksBorrowedByUser1(String login) {
+        List<Book> allBooks = bookRepository.findAllByOrderByTitle();
+        List<BookDTO> borrowedBooks = new ArrayList<>();
+
+        for (Book book : allBooks) {
+            Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, login);
+            if (latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("borrowed")) {
+                BookDTO bookDTO = new BookDTO();
+                bookDTO.setBookId(book.getId());
+                bookDTO.setTitle(book.getTitle());
+                bookDTO.setBorrowedDate(latestBorrowed.get().getBorrowedDate());
+                bookDTO.setReturnDate(latestBorrowed.get().getReturnDate());
+                bookDTO.setStatus(latestBorrowed.get().getStatus());
+                borrowedBooks.add(bookDTO);
+            }
+        }
+
+        return borrowedBooks;
+    }
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
             int count = 0;
@@ -51,11 +93,22 @@ public class BookService {
         return latestBorrowed.get().getStatus().equals("available");
     }
 
+
     public List<Book> getBooksBorrowedByUser(String login) {
-        // todo: get data from db for user which have login = login and return book list
-        // query do bazy
-//                return bookRepository.findAllByOrderByTitle();
-        return new ArrayList<>();
+        List<Book> allBooks = bookRepository.findAllByOrderByTitle();
+        return allBooks.stream()
+                .filter(book -> {
+                    Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, login);
+                    return latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("borrowed");
+                })
+                .collect(Collectors.toList());
+    }
+
+    private Optional<Borrowed> getLatestBorrowed(Book book, String login) {
+        return book.getSignatures().stream()
+                .flatMap(signature -> signature.getBorrowedBookList().stream())
+                .filter(borrowed -> borrowed.getLogin().equals(login))
+                .max(Comparator.comparing(Borrowed::getStatusDate));
     }
 
     public List<Book> getBooksReservedByUser(String login) {

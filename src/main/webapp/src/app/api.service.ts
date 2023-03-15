@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { api } from './shared/const/api';
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/book';
+import { BookDTO } from './shared/interface/bookDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +30,14 @@ export class ApiService {
     const params = {
       login,
     };
-
     return this.http.get<Book[]>(api.books.userBooks, { params });
+  }
+  getBorrowedBooksForUser(login: string): Observable<BookDTO[]> {
+    return this.http.get<BookDTO[]>(api.books.userBooks + `?login=${login}`);
+  }
+
+  getBorrowedDate(login: Date | undefined): Observable<Book[]> {
+    return this.http.get<Book[]>(api.books.borrowedDate + `?login=${login}`);
   }
 
   getReservedBooksForUser(login: string): Observable<Book[]> {

@@ -1,0 +1,31 @@
+<form>
+  <div *ngIf="username">
+    <h1>Lista książek wypożyczonych przez użytkownika: {{ username }}</h1>
+  </div>
+</form>
+
+<table class="w-full">
+  <tr class="border-b-2 border-gray-400">
+    <th class="font-medium p-2 text-left">Id</th>
+    <th class="font-medium p-2 text-left">Title</th>
+    <th class="font-medium p-2 text-left">Author</th>
+    <th class="font-medium p-2 text-left">Genre</th>
+    <th class="font-medium p-2 text-left">Borrow Date</th>
+    <th class="font-medium p-2 text-left">Return Date</th>
+  </tr>
+  <tr class="border-b hover:bg-gray-50" *ngFor="let book of books">
+    <td class="p-2">{{ book.id }}</td>
+    <td class="p-2">{{ book.title }}</td>
+    <td class="p-2">
+      <span *ngFor="let author of book.authors"
+        ><p>{{ author.firstName }} {{ author.lastName }}<br /></p
+      ></span>
+    </td>
+    <td class="p-2">{{ book.genre }}</td>
+    <td class="p-2" *ngFor="let book of borrowedBook">{{ book.borrowedDate }}</td>
+    <td class="p-2" *ngFor="let book of borrowedBook">{{ book.returnDate }}</td>
+
+    <!--    <td class="p-2">{{ books[0].signatures[1].borrowedBookList[0].borrowedDate | date : 'yyyy-MM-dd' }}</td>-->
+    <!--    <td class="p-2">{{ books[0].signatures[1].borrowedBookList[0].returnDate | date : 'yyyy-MM-dd' }}</td>-->
+  </tr>
+</table>

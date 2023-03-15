@@ -1,7 +1,5 @@
 package pl.softsystem.books.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +25,6 @@ public class Signature {
     @OneToMany(targetEntity = Borrowed.class, cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "signature_id", referencedColumnName = "id")
     private List<Borrowed> borrowedBookList;
+
+
 }
