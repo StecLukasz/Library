@@ -2,14 +2,9 @@ package pl.softsystem.books.application.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.softsystem.books.domain.Author;
 import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.BookRepository;
 
-import java.util.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @Service
