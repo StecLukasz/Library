@@ -6,6 +6,7 @@ export interface Book {
   title: string;
   pages: number;
   genre: string;
+  availableQuantity: number;
   authors: Author[];
   signatures: Signature[];
 }

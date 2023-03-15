@@ -26,9 +26,16 @@ public class BookService {
         books = sortAuthorsByLastName(books);
         books = removeDuplicateBooks(books);
         books = sortBooksByTitle(books);
+        books = countAvailableBooks(books);
         return books;
     }
 
+    public List<Book> countAvailableBooks(List<Book> books){
+        for (Book book : books) {
+            book.setAvailableQuantity(99);
+        }
+        return books;
+    }
 
     public List<Book> getBooksBorrowedByUser(String login) {
         // todo: get data from db for user which have login = login and return book list

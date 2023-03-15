@@ -25,6 +25,8 @@ public class Book {
     private String title;
     private int pages;
     private String genre;
+    @Transient
+    private int availableQuantity;
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)

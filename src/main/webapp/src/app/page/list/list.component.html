@@ -10,7 +10,7 @@
       name="text"
       (keyup)="onSearch()"
     />
-    <button type="submit">Search</button>
+    <button type="submit"></button>
   </div>
 </form>
 
@@ -29,7 +29,8 @@
       <span *ngFor="let author of book.authors">{{ author.firstName }}, {{ author.lastName }}</span>
     </td>
     <td class="p-2">{{ book.genre }}</td>
-    <!--    <td class="p-2">{{ book.available }}</td>-->
+    <td class="p-2">{{ book.availableQuantity }}</td>
+    <!--    <td class="p-2">{{ signatureQuantity(book) }}</td>-->
     <td class="p-2"></td>
   </tr>
 </table>

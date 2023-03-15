@@ -32,6 +32,9 @@ public class Borrowed {
     @Column(name = "overdue_date")
     private Date overdueDate;
 
+    @Column(name = "status_date")
+    private Date statusDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "return_date")
     final private Date returnDate = new Date(System.currentTimeMillis());
