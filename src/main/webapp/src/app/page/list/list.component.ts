@@ -48,7 +48,7 @@ export class ListComponent implements OnInit {
     console.log(this.books);
   }
 
-  onSubmit() {
+  onSearch() {
     this.getSentencesSearch(this.search);
     console.log(this.search);
   }
@@ -58,4 +58,20 @@ export class ListComponent implements OnInit {
       this.books = data;
     });
   }
+
+  signatureQuantity(book: Book): number {
+    return book.signatures.length;
+  }
+
+  // showAvailableBooks(book: Book): number {
+  //   let count = 0;
+  //   for (const signature of book.signatures) {
+  //     for (const borrowed of signature.borroweds) {
+  //       if (borrowed.status === 'borrowed') {
+  //         count++;
+  //       }
+  //     }
+  //   }
+  //   return count;
+  // }
 }
