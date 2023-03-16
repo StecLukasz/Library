@@ -2,9 +2,7 @@ package pl.softsystem.books.application.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.softsystem.books.domain.Author;
-import pl.softsystem.books.domain.Book;
-import pl.softsystem.books.domain.BookRepository;
+import pl.softsystem.books.domain.*;
 
 import java.util.*;
 
@@ -16,8 +14,8 @@ public class BookService {
 
     public List<Book> getAll() {
         List<Book> books = bookRepository.findAllByOrderByTitle();
-
-        return sortAuthorsByLastName(books);
+        books = countBorrowedBooks(books);
+        return books;
     }
 
     public List<Book> findBooksByTitleAndGenreAndAuthor(String title, String genre, String authorLastName) {
@@ -26,15 +24,29 @@ public class BookService {
         books = sortAuthorsByLastName(books);
         books = removeDuplicateBooks(books);
         books = sortBooksByTitle(books);
-        books = countAvailableBooks(books);
+        books = countBorrowedBooks(books);
         return books;
     }
 
-    public List<Book> countAvailableBooks(List<Book> books){
+    public List<Book> countBorrowedBooks(List<Book> books) {
         for (Book book : books) {
-            book.setAvailableQuantity(99);
+            int count = 0;
+            for (Signature signature : book.getSignatures()) {
+                boolean isBorrowed = isLatestStatusBorrowed(signature.getBorrowedBookList());
+                if (isBorrowed) count++;
+            }
+            book.setAvailableQuantity(countHowManySignatures(book) - count);
         }
         return books;
+    }
+
+    public boolean isLatestStatusBorrowed(List<Borrowed> borrowedList) {
+        if (borrowedList == null || borrowedList.isEmpty()) {
+            return false;
+        }
+        Optional<Borrowed> latestBorrowed = borrowedList.stream().max(Comparator.comparing(Borrowed::getStatusDate));
+
+        return latestBorrowed.get().getStatus().equals("borrowed");
     }
 
     public List<Book> getBooksBorrowedByUser(String login) {
@@ -69,6 +81,11 @@ public class BookService {
     public static List<Book> sortBooksByTitle(List<Book> books) {
         Collections.sort(books, Comparator.comparing(Book::getTitle));
         return books;
+    }
+
+    public int countHowManySignatures(Book book) {
+        List<Signature> signatures = book.getSignatures();
+        return signatures.size();
     }
 }
 

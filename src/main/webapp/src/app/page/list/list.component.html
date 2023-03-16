@@ -20,17 +20,18 @@
     <th class="font-medium p-2 text-left">Title</th>
     <th class="font-medium p-2 text-left">Author</th>
     <th class="font-medium p-2 text-left">Genre</th>
-    <th class="font-medium p-2 text-left">Available</th>
+    <th class="font-medium p-2 text-left">Borrowed</th>
+    <th class="font-medium p-2 text-left">Quantity</th>
   </tr>
   <tr class="border-b hover:bg-gray-50" *ngFor="let book of books">
     <td class="p-2">{{ book.id }}</td>
     <td class="p-2">{{ book.title }}</td>
     <td class="p-2">
-      <span *ngFor="let author of book.authors">{{ author.firstName }}, {{ author.lastName }}</span>
+      <span *ngFor="let author of book.authors">{{ author.firstName }} {{ author.lastName }}, </span>
     </td>
     <td class="p-2">{{ book.genre }}</td>
     <td class="p-2">{{ book.availableQuantity }}</td>
-    <!--    <td class="p-2">{{ signatureQuantity(book) }}</td>-->
+    <td class="p-2">{{ signatureQuantity(book) }}</td>
     <td class="p-2"></td>
   </tr>
 </table>
