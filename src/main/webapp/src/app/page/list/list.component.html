@@ -22,6 +22,7 @@
     <th class="font-medium p-2 text-left">Genre</th>
     <th class="font-medium p-2 text-left">Available</th>
     <th class="font-medium p-2 text-left">Quantity</th>
+    <th class="font-medium p-2 text-left"></th>
   </tr>
   <tr class="border-b hover:bg-gray-50" *ngFor="let book of books">
     <td class="p-2">{{ book.id }}</td>
@@ -32,6 +33,8 @@
     <td class="p-2">{{ book.genre }}</td>
     <td class="p-2">{{ book.availableQuantity }}</td>
     <td class="p-2">{{ signatureQuantity(book) }}</td>
-    <td class="p-2"></td>
+    <td class="p-2">
+      <button (click)="reserveBookByUser(book)"><span class="material-icons">add_box</span></button>
+    </td>
   </tr>
 </table>

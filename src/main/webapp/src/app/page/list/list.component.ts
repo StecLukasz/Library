@@ -19,6 +19,7 @@ import { Book } from '../../shared/interface/book';
 export class ListComponent implements OnInit {
   books: Book[] = [];
   search: string = '';
+  currentUser: string = '';
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -31,8 +32,9 @@ export class ListComponent implements OnInit {
         this.getBooks();
         return;
       }
+      this.currentUser = user.username;
 
-      console.log(user.username);
+      console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
       this.getBooksForUser(user);
     });
@@ -63,15 +65,10 @@ export class ListComponent implements OnInit {
     return book.signatures.length;
   }
 
-  // showAvailableBooks(book: Book): number {
-  //   let count = 0;
-  //   for (const signature of book.signatures) {
-  //     for (const borrowed of signature.borroweds) {
-  //       if (borrowed.status === 'borrowed') {
-  //         count++;
-  //       }
-  //     }
-  //   }
-  //   return count;
-  // }
+  reserveBookByUser(book: Book) {
+    this.api.reserveBookByUser(this.currentUser, book.id).subscribe(
+      (data) => {},
+      (error) => console.log(error)
+    );
+  }
 }
