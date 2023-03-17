@@ -87,5 +87,15 @@ public class BookService {
         List<Signature> signatures = book.getSignatures();
         return signatures.size();
     }
+
+    public void makeReservationBookByUser(String login, int bookId) {
+
+        System.out.println(login);
+        System.out.println(bookId);
+
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+        books = countBorrowedBooks(books);
+
+    }
 }
 

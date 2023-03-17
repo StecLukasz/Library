@@ -1,7 +1,6 @@
 package pl.softsystem.books.web.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
@@ -33,9 +32,11 @@ public class BookController {
         return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName);
     }
 
-    @PostMapping("/{login}/{bookId}")
-    public ResponseEntity<String> reserveBookByUser(@PathVariable String login, @PathVariable Long bookId, @RequestBody Map<String, Object> data) {
-
-        return ResponseEntity.ok("Book reserved successfully" + login + "/" + bookId);
+    @PostMapping("/reserve")
+    public ResponseEntity<String> reserveBookByUser(@RequestBody Map<String, Object> data) {
+        String login = (String) data.get("login");
+        int bookId = (int) data.get("bookId");
+        bookService.makeReservationBookByUser(login, bookId);
+        return ResponseEntity.ok("Book " + bookId + " reserved successfully for " + login);
     }
 }

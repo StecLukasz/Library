@@ -39,6 +39,6 @@ export class ApiService {
 
   reserveBookByUser(login: string, bookId: number): Observable<Object> {
     const data = { login, bookId };
-    return this.http.post(api.books.url + `/${login}/${bookId}`, data);
+    return this.http.post(api.books.url + `/reserve`, data);
   }
 }
