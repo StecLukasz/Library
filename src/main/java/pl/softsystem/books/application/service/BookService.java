@@ -89,7 +89,8 @@ public class BookService {
     }
 
     public void makeReservationBookByUser(String login, String title) {
-        List<Book> books = bookRepository.findAllByOrderByTitle();
+//        List<Book> books = bookRepository.findAllByOrderByTitle();
+//        Book book
 
     }
 }

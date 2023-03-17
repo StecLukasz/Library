@@ -36,9 +36,7 @@ public class BookController {
     public ResponseEntity<String> reserveBookByUser(@RequestBody Map<String, Object> data) {
         String login = (String) data.get("login");
         String title = (String) data.get("title");
-        System.out.println(login);
-        System.out.println(title);
         bookService.makeReservationBookByUser(login, title);
-        return ResponseEntity.ok("Book " + title + " reserved successfully for " + login);
+        return ResponseEntity.ok(title + " " + login);
     }
 }
