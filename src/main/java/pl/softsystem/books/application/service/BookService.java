@@ -89,8 +89,19 @@ public class BookService {
     }
 
     public void makeReservationBookByUser(String login, String title) {
-//        List<Book> books = bookRepository.findAllByOrderByTitle();
-//        Book book
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+        Book bookByTitle = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+
+        System.out.println(bookByTitle.getSignatures().get(0).getBorrowedBookList().get(0));
+        System.out.println(bookByTitle.getSignatures().get(0).getBorrowedBookList().get(1));
+        Book booktoAdd = new Book();
+        booktoAdd = bookByTitle;
+        Borrowed borrowed = new Borrowed();
+        borrowed.setLogin(login);
+        borrowed.setStatus("reserved");
+        booktoAdd.getSignatures().get(0).getBorrowedBookList().add(borrowed);
+        bookRepository.save(bookByTitle);
+
 
     }
 }
