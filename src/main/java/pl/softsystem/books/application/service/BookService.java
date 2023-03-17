@@ -14,7 +14,7 @@ public class BookService {
 
     public List<Book> getAll() {
         List<Book> books = bookRepository.findAllByOrderByTitle();
-        books = countBorrowedBooks(books);
+        books = countAvailableBooks(books);
         return books;
     }
 
@@ -24,11 +24,11 @@ public class BookService {
         books = sortAuthorsByLastName(books);
         books = removeDuplicateBooks(books);
         books = sortBooksByTitle(books);
-        books = countBorrowedBooks(books);
+        books = countAvailableBooks(books);
         return books;
     }
 
-    public List<Book> countBorrowedBooks(List<Book> books) {
+    public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
             int count = 0;
             for (Signature signature : book.getSignatures()) {
@@ -88,13 +88,8 @@ public class BookService {
         return signatures.size();
     }
 
-    public void makeReservationBookByUser(String login, int bookId) {
-
-        System.out.println(login);
-        System.out.println(bookId);
-
+    public void makeReservationBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
-        books = countBorrowedBooks(books);
 
     }
 }

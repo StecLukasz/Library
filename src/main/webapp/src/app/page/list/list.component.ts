@@ -66,7 +66,7 @@ export class ListComponent implements OnInit {
   }
 
   reserveBookByUser(book: Book) {
-    this.api.reserveBookByUser(this.currentUser, book.id).subscribe(
+    this.api.reserveBookByUser(this.currentUser, book.title).subscribe(
       (data) => {},
       (error) => console.log(error)
     );

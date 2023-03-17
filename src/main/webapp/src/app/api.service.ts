@@ -37,8 +37,10 @@ export class ApiService {
     return this.http.get<Book[]>(api.books.url + `/search?title=${text}&genre=${text}&authorLastName=${text}`);
   }
 
-  reserveBookByUser(login: string, bookId: number): Observable<Object> {
-    const data = { login, bookId };
+  reserveBookByUser(login: string, title: string): Observable<Object> {
+    const data = { login, title };
+    console.log(data);
+
     return this.http.post(api.books.url + `/reserve`, data);
   }
 }
