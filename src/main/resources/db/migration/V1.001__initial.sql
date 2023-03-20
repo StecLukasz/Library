@@ -1,9 +1,9 @@
 CREATE TABLE book
 (
-    id    BIGSERIAL NOT NULL PRIMARY KEY,
-    title VARCHAR(255) NULL,
-    pages INT NULL,
-    genre VARCHAR(255) NULL
+    id      BIGSERIAL    NOT NULL PRIMARY KEY,
+    title        VARCHAR(255) NULL,
+    pages        INT          NOT NULL,
+    genre        VARCHAR(255) NOT NULL
 );
 
 ALTER TABLE book
