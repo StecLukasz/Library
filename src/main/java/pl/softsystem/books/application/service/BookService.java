@@ -61,7 +61,7 @@ public class BookService {
         return allBooks.stream()
                 .filter(book -> {
                     Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, login);
-                    return latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("borrowed");
+                    return latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("reserved");
                 })
                 .collect(Collectors.toList());
     }
@@ -141,6 +141,11 @@ public class BookService {
             result++;
         }
         return result;
+    }
+
+    public void displayFirstTitle(){
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+        System.out.println(books.get(0).getTitle());
     }
 }
 

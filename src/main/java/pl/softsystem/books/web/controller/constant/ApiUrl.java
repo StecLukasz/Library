@@ -14,6 +14,4 @@ public class ApiUrl {
         public final String FOR_USER = "/books-for-user";
         public final String RESERVED_FOR_USER = "/reserved-books-for-user";
     }
-
-
 }

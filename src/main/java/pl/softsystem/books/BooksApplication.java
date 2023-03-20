@@ -4,9 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pl.softsystem.security.EnableOAuthClientResources;
 import pl.softsystem.security.EnableSessionOAuthSecurity;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableSessionOAuthSecurity
 @EnableOAuthClientResources
+@EnableScheduling
 @SpringBootApplication
 public class BooksApplication {
 

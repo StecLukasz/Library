@@ -33,6 +33,10 @@ export class ApiService {
     return this.http.get<Book[]>(api.books.userBooks, { params });
   }
 
+  getReservedBooksForUser(login: string): Observable<Book[]> {
+    return this.http.get<Book[]>(api.books.reservedUserBooks + `?login=${login}`);
+  }
+
   getBooksSearch(text: string): Observable<Book[]> {
     return this.http.get<Book[]>(api.books.url + `/search?title=${text}&genre=${text}&authorLastName=${text}`);
   }
