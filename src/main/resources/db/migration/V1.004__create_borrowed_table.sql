@@ -1,13 +1,13 @@
 CREATE TABLE borrowed
 (
-    id            INT          NOT NULL,
-    login         VARCHAR(255) NOT NULL,
-    signature_id  INT          NOT NULL,
-    borrowed_date DATE         NOT NULL,
+    id            INT NULL,
+    login         VARCHAR(255)  NULL,
+    signature_id  INT NULL,
+    borrowed_date DATE          NULL,
     overdue_date  DATE NULL,
-    return_date   DATE         NOT NULL,
+    return_date   DATE          NULL,
     status_date   date NULL,
-    status        VARCHAR(255) NOT NULL,
+    status        VARCHAR(255)  NULL,
 
     PRIMARY KEY (id),
     FOREIGN KEY (signature_id) REFERENCES signature (id)

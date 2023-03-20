@@ -1,10 +1,10 @@
 CREATE TABLE authors
 (
-    id  INT          NOT NULL PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name  VARCHAR(255) NOT NULL,
-    gender     VARCHAR(255) NOT NULL,
-    birth_date DATE         NOT NULL
+    id  INT           NULL PRIMARY KEY,
+    first_name VARCHAR(255)  NULL,
+    last_name  VARCHAR(255)  NULL,
+    gender     VARCHAR(255)  NULL,
+    birth_date DATE          NULL
 );
 
 INSERT INTO authors (id, first_name, last_name, gender, birth_date)

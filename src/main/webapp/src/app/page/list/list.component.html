@@ -34,7 +34,9 @@
     <td class="p-2">{{ book.availableQuantity }}</td>
     <td class="p-2">{{ signatureQuantity(book) }}</td>
     <td class="p-2">
-      <button (click)="reserveBookByUser(book)"><span class="material-icons">add_box</span></button>
+      <button *ngIf="book.availableQuantity > 0" (click)="reserveBookByUser(book)">
+        <span class="material-icons">add_box</span>
+      </button>
     </td>
   </tr>
 </table>

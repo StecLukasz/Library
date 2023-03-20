@@ -32,6 +32,11 @@ public class BookController {
         return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName);
     }
 
+    @GetMapping(ApiUrl.Book.RESERVED_FOR_USER)
+    public List<Book> getReservedBooksForUser(@RequestParam String login) {
+        return bookService.getBooksReservedByUser(login);
+    }
+
     @PostMapping("/reserve")
     public ResponseEntity<String> reserveBookByUser(@RequestBody Map<String, Object> data) {
         String login = (String) data.get("login");
@@ -39,4 +44,5 @@ public class BookController {
         bookService.makeReservationBookByUser(login, title);
         return ResponseEntity.ok(title + " " + login);
     }
+
 }

@@ -9,11 +9,10 @@ CREATE TABLE signature
 );
 
 INSERT INTO signature (id, book_id, book_signature)
-VALUES (1, 4, 'yyy'),
-       (2, 3, 'xxx'),
+VALUES (1, 1, 'yyy'),
+       (2, 1, 'xxx'),
        (3, 2, 'eee'),
-       (4, 1, 'hhh'),
-       (5, 4, 'yyy1'),
-       (6, 3, 'xxx1'),
-       (7, 2, 'eee1'),
-       (8, 1, 'hhh1');
+       (4, 3, 'hhh'),
+       (5, 4, 'eee'),
+       (6, 4, 'hhh');
+

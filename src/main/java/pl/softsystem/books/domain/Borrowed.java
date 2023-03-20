@@ -23,7 +23,7 @@ public class Borrowed {
     private String login;
 
     @Column(name = "signature_id")
-    private String signatureId;
+    private Long signatureId;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "borrowed_date")
@@ -32,8 +32,9 @@ public class Borrowed {
     @Column(name = "overdue_date")
     private Date overdueDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "status_date")
-    private Date statusDate;
+    private Date statusDate = new Date(System.currentTimeMillis());
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "return_date")

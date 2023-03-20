@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +46,6 @@ public class BookService {
             return false;
         }
         Optional<Borrowed> latestBorrowed = borrowedList.stream().max(Comparator.comparing(Borrowed::getStatusDate));
-
         return latestBorrowed.get().getStatus().equals("borrowed");
     }
 
@@ -55,6 +55,24 @@ public class BookService {
 //                return bookRepository.findAllByOrderByTitle();
         return new ArrayList<>();
     }
+
+    public List<Book> getBooksReservedByUser(String login) {
+        List<Book> allBooks = bookRepository.findAllByOrderByTitle();
+        return allBooks.stream()
+                .filter(book -> {
+                    Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, login);
+                    return latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("borrowed");
+                })
+                .collect(Collectors.toList());
+    }
+
+    private Optional<Borrowed> getLatestBorrowed(Book book, String login) {
+        return book.getSignatures().stream()
+                .flatMap(signature -> signature.getBorrowedBookList().stream())
+                .filter(borrowed -> borrowed.getLogin().equals(login))
+                .max(Comparator.comparing(Borrowed::getStatusDate));
+    }
+
 
     public static List<Book> removeDuplicateBooks(List<Book> books) {
         List<Book> uniqueBooks = new ArrayList<>();
@@ -90,19 +108,39 @@ public class BookService {
 
     public void makeReservationBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
-        Book bookByTitle = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+        Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+        Long availableSignatureId = getSignatureIdAvailableBook(books, title);
 
-        System.out.println(bookByTitle.getSignatures().get(0).getBorrowedBookList().get(0));
-        System.out.println(bookByTitle.getSignatures().get(0).getBorrowedBookList().get(1));
-        Book booktoAdd = new Book();
-        booktoAdd = bookByTitle;
-        Borrowed borrowed = new Borrowed();
-        borrowed.setLogin(login);
-        borrowed.setStatus("reserved");
-        booktoAdd.getSignatures().get(0).getBorrowedBookList().add(borrowed);
-        bookRepository.save(bookByTitle);
+        int sizee = book.getSignatures().size();
+        if (availableSignatureId < sizee) {
 
+            Signature signatureCurrent = book.getSignatures().get(availableSignatureId.intValue());
+            List<Borrowed> borrowedList = signatureCurrent.getBorrowedBookList();
+            //System.out.println(signatureCurrent);
+            Borrowed borrowed = new Borrowed();
+            //borrowed.setId(7L);
+            borrowed.setLogin(login);
+            borrowed.setSignatureId(availableSignatureId);
+            borrowed.setStatus("reserveddd");
+            borrowedList.add(borrowed);
+            signatureCurrent.setBorrowedBookList(borrowedList);
+            System.out.println(signatureCurrent);
+            //bookRepository.save(book);
+        }
+    }
 
+    public Long getSignatureIdAvailableBook(List<Book> books, String title) {
+        Book bookByTitle = books.stream()
+                .filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+        Long result = 0L;
+        for (Signature signature : bookByTitle.getSignatures()) {
+
+            if (signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1).getStatus().equals("available")) {
+                break;
+            }
+            result++;
+        }
+        return result;
     }
 }
 

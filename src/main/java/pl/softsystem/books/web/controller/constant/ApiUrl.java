@@ -12,6 +12,7 @@ public class ApiUrl {
     public class Book {
         public final String BASE = ApiUrl.BASE + "/books";
         public final String FOR_USER = "/books-for-user";
+        public final String RESERVED_FOR_USER = "/reserved-books-for-user";
     }
 
 

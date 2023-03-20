@@ -4,12 +4,17 @@ import { AuthGuard } from './core/auth/auth.guard';
 import { AboutComponent } from './page/about/about.component';
 import { ListComponent } from './page/list/list.component';
 import { LoginComponent } from './page/login/login.component';
+import { ReservedComponent } from './page/reserved/reserved.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
   {
     path: 'list',
     component: ListComponent,
+  },
+  {
+    path: 'reserved',
+    component: ReservedComponent,
   },
   {
     path: 'about',
