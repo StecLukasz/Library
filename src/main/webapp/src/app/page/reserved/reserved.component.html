@@ -1,0 +1,42 @@
+<!--<form>-->
+<!--  <div>-->
+<!--    <input-->
+<!--      type="text"-->
+<!--      id="text"-->
+<!--      placeholder="Search"-->
+<!--      class="px-3 py-2 placeholder-gray-500 text-black rounded-sm ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"-->
+<!--      style="border: 1px solid black"-->
+<!--      [(ngModel)]="search"-->
+<!--      name="text"-->
+<!--      (keyup)="onSearch()"-->
+<!--    />-->
+<!--    <button type="submit"></button>-->
+<!--  </div>-->
+<!--</form>-->
+
+<table class="w-full">
+  <tr class="border-b-2 border-gray-400">
+    <th class="font-medium p-2 text-left">Id</th>
+    <th class="font-medium p-2 text-left">Title</th>
+    <th class="font-medium p-2 text-left">Author</th>
+    <th class="font-medium p-2 text-left">Genre</th>
+    <!--    <th class="font-medium p-2 text-left">Available</th>-->
+    <!--    <th class="font-medium p-2 text-left">Quantity</th>-->
+    <th class="font-medium p-2 text-left"></th>
+  </tr>
+  <tr class="border-b hover:bg-gray-50" *ngFor="let book of books">
+    <td class="p-2">{{ book.id }}</td>
+    <td class="p-2">{{ book.title }}</td>
+    <td class="p-2">
+      <span *ngFor="let author of book.authors">{{ author.firstName }} {{ author.lastName }}, </span>
+    </td>
+    <td class="p-2">{{ book.genre }}</td>
+    <!--    <td class="p-2">{{ book.availableQuantity }}</td>-->
+    <!--    <td class="p-2">{{ signatureQuantity(book) }}</td>-->
+    <!--    <td class="p-2">-->
+    <!--      <button *ngIf="book.availableQuantity > 0" (click)="reserveBookByUser(book)">-->
+    <!--        <span class="material-icons">add_box</span>-->
+    <!--      </button>-->
+    <!--    </td>-->
+  </tr>
+</table>
