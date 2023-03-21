@@ -1,6 +1,6 @@
 CREATE TABLE borrowed
 (
-    id            INT          NOT NULL,
+    id            BIGSERIAL          NOT NULL AUTO_INCREMENT,
     login         VARCHAR(255) NOT NULL,
     signature_id  INT          NOT NULL,
     borrowed_date DATE         NOT NULL,
