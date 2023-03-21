@@ -15,8 +15,8 @@ VALUES (1, 'Jack', 'Hoppkins', 'male', '01-02-2000'),
 
 CREATE TABLE book_author
 (
-    book_id   INT NOT NULL,
-    author_id INT NOT NULL,
+    book_id   BIGSERIAL NOT NULL,
+    author_id BIGSERIAL NOT NULL,
     PRIMARY KEY (book_id, author_id),
     FOREIGN KEY (book_id) REFERENCES book (id),
     FOREIGN KEY (author_id) REFERENCES authors (id)

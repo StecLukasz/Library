@@ -1,6 +1,6 @@
 CREATE TABLE signature
 (
-    id             BIGSERIAL          NOT NULL PRIMARY KEY,
+    id             BIGSERIAL    NOT NULL PRIMARY KEY,
     book_id        INT          NOT NULL,
     book_signature VARCHAR(255) NOT NULL,
 
