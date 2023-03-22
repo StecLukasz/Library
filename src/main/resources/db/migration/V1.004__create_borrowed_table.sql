@@ -6,7 +6,7 @@ CREATE TABLE borrowed
     borrowed_date DATE         NOT NULL,
     overdue_date  DATE NULL,
     return_date   DATE         NOT NULL,
-    status_date   date NULL,
+    status_date   TIMESTAMP NULL,
     status        VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (id),
