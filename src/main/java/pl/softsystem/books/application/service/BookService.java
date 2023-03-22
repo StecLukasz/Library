@@ -30,6 +30,7 @@ public class BookService {
         return books;
     }
 
+    //TODO change into how many avaible not borrowed
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
             int count = 0;
@@ -110,57 +111,20 @@ public class BookService {
     public void makeReservationBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
-        Long availableSignatureId = getAvailableSignaturesQuantity(books, title);
+        Long availableSignatureIndex = getAvailableSignaturesQuantity(books, title);
 
 //        int allSignaturesQuantity = book.getSignatures().size();
-        if (getAvailableSignaturesQuantity(books, title) > 0) {
+        if (availableSignatureIndex > 0) {
 
             Borrowed borrowed = new Borrowed();
-            borrowed.setId(6L);
-            borrowed.setLogin("jchyla");
-            borrowed.setSignatureId(availableSignatureId);
+            borrowed.setLogin(login);
+            //borrowed.setSignatureId(availableSignatureIndex);
+            borrowed.setSignatureId(firstAvailableSignatureId(books, title, availableSignatureIndex));
             borrowed.setOverdueDate(new Date(System.currentTimeMillis()));
-            borrowed.setStatus("nowystatus");
+            borrowed.setStatus("reserved");
 
             System.out.println(borrowed);
             borrowedRepository.save(borrowed);
-
-//            Signature fisrtAvailableSignatureToReserve = book.getSignatures().get(firstAvailableSignatureId(books, title).intValue());
-//            List<Borrowed> borrowedList = fisrtAvailableSignatureToReserve.getBorrowedBookList();
-//            Borrowed borrowed = new Borrowed();
-////            borrowed.setId();
-//            borrowed.setLogin(login);
-//            borrowed.setSignatureId(firstAvailableSignatureId(books, title));
-//            borrowed.setStatus("reserveddd");
-//            borrowedList.add(borrowed);
-//
-//            book.setSignatures();
-//            System.out.println(fisrtAvailableSignatureToReserve);
-//            bookRepository.save(book);
-////////////////////////////////////////////// new book to save
-//            Book xBook = new Book();
-//            xBook.setTitle("newbook");
-//            xBook.setPages(123);
-//            xBook.setGenre("gatunek");
-//
-//            ArrayList<Signature> xSignatures = new ArrayList<Signature>();
-//            Signature xSignature = new Signature();
-//            xSignature.setBookId(5L);
-//            xSignature.setBookSignature("xSignature");
-//            xSignatures.add(xSignature);
-//
-//            ArrayList<Borrowed> xBorroweds = new ArrayList<>();
-//            Borrowed xBorrowed = new Borrowed();
-//            xBorrowed.setLogin("xjchyla");
-//            xBorrowed.setSignatureId(7L);
-//            xBorrowed.setStatus("xstatus");
-//            xBorroweds.add(xBorrowed);
-//
-//            xSignature.setBorrowedBookList(xBorroweds);
-//            xBook.setSignatures(xSignatures);
-//            System.out.println(xBook);
-//
-//            bookRepository.save(xBook);
         }
     }
 
@@ -172,20 +136,23 @@ public class BookService {
             if (signature.getBorrowedBookList().get(signature.getBorrowedBookList()
                     .size() - 1).getStatus().equals("available")) result++;
         }
+//        System.out.println(bookByTitle.getSignatures());
+//        System.out.println(bookByTitle.getSignatures().get(result.intValue()).getId());
         return result;
     }
 
-    public Long firstAvailableSignatureId(List<Book> books, String title) {
+    public Long firstAvailableSignatureId(List<Book> books, String title, Long availableSignatureIndex) {
         Book bookByTitle = books.stream()
                 .filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
         Long result = -1L;
         for (Signature signature : bookByTitle.getSignatures()) {
-            result++;
             if (signature.getBorrowedBookList().get(signature.getBorrowedBookList()
                     .size() - 1).getStatus().equals("available")) {
+                result = signature.getId();
                 break;
             }
         }
+        System.out.println(result);
         return result;
     }
 
