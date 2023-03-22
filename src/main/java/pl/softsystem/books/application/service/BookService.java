@@ -30,7 +30,6 @@ public class BookService {
         return books;
     }
 
-    //TODO change into how many avaible not borrowed
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
             int count = 0;

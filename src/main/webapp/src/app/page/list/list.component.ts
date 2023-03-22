@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -21,7 +22,12 @@ export class ListComponent implements OnInit {
   search: string = '';
   currentUser: string = '';
 
-  constructor(private api: ApiService, private authService: AuthService) {}
+  constructor(
+    private api: ApiService,
+    private authService: AuthService,
+    private router: Router,
+    private location: Location
+  ) {}
 
   async ngOnInit(): Promise<void> {
     // stream obserwujacy aktualnie zalogowanego użytkownika
@@ -58,11 +64,10 @@ export class ListComponent implements OnInit {
     this.books = await firstValueFrom(this.api.getBooksSearch(text));
   }
 
-  // private getBooksSearch(text: string) {
-  //   this.api.getBooksSearch(text).subscribe((data) => {
-  //     this.books = data;
-  //   });
-  // }
+  goToList() {
+    this.router.navigate(['list']);
+    console.log('hello');
+  }
 
   getSignatureQuantity(book: Book): number {
     return book.signatures.length;
@@ -73,5 +78,17 @@ export class ListComponent implements OnInit {
       (data) => {},
       (error) => console.log(error)
     );
+    // this.refresh();
   }
+
+  // refresh() {
+  //   this.location.go(this.location.path());
+  //   window.location.reload();
+  // }
+
+  // private getBooksSearch(text: string) {
+  //   this.api.getBooksSearch(text).subscribe((data) => {
+  //     this.books = data;
+  //   });;
+  // }
 }
