@@ -35,20 +35,20 @@ public class BookService {
         for (Book book : books) {
             int count = 0;
             for (Signature signature : book.getSignatures()) {
-                boolean isBorrowed = isLatestStatusBorrowed(signature.getBorrowedBookList());
+                boolean isBorrowed = isLatestStatusAvailable(signature.getBorrowedBookList());
                 if (isBorrowed) count++;
             }
-            book.setAvailableQuantity(countHowManySignatures(book) - count);
+            book.setAvailableQuantity(count);
         }
         return books;
     }
 
-    public boolean isLatestStatusBorrowed(List<Borrowed> borrowedList) {
+    public boolean isLatestStatusAvailable(List<Borrowed> borrowedList) {
         if (borrowedList == null || borrowedList.isEmpty()) {
             return false;
         }
         Optional<Borrowed> latestBorrowed = borrowedList.stream().max(Comparator.comparing(Borrowed::getStatusDate));
-        return latestBorrowed.get().getStatus().equals("borrowed");
+        return latestBorrowed.get().getStatus().equals("available");
     }
 
     public List<Book> getBooksBorrowedByUser(String login) {
@@ -113,12 +113,10 @@ public class BookService {
         Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
         Long availableSignatureIndex = getAvailableSignaturesQuantity(books, title);
 
-//        int allSignaturesQuantity = book.getSignatures().size();
         if (availableSignatureIndex > 0) {
 
             Borrowed borrowed = new Borrowed();
             borrowed.setLogin(login);
-            //borrowed.setSignatureId(availableSignatureIndex);
             borrowed.setSignatureId(firstAvailableSignatureId(books, title, availableSignatureIndex));
             borrowed.setOverdueDate(new Date(System.currentTimeMillis()));
             borrowed.setStatus("reserved");

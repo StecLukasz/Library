@@ -33,10 +33,10 @@ export class ListComponent implements OnInit {
         return;
       }
       this.currentUser = user.username;
-
       console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
-      this.getBooksForUser(user);
+      // this.getBooksForUser(user);
+      this.getBooks();
     });
   }
 
@@ -46,26 +46,29 @@ export class ListComponent implements OnInit {
 
   private async getBooksForUser(user: User): Promise<void> {
     this.books = await firstValueFrom(this.api.getBooksForUser(user.username));
-
     console.log(this.books);
   }
 
   onSearch() {
-    this.getSentencesSearch(this.search);
+    this.getBooksSearch(this.search);
     console.log(this.search);
   }
 
-  private getSentencesSearch(text: string) {
-    this.api.getBooksSearch(text).subscribe((data) => {
-      this.books = data;
-    });
+  private async getBooksSearch(text: string): Promise<void> {
+    this.books = await firstValueFrom(this.api.getBooksSearch(text));
   }
 
-  signatureQuantity(book: Book): number {
+  // private getBooksSearch(text: string) {
+  //   this.api.getBooksSearch(text).subscribe((data) => {
+  //     this.books = data;
+  //   });
+  // }
+
+  getSignatureQuantity(book: Book): number {
     return book.signatures.length;
   }
 
-  reserveBookByUser(book: Book) {
+  PostReservedBookByUser(book: Book) {
     this.api.reserveBookByUser(this.currentUser, book.title).subscribe(
       (data) => {},
       (error) => console.log(error)
