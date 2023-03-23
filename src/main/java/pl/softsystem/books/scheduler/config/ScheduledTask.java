@@ -11,10 +11,9 @@ public class ScheduledTask {
     @Autowired
     private BookService bookService;
 
-    @Scheduled(fixedRate = 500000)
+    @Scheduled(cron = "0 0 4 * * ?")
     public void computePrice() throws InterruptedException {
-
-    bookService.changeToAvailableAfterOneWeek();
+        bookService.changeToAvailableAfterOneWeek();
     }
 }
 

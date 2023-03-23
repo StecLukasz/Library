@@ -17,6 +17,7 @@ public class BookService {
     public List<Book> getAll() {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         books = countAvailableBooks(books);
+        books = sortAuthorsByLastName(books);
         return books;
     }
 
@@ -58,13 +59,16 @@ public class BookService {
     }
 
     public List<Book> getBooksReservedByUser(String login) {
-        List<Book> allBooks = bookRepository.findAllByOrderByTitle();
-        return allBooks.stream()
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+        books = books.stream()
                 .filter(book -> {
                     Optional<Borrowed> latestReserved = getLatestReserved(book, login);
                     return latestReserved.isPresent() && latestReserved.get().getStatus().equals("reserved");
                 })
                 .collect(Collectors.toList());
+        books = sortAuthorsByLastName(books);
+
+        return books;
     }
 
     private Optional<Borrowed> getLatestReserved(Book book, String login) {
@@ -133,8 +137,6 @@ public class BookService {
             if (signature.getBorrowedBookList().get(signature.getBorrowedBookList()
                     .size() - 1).getStatus().equals("available")) result++;
         }
-//        System.out.println(bookByTitle.getSignatures());
-//        System.out.println(bookByTitle.getSignatures().get(result.intValue()).getId());
         return result;
     }
 
@@ -154,9 +156,33 @@ public class BookService {
     }
 
     public void changeToAvailableAfterOneWeek() {
-        //TODO
+        System.out.println("changeToAvailableAfterOneWeek started");
         List<Book> books = bookRepository.findAllByOrderByTitle();
-        System.out.println(books.get(0).getTitle());
+        for (Book book : books) {
+            for (Signature signature : book.getSignatures()) {
+                Borrowed borrowed = signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1);
+                if (borrowed.getStatus().equals("reserved")) {
+                    if (isOneWeekLater(borrowed.getStatusDate())) {
+                        Borrowed newBorrowed = new Borrowed();
+                        newBorrowed.setLogin(borrowed.getLogin());
+                        newBorrowed.setSignatureId(borrowed.getSignatureId());
+                        newBorrowed.setOverdueDate(new Date(System.currentTimeMillis()));
+                        newBorrowed.setStatus("available");
+                        borrowedRepository.save(newBorrowed);
+                    }
+                }
+            }
+        }
     }
+
+    public boolean isOneWeekLater(Date date) {
+        Calendar now = Calendar.getInstance();
+        Calendar other = Calendar.getInstance();
+        other.setTime(date);
+        other.add(Calendar.WEEK_OF_YEAR, 1);
+        return now.after(other);
+    }
+
+
 }
 

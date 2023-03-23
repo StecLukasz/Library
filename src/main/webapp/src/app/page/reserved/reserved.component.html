@@ -28,7 +28,9 @@
     <td class="p-2">{{ book.id }}</td>
     <td class="p-2">{{ book.title }}</td>
     <td class="p-2">
-      <span *ngFor="let author of book.authors">{{ author.firstName }} {{ author.lastName }}, </span>
+      <span *ngFor="let author of book.authors"
+        ><p>{{ author.firstName }} {{ author.lastName }}<br /></p
+      ></span>
     </td>
     <td class="p-2">{{ book.genre }}</td>
     <!--    <td class="p-2">{{ book.availableQuantity }}</td>-->
