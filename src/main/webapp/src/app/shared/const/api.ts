@@ -6,7 +6,7 @@ const apiBase = {
   },
   books: {
     url: '/books',
-    userBooks: '/books-for-user',
+    userBooks: '/borrowed-books',
     reservedUserBooks: '/reserved-books-for-user',
     borrowedDate: '/borrowed-date',
   },
