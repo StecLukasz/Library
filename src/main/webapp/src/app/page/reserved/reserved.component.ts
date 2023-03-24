@@ -5,7 +5,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
-import { User } from '../../core/auth/model/user';
 import { Book } from '../../shared/interface/book';
 
 @UntilDestroy()
@@ -36,7 +35,7 @@ export class ReservedComponent implements OnInit {
 
       console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
-      this.getReservedBooksForUser(user);
+      this.getReservedBooksForUser(this.currentUser);
     });
   }
 
@@ -44,8 +43,8 @@ export class ReservedComponent implements OnInit {
     this.books = await firstValueFrom(this.api.getBooks());
   }
 
-  private async getReservedBooksForUser(user: User): Promise<void> {
-    this.books = await firstValueFrom(this.api.getReservedBooksForUser(user.username));
+  private async getReservedBooksForUser(user: string): Promise<void> {
+    this.books = await firstValueFrom(this.api.getReservedBooksForUser(this.currentUser));
   }
 
   postCancelReservedBookByUser(book: Book) {
@@ -53,7 +52,7 @@ export class ReservedComponent implements OnInit {
       (data) => {},
       (error) => console.log(error)
     );
-    //this.getBooks();
+    this.getReservedBooksForUser(this.currentUser);
     console.log(this.getBooks());
   }
 }
