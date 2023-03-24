@@ -13,5 +13,8 @@ public class ApiUrl {
         public final String BASE = ApiUrl.BASE + "/books";
         public final String FOR_USER = "/books-for-user";
         public final String RESERVED_FOR_USER = "/reserved-books-for-user";
+        public final String RESERVE = "/reserve";
+        public final String CANCEL_RESERVED = "/cancelReserved";
+        public final String SEARCH = "/search";
     }
 }

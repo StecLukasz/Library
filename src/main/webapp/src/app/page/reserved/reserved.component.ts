@@ -47,4 +47,13 @@ export class ReservedComponent implements OnInit {
   private async getReservedBooksForUser(user: User): Promise<void> {
     this.books = await firstValueFrom(this.api.getReservedBooksForUser(user.username));
   }
+
+  postCancelReservedBookByUser(book: Book) {
+    this.api.postCancelReservedBookByUser(this.currentUser, book.title).subscribe(
+      (data) => {},
+      (error) => console.log(error)
+    );
+    //this.getBooks();
+    console.log(this.getBooks());
+  }
 }

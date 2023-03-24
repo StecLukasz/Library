@@ -27,9 +27,9 @@ public class BookController {
         return bookService.getBooksBorrowedByUser(login);
     }
 
-    @GetMapping("/search")
-    public List<Book> findBooks(String title, String genre, String authorLastName) {
-        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName);
+    @GetMapping(ApiUrl.Book.SEARCH)
+    public List<Book> findBooks(String title, String genre, String authorLastName, String authorFirstName) {
+        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName, authorFirstName);
     }
 
     @GetMapping(ApiUrl.Book.RESERVED_FOR_USER)
@@ -37,11 +37,19 @@ public class BookController {
         return bookService.getBooksReservedByUser(login);
     }
 
-    @PostMapping("/reserve")
+    @PostMapping(ApiUrl.Book.RESERVE)
     public ResponseEntity<String> reserveBookByUser(@RequestBody Map<String, Object> data) {
         String login = (String) data.get("login");
         String title = (String) data.get("title");
         bookService.makeReservationBookByUser(login, title);
+        return ResponseEntity.ok(title + " " + login);
+    }
+
+    @PostMapping(ApiUrl.Book.CANCEL_RESERVED)
+    public ResponseEntity<String> cancelReservedBookByUser(@RequestBody Map<String, Object> data) {
+        String login = (String) data.get("login");
+        String title = (String) data.get("title");
+        bookService.cancelReservedBookByUser(login, title);
         return ResponseEntity.ok(title + " " + login);
     }
 

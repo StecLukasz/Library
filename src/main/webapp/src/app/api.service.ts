@@ -38,13 +38,22 @@ export class ApiService {
   }
 
   getBooksSearch(text: string): Observable<Book[]> {
-    return this.http.get<Book[]>(api.books.url + `/search?title=${text}&genre=${text}&authorLastName=${text}`);
+    return this.http.get<Book[]>(
+      api.books.url + `/search?title=${text}&genre=${text}&authorLastName=${text}&authorFirstName=${text}`
+    );
   }
 
-  reserveBookByUser(login: string, title: string): Observable<Object> {
+  postReserveBookByUser(login: string, title: string): Observable<Object> {
     const data = { login, title };
     console.log(data);
 
     return this.http.post(api.books.url + `/reserve`, data);
+  }
+  //TODO URL ENUMS
+  postCancelReservedBookByUser(login: string, title: string): Observable<Object> {
+    const data = { login, title };
+    console.log(data);
+
+    return this.http.post(api.books.url + `/cancelReserved`, data);
   }
 }
