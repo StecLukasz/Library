@@ -65,15 +65,21 @@ public class BookService {
                 bookDTO.setBookId(book.getId());
                 bookDTO.setTitle(book.getTitle());
                 bookDTO.setBorrowedDate(latestBorrowed.get().getBorrowedDate());
-                bookDTO.setReturnDate(latestBorrowed.get().getReturnDate()); //tutaj przypiszę metodę do oblicznia return date
+                bookDTO.setReturnDate(addThreeMonthsToDate(latestBorrowed.get().getReturnDate())); //tutaj przypiszę metodę do oblicznia return date
                 bookDTO.setStatus(latestBorrowed.get().getStatus());
-                // tutaj dopisać datę return date
                 borrowedBooks.add(bookDTO);
             }
         }
-// tutaj dopisać datę return date
         return borrowedBooks;
     }
+
+    public Date addThreeMonthsToDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MONTH, 3);
+        return cal.getTime();
+    }
+
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
             int count = 0;
