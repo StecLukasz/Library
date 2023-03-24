@@ -78,7 +78,7 @@ public class BookService {
     }
 
 
-    public static List<Book> removeDuplicateBooks(List<Book> books) {
+    public List<Book> removeDuplicateBooks(List<Book> books) {
         List<Book> uniqueBooks = new ArrayList<>();
         Set<String> addedTitles = new HashSet<>();
 
@@ -91,7 +91,7 @@ public class BookService {
         return uniqueBooks;
     }
 
-    private static List<Book> sortAuthorsByLastName(List<Book> books) {
+    private List<Book> sortAuthorsByLastName(List<Book> books) {
         books.forEach(book -> {
             List<Author> sortedAuthors = new ArrayList<>(book.getAuthors());
             sortedAuthors.sort(Comparator.comparing(Author::getLastName));
@@ -100,7 +100,7 @@ public class BookService {
         return books;
     }
 
-    public static List<Book> sortBooksByTitle(List<Book> books) {
+    public List<Book> sortBooksByTitle(List<Book> books) {
         Collections.sort(books, Comparator.comparing(Book::getTitle));
         return books;
     }
