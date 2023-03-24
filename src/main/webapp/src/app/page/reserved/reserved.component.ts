@@ -53,6 +53,6 @@ export class ReservedComponent implements OnInit {
       (error) => console.log(error)
     );
     this.getReservedBooksForUser(this.currentUser);
-    console.log(this.getBooks());
+    console.log(this.getReservedBooksForUser(this.currentUser));
   }
 }
