@@ -54,7 +54,7 @@ public class BookService {
         return borrowedBooks;
     }
 
-    public List<BookDTO> getBooksBorrowedByUser1(String login) {
+    public List<BookDTO> getBooksBorrowedByUserDto(String login) {
         List<Book> allBooks = bookRepository.findAllByOrderByTitle();
         List<BookDTO> borrowedBooks = new ArrayList<>();
 
@@ -65,12 +65,13 @@ public class BookService {
                 bookDTO.setBookId(book.getId());
                 bookDTO.setTitle(book.getTitle());
                 bookDTO.setBorrowedDate(latestBorrowed.get().getBorrowedDate());
-                bookDTO.setReturnDate(latestBorrowed.get().getReturnDate());
+                bookDTO.setReturnDate(latestBorrowed.get().getReturnDate()); //tutaj przypiszę metodę do oblicznia return date
                 bookDTO.setStatus(latestBorrowed.get().getStatus());
+                // tutaj dopisać datę return date
                 borrowedBooks.add(bookDTO);
             }
         }
-
+// tutaj dopisać datę return date
         return borrowedBooks;
     }
     public List<Book> countAvailableBooks(List<Book> books) {

@@ -37,7 +37,7 @@ export class BorrowedListComponent implements OnInit {
       console.log(user.username);
       // zalogowany - user nie jest undefined
       this.username = user.username;
-      this.getBooksForUser(user);
+      this.getBooksForUserDto(user);
     });
   }
 
@@ -46,8 +46,13 @@ export class BorrowedListComponent implements OnInit {
   }
 
   private async getBooksForUser(user: User): Promise<void> {
-    this.borrowedBook = await firstValueFrom(this.api.getBorrowedBooksForUser(user.username));
+    this.books = await firstValueFrom(this.api.getBorrowedBooksForUser(user.username));
     console.log(this.books);
+  }
+
+  private async getBooksForUserDto(user: User): Promise<void> {
+    this.borrowedBook = await firstValueFrom(this.api.getBorrowedDate(user.username));
+    console.log(this.borrowedBook);
   }
 
   // private loadBorrowedList() {

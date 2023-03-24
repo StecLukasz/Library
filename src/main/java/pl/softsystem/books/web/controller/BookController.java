@@ -11,8 +11,10 @@ import pl.softsystem.books.domain.BookDTO;
 import pl.softsystem.books.domain.BookRepository;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +32,12 @@ public class BookController {
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {
         return bookService.getBooksBorrowedByUser(login);
+    }
+
+    @GetMapping(ApiUrl.Book.BORROWED_DATE)
+    public List<BookDTO> getBooksBorrowedByUserOnlyForTable(@RequestParam String login) {
+        List<BookDTO> borrowedBooks = bookService.getBooksBorrowedByUserDto(login);
+        return borrowedBooks;
     }
 
     @GetMapping("/search")

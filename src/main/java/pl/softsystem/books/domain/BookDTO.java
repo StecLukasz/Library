@@ -12,12 +12,16 @@ public class BookDTO {
 
     private Long bookId;
     private String title;
-    private int pages;
     private Date borrowedDate;
     private Date returnDate;
     private String status;
-    private int availableQuantity;
-    private String author;
 
 
+    public BookDTO(Long bookId, String title, Date borrowedDate, Date returnDate, String status) {
+
+    }
+
+    public BookDTO() {
+
+    }
 }

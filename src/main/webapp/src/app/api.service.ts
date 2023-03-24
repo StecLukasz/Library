@@ -32,12 +32,12 @@ export class ApiService {
     };
     return this.http.get<Book[]>(api.books.userBooks, { params });
   }
-  getBorrowedBooksForUser(login: string): Observable<BookDTO[]> {
-    return this.http.get<BookDTO[]>(api.books.userBooks + `?login=${login}`);
+  getBorrowedBooksForUser(login: string): Observable<Book[]> {
+    return this.http.get<Book[]>(api.books.userBooks + `?login=${login}`);
   }
 
-  getBorrowedDate(login: Date | undefined): Observable<Book[]> {
-    return this.http.get<Book[]>(api.books.borrowedDate + `?login=${login}`);
+  getBorrowedDate(login: string): Observable<BookDTO[]> {
+    return this.http.get<BookDTO[]>(api.books.borrowedDate + `?login=${login}`);
   }
 
   getReservedBooksForUser(login: string): Observable<Book[]> {

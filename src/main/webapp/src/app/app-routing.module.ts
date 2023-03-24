@@ -18,7 +18,7 @@ const routes: Routes = [
     component: ReservedComponent,
   },
   {
-    path: 'borrowed-books',
+    path: 'borrowed-date',
     component: BorrowedListComponent,
   },
   {
