@@ -31,7 +31,6 @@ public class BookService {
         return books;
     }
 
-
     public boolean isLatestStatusBorrowed(List<Borrowed> borrowedList) {
         if (borrowedList == null || borrowedList.isEmpty()) {
             return false;
