@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { api } from './shared/const/api';
+import { AdminPanelDTO } from './shared/interface/AdminPanelDTO';
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/book';
 import { BookDTO } from './shared/interface/bookDTO';
@@ -26,6 +27,10 @@ export class ApiService {
     return this.http.get<Book[]>(api.books.url);
   }
 
+  getSignaturesForAdminPanel(): Observable<AdminPanelDTO[]> {
+    return this.http.get<AdminPanelDTO[]>(api.books.adminPanelList);
+  }
+
   getBooksForUser(login: string): Observable<Book[]> {
     const params = {
       login,
@@ -37,7 +42,7 @@ export class ApiService {
   }
 
   getBorrowedDate(login: string): Observable<BookDTO[]> {
-    return this.http.get<BookDTO[]>(api.books.borrowedDate + `?login=${login}`);
+    return this.http.get<BookDTO[]>(api.books.borrowedDate + `/?login=${login}`);
   }
 
   getReservedBooksForUser(login: string): Observable<Book[]> {

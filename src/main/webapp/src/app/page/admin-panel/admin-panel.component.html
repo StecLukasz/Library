@@ -1,0 +1,25 @@
+<table class="w-full">
+  <tr class="border-b-2 border-gray-400">
+    <th class="font-medium p-2 text-left">Signature</th>
+    <th class="font-medium p-2 text-left">Title</th>
+    <th class="font-medium p-2 text-left">User</th>
+    <th
+      class="font-medium p-2 text-left"
+      (click)="toggleSortDirection()"
+      [style.cursor]="sortDirection ? 'pointer' : 'auto'"
+      (mouseleave)="sortDirection ? (sortDirection = sortDirection) : ''"
+    >
+      Status
+      <span *ngIf="sortDirection === 'asc'">&#x25B2;</span>
+      <span *ngIf="sortDirection === 'desc'">&#x25BC;</span>
+    </th>
+    <th class="font-medium p-2 text-left">Ready</th>
+    <th class="font-medium p-2 text-left">Cancel</th>
+  </tr>
+  <tr class="border-b hover:bg-gray-50" *ngFor="let DTO of AdminPanelDTOs">
+    <td class="p-2">{{ DTO.bookSignature }}</td>
+    <td class="p-2">{{ DTO.title }}</td>
+    <td class="p-2">{{ DTO.username }}</td>
+    <td class="p-2" [style.color]="DTO.status === 'reserved' ? 'red' : 'inherit'">{{ DTO.status }}</td>
+  </tr>
+</table>
