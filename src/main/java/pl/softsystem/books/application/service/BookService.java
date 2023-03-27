@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -190,7 +191,7 @@ public class BookService {
     }
 
     public void changeToAvailableAfterOneWeek() {
-        System.out.println("changeToAvailableAfterOneWeek started");
+        System.out.println("changeToAvailableAfterOneWeek started: " + LocalDateTime.now());
         List<Book> books = bookRepository.findAllByOrderByTitle();
         for (Book book : books) {
             for (Signature signature : book.getSignatures()) {

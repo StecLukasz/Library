@@ -8,6 +8,7 @@ const apiBase = {
     url: '/books',
     userBooks: '/books-for-user',
     reservedUserBooks: '/reserved-books-for-user',
+    reservedAdminSignatures: '/reserved-signatures-for-admin',
   },
 };
 

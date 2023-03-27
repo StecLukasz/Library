@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { api } from './shared/const/api';
+import { AdminSignatureReservedDTO } from './shared/interface/AdminSignatureReservedDTO';
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/book';
 
@@ -23,6 +24,10 @@ export class ApiService {
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(api.books.url);
+  }
+
+  getSignaturesReserved(): Observable<AdminSignatureReservedDTO[]> {
+    return this.http.get<AdminSignatureReservedDTO[]>(api.books.reservedAdminSignatures);
   }
 
   getBooksForUser(login: string): Observable<Book[]> {
