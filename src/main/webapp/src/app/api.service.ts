@@ -37,6 +37,7 @@ export class ApiService {
     };
     return this.http.get<Book[]>(api.books.userBooks, { params });
   }
+
   getBorrowedBooksForUser(login: string): Observable<Book[]> {
     return this.http.get<Book[]>(api.books.userBooks + `?login=${login}`);
   }

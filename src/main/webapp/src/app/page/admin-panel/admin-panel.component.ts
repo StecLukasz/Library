@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -9,13 +10,14 @@ import { AdminPanelDTO } from '../../shared/interface/AdminPanelDTO';
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.scss'],
 })
 export class AdminPanelComponent implements OnInit {
   AdminPanelDTOs: AdminPanelDTO[] = [];
   sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction is ascending
+  currentUser: string = '';
 
   constructor(private api: ApiService, private authService: AuthService) {}
 

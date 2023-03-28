@@ -54,19 +54,4 @@ export class BorrowedListComponent implements OnInit {
     this.borrowedBook = await firstValueFrom(this.api.getBorrowedDate(user.username));
     console.log(this.borrowedBook);
   }
-
-  // private loadBorrowedList() {
-  //   this.borrowedService.getBorrowedList().subscribe((borrowedList) => {
-  //     this.borrowedList = borrowedList.map((borrowed) => ({
-  //       ...borrowed,
-  //       dueDate: this.getDueDate(new Date(borrowed.borrowedDate)),
-  //     }));
-  //   });
-  // }
-  private getDueDate(borrowedDate: Date): Date {
-    //dodaj 3 meisiące do daty wypożyczenia
-    const dueDate = new Date(borrowedDate.getTime());
-    dueDate.setMonth(dueDate.getMonth() + 3);
-    return dueDate;
-  }
 }

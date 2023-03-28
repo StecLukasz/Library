@@ -14,5 +14,12 @@ public class ApiUrl {
         public final String FOR_USER = "/borrowed-books";
         public final String BORROWED_DATE = "/borrowed-date";
         public final String RESERVED_FOR_USER = "/reserved-books-for-user";
+        public final String FOR_ADMIN = "/admin-panel";
+        public final String CANCEL_RESERVED = "/cancelReserved";
+        public final String CANCEL_SIGNATURE_RESERVATION = "/cancelSignatureReservation";
+        public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
+        public final String BORROW_SIGNATURE_RESERVATION = "/borrowSignatureReservation";
+        public final String SEARCH = "/search";
+
     }
 }

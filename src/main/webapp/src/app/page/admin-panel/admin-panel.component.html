@@ -13,8 +13,8 @@
       <span *ngIf="sortDirection === 'asc'">&#x25B2;</span>
       <span *ngIf="sortDirection === 'desc'">&#x25BC;</span>
     </th>
-    <th class="font-medium p-2 text-left">Ready</th>
-    <th class="font-medium p-2 text-left">Cancel</th>
+    <th class="font-medium p-2 text-left">Edit</th>
+    <th class="font-medium p-2 text-left">Delete</th>
   </tr>
   <tr class="border-b hover:bg-gray-50" *ngFor="let DTO of AdminPanelDTOs">
     <td class="p-2">{{ DTO.bookSignature }}</td>
