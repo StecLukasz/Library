@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { api } from './shared/const/api';
-import { AdminPanelDTO } from './shared/interface/AdminPanelDTO';
+import { AdminSignatureDTO } from './shared/interface/adminSignatureDTO';
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/book';
 import { BookDTO } from './shared/interface/bookDTO';
@@ -25,10 +25,6 @@ export class ApiService {
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(api.books.url);
-  }
-
-  getSignaturesForAdminPanel(): Observable<AdminPanelDTO[]> {
-    return this.http.get<AdminPanelDTO[]>(api.books.adminPanelList);
   }
 
   getBooksForUser(login: string): Observable<Book[]> {
@@ -59,5 +55,9 @@ export class ApiService {
     console.log(data);
 
     return this.http.post(api.books.url + `/reserve`, data);
+  }
+
+  getSignaturesForAdminPanel(): Observable<AdminSignatureDTO[]> {
+    return this.http.get<AdminSignatureDTO[]>(api.books.adminPanelList);
   }
 }

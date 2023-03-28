@@ -18,7 +18,7 @@ public class SignatureController {
     private final SignatureService signatureService;
 
     @GetMapping(ApiUrl.Book.FOR_ADMIN)
-    public List<AdminSignatureDTO> getSignaturesForAdmin() {
+    public List<AdminSignatureDTO> getSignaturesForAdminPanel() {
         return signatureService.getSignaturesForAdminList();
     }
 }

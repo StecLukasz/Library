@@ -1,3 +1,5 @@
+<form>tutaj będzie przycisk do dodawania nowej książki po prawej stronie</form>
+
 <table class="w-full">
   <tr class="border-b-2 border-gray-400">
     <th class="font-medium p-2 text-left">Signature</th>
@@ -16,10 +18,25 @@
     <th class="font-medium p-2 text-left">Edit</th>
     <th class="font-medium p-2 text-left">Delete</th>
   </tr>
-  <tr class="border-b hover:bg-gray-50" *ngFor="let DTO of AdminPanelDTOs">
+  <tr class="border-b hover:bg-gray-50" *ngFor="let DTO of adminPanelDTOs">
     <td class="p-2">{{ DTO.bookSignature }}</td>
     <td class="p-2">{{ DTO.title }}</td>
     <td class="p-2">{{ DTO.username }}</td>
-    <td class="p-2" [style.color]="DTO.status === 'reserved' ? 'red' : 'inherit'">{{ DTO.status }}</td>
+    <td
+      class="p-2"
+      [style.color]="
+        DTO.status === 'borrowed'
+          ? 'red'
+          : DTO.status === 'reserved'
+          ? 'orange'
+          : DTO.status === 'ready'
+          ? 'blue'
+          : DTO.status === 'available'
+          ? 'green'
+          : 'inherit'
+      "
+    >
+      {{ DTO.status }}
+    </td>
   </tr>
 </table>
