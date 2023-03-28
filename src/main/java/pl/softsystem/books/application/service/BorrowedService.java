@@ -29,4 +29,13 @@ public class BorrowedService {
         System.out.println(borrowed);
         borrowedRepository.save(borrowed);
     }
+
+    public void borrowReservedSignatureByUser(String login, int id) {
+        Borrowed borrowed = new Borrowed();
+        borrowed.setLogin(login);
+        borrowed.setSignatureId((long)id);
+        borrowed.setStatus("borrowed");
+        System.out.println(borrowed);
+        borrowedRepository.save(borrowed);
+    }
 }

@@ -64,6 +64,15 @@ export class AdminReservedComponent implements OnInit {
     console.log(this.getBooks());
   }
 
+  postBorrowReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
+    this.api.postBorrowReservedSignatureByUser(DTO.username, DTO.id).subscribe(
+      (data) => {},
+      (error) => console.log(error)
+    );
+    this.getBooks();
+    console.log(this.getBooks());
+  }
+
   sortByStatus(): void {
     this.AdminSignatureReservedDTOs.sort((a, b) => {
       if (a.status > b.status) {

@@ -35,4 +35,13 @@ public class BorrowedController {
         return ResponseEntity.ok(login + " " + id);
     }
 
+    @PostMapping(ApiUrl.Book.BORROW_SIGNATURE_RESERVATION)
+    public ResponseEntity<String> borrowReservedBookByUser(@RequestBody Map<String, Object> data) {
+        System.out.println(data);
+        String login = (String) data.get("login");
+        int id = (int) data.get("id");
+        borrowedService.borrowReservedSignatureByUser(login, id);
+        return ResponseEntity.ok(login + " " + id);
+    }
+
 }

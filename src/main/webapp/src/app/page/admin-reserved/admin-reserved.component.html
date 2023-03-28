@@ -14,6 +14,7 @@
       <span *ngIf="sortDirection === 'desc'">&#x25BC;</span>
     </th>
     <th class="font-medium p-2 text-left">Ready</th>
+    <th class="font-medium p-2 text-left">Lend</th>
     <th class="font-medium p-2 text-left">Cancel</th>
   </tr>
   <tr class="border-b hover:bg-gray-50" *ngFor="let DTO of AdminSignatureReservedDTOs">
@@ -23,11 +24,25 @@
     <td class="p-2" [style.color]="DTO.status === 'reserved' ? 'red' : DTO.status === 'ready' ? 'green' : 'inherit'">
       {{ DTO.status }}
     </td>
-    <td class="p-2">
+
+    <td class="p-2" *ngIf="DTO.status !== 'ready'; else ready">
       <button (click)="postReadyReservedSignatureByUser(DTO)">
         <span class="material-icons">add_box</span>
       </button>
     </td>
+    <ng-template #ready>
+      <td class="p-2"></td>
+    </ng-template>
+
+    <td class="p-2" *ngIf="DTO.status !== 'reserved'; else reserved">
+      <button (click)="postBorrowReservedSignatureByUser(DTO)">
+        <span class="material-icons">add_box</span>
+      </button>
+    </td>
+    <ng-template #reserved>
+      <td class="p-2"></td>
+    </ng-template>
+
     <td class="p-2">
       <button (click)="postCancelReservedSignatureByUser(DTO)">
         <span class="material-icons">disabled_by_default</span>
