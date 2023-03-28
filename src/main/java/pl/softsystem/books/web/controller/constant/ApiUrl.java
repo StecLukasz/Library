@@ -16,6 +16,8 @@ public class ApiUrl {
         public final String RESERVED_FOR_ADMIN = "/reserved-signatures-for-admin";
         public final String RESERVE = "/reserve";
         public final String CANCEL_RESERVED = "/cancelReserved";
+        public final String CANCEL_SIGNATURE_RESERVATION = "/cancelSignatureReservation";
+        public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
         public final String SEARCH = "/search";
     }
 }

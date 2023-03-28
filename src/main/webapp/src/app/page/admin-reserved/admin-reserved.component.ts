@@ -16,7 +16,8 @@ import { AdminSignatureReservedDTO } from '../../shared/interface/AdminSignature
 })
 export class AdminReservedComponent implements OnInit {
   AdminSignatureReservedDTOs: AdminSignatureReservedDTO[] = [];
-  sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction is ascending
+  sortDirection: 'asc' | 'desc' = 'asc';
+  currentUser: string = '';
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -29,6 +30,7 @@ export class AdminReservedComponent implements OnInit {
         this.getBooks();
         return;
       }
+      this.currentUser = user.username;
       console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
       this.getBooks();
@@ -37,7 +39,29 @@ export class AdminReservedComponent implements OnInit {
 
   private async getBooks(): Promise<void> {
     this.AdminSignatureReservedDTOs = await firstValueFrom(this.api.getSignaturesReserved());
-    this.sortByStatus(); // sort by status after fetching the data
+    this.sortByStatus();
+  }
+
+  signatureReady(): void {
+    console.log('ready');
+  }
+
+  postCancelReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
+    this.api.postCancelReservedSignatureByUser(DTO.username, DTO.id).subscribe(
+      (data) => {},
+      (error) => console.log(error)
+    );
+    this.getBooks();
+    console.log(this.getBooks());
+  }
+
+  postReadyReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
+    this.api.postReadyReservedSignatureByUser(DTO.username, DTO.id).subscribe(
+      (data) => {},
+      (error) => console.log(error)
+    );
+    this.getBooks();
+    console.log(this.getBooks());
   }
 
   sortByStatus(): void {

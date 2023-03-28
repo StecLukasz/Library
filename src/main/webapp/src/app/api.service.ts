@@ -61,4 +61,18 @@ export class ApiService {
 
     return this.http.post(api.books.url + `/cancelReserved`, data);
   }
+
+  postCancelReservedSignatureByUser(login: string, id: number): Observable<Object> {
+    const data = { login, id };
+    console.log(data);
+
+    return this.http.post(api.books.url + `/cancelSignatureReservation`, data);
+  }
+
+  postReadyReservedSignatureByUser(login: string, id: number): Observable<Object> {
+    const data = { login, id };
+    console.log(data);
+
+    return this.http.post(api.books.url + `/readySignatureReservation`, data);
+  }
 }

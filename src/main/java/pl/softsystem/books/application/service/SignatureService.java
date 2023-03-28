@@ -1,7 +1,8 @@
-package pl.softsystem.books.domain;
+package pl.softsystem.books.application.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.softsystem.books.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +14,26 @@ public class SignatureService {
     private final SignatureRepository signatureRepository;
     private final BookRepository bookRepository;
 
-    public List<AdminSignatureReservedDTO> getReservedSignaturesForAdmin() {
+
+    public List<reservedSignaturesForAdminDTO> getReservedSignaturesForAdmin() {
         List<Signature> signatures = signatureRepository.findAll();
-        List<AdminSignatureReservedDTO> adminSignatureReservedDTOS = new ArrayList<>();
+        List<reservedSignaturesForAdminDTO> reservedSignaturesForAdminDTOS = new ArrayList<>();
         List<Book> books = bookRepository.findAllByOrderByTitle();
 
         for (int i = 0; i < signatures.size(); i++) {
             if (getLatestStatusForSignature(signatures.get(i)).equals("reserved") ||
                     getLatestStatusForSignature(signatures.get(i)).equals("ready")) {
-                AdminSignatureReservedDTO adminSignatureReservedDTO = new AdminSignatureReservedDTO();
+                reservedSignaturesForAdminDTO reservedSignaturesForAdminDTO = new reservedSignaturesForAdminDTO();
                 String titleBySignatureIf = getTitleBySignatureId(books, (long) i + 1);
-                adminSignatureReservedDTO.setId(signatures.get(i).getId());
-                adminSignatureReservedDTO.setTitle(titleBySignatureIf);
-                adminSignatureReservedDTO.setBookSignature(signatures.get(i).getBookSignature());
-                adminSignatureReservedDTO.setUsername(getUsernameForLatestStatus(signatures.get(i)));
-                adminSignatureReservedDTO.setStatus(getLatestStatusForSignature(signatures.get(i)));
-                adminSignatureReservedDTOS.add(adminSignatureReservedDTO);
+                reservedSignaturesForAdminDTO.setId(signatures.get(i).getId());
+                reservedSignaturesForAdminDTO.setTitle(titleBySignatureIf);
+                reservedSignaturesForAdminDTO.setBookSignature(signatures.get(i).getBookSignature());
+                reservedSignaturesForAdminDTO.setUsername(getUsernameForLatestStatus(signatures.get(i)));
+                reservedSignaturesForAdminDTO.setStatus(getLatestStatusForSignature(signatures.get(i)));
+                reservedSignaturesForAdminDTOS.add(reservedSignaturesForAdminDTO);
             }
         }
-        return adminSignatureReservedDTOS;
+        return reservedSignaturesForAdminDTOS;
     }
 
     public String getLatestStatusForSignature(Signature signature) {
@@ -68,4 +70,6 @@ public class SignatureService {
         }
         return null;
     }
+
+
 }

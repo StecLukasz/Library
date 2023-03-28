@@ -20,6 +20,18 @@
     <td class="p-2">{{ DTO.bookSignature }}</td>
     <td class="p-2">{{ DTO.title }}</td>
     <td class="p-2">{{ DTO.username }}</td>
-    <td class="p-2" [style.color]="DTO.status === 'reserved' ? 'red' : 'inherit'">{{ DTO.status }}</td>
+    <td class="p-2" [style.color]="DTO.status === 'reserved' ? 'red' : DTO.status === 'ready' ? 'green' : 'inherit'">
+      {{ DTO.status }}
+    </td>
+    <td class="p-2">
+      <button (click)="postReadyReservedSignatureByUser(DTO)">
+        <span class="material-icons">add_box</span>
+      </button>
+    </td>
+    <td class="p-2">
+      <button (click)="postCancelReservedSignatureByUser(DTO)">
+        <span class="material-icons">disabled_by_default</span>
+      </button>
+    </td>
   </tr>
 </table>
