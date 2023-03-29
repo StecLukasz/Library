@@ -242,6 +242,41 @@ public class BookService {
         return now.after(other);
     }
 
+    public void addBook(Book book) {
+        Book addNewBook = new Book();
+        addNewBook.setId(book.getId());
+        addNewBook.setTitle(book.getTitle());
+        addNewBook.setPages(book.getPages());
+        addNewBook.setGenre(book.getGenre());
+        Set<Author> authors = book.getAuthors();
+        if (authors != null && !authors.isEmpty()) {
+            for (Author author : authors) {
+                addNewBook.getAuthors().add(author);
+            }
+        }
+        addNewBook.setAvailableQuantity(1);
+
+        List<Signature> signatures = new ArrayList<>();
+        Signature signature = new Signature();
+        signature.setBookId(addNewBook.getId());
+        signature.setBookSignature("11111y");
+
+        List<Borrowed> borrowedList = new ArrayList<>();
+        Borrowed borrowed = new Borrowed();
+        borrowed.setSignatureId(signature.getId());
+        borrowed.setStatus("available");
+        borrowedList.add(borrowed);
+
+        signature.setBorrowedBookList(borrowedList);
+        signatures.add(signature);
+
+        addNewBook.setSignatures(signatures);
+
+        System.out.println(addNewBook);
+        bookRepository.save(addNewBook);
+
+    }
+
 
 }
 

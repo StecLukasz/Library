@@ -1,5 +1,6 @@
 package pl.softsystem.books.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,6 @@ public class Book {
     @Transient
     private int availableQuantity;
 
-    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_author",

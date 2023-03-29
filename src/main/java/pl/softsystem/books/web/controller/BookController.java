@@ -2,19 +2,14 @@ package pl.softsystem.books.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
 import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.BookDTO;
-import pl.softsystem.books.domain.BookRepository;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +22,13 @@ public class BookController {
     @GetMapping()
     public List<Book> getBooks() {
         return bookService.getAll();
+    }
+
+    //TODO: TO NIE DZIAŁA
+    @PostMapping(ApiUrl.Book.ADD_BOOK)
+    public void addNewBookToList(@RequestBody Book book) {
+        bookService.addBook(book);
+//        return book;
     }
 
     @GetMapping(ApiUrl.Book.FOR_USER)

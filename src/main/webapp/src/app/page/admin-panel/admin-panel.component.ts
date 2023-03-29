@@ -58,4 +58,22 @@ export class AdminPanelComponent implements OnInit {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortByStatus();
   }
+
+  async editBook(book: AdminSignatureDTO): Promise<void> {
+    // TODO: implementacja metody edytującej książkę
+  }
+
+  async deleteBook(book: AdminSignatureDTO): Promise<void> {
+    // TODO: implementacja metody usuwającej książkę
+  }
+
+  // openAddBookModal(): void {
+  //   const dialogRef = this.dialog.open(AddBookModalComponent);
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log('The dialog was closed');
+  //     console.log(result);
+  //
+  //     // tu możesz dodać logikę zapisującą nową książkę do bazy danych
+  //   });
+  // }
 }
