@@ -47,6 +47,9 @@ export class ApiService {
       api.books.url + `/search?title=${text}&genre=${text}&authorLastName=${text}&authorFirstName=${text}`
     );
   }
+  getReservedBookByIdAndLogin(id: number, login: string): Observable<Book[]> {
+    return this.http.get<Book[]>(api.books.url + `/is-book-reserved-by-user?id=${id}&login=${login}`);
+  }
 
   postReserveBookByUser(login: string, title: string): Observable<Object> {
     const data = { login, title };

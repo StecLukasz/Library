@@ -114,9 +114,8 @@ public class BookService {
     public void makeReservationBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Long availableSignatureIndex = getAvailableSignaturesQuantity(books, title);
-        Boolean isLatestStatusAvailable = isLatestStatusAvailableForSignature(books, title, availableSignatureIndex);
 
-        if (availableSignatureIndex > 0 && isLatestStatusAvailable) {
+        if (availableSignatureIndex > 0) {
 
             Borrowed borrowed = new Borrowed();
             borrowed.setLogin(login);
@@ -162,18 +161,6 @@ public class BookService {
         return result;
     }
 
-    public Boolean isLatestStatusAvailableForSignature(List<Book> books, String title, Long availableSignatureIndex) {
-        Book bookByTitle = books.stream()
-                .filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
-
-        Signature signature = bookByTitle.getSignatures().get(availableSignatureIndex.intValue() - 1);
-        Boolean result = false;
-
-        if (signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1).getStatus().equals("available")) {
-            result = true;
-        }
-        return result;
-    }
 
     public Long firstAvailableSignatureId(List<Book> books, String title, Long availableSignatureIndex) {
         Book bookByTitle = books.stream()

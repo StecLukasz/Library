@@ -12,6 +12,7 @@ public class BorrowedService {
 
     private final BorrowedRepository borrowedRepository;
 
+    //TODO refactor to DRY
     public void cancelReservedSignatureByUser(String login, int id) {
         Borrowed borrowed = new Borrowed();
         borrowed.setLogin(login);

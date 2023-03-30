@@ -19,6 +19,7 @@ export class ListComponent implements OnInit {
   books: Book[] = [];
   search: string = '';
   currentUser: string = '';
+  isBookServedByUser: boolean = false;
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -28,7 +29,8 @@ export class ListComponent implements OnInit {
       if (!user) {
         console.log('anonymous');
         // gdy użytkownik niezalogowany
-        this.getBooks();
+        //this.getBooks();
+        this.onSearch();
         return;
       }
       this.currentUser = user.username;
@@ -36,7 +38,8 @@ export class ListComponent implements OnInit {
       console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
       // this.getBooksForUser(user);
-      this.getBooks();
+      //this.getBooks();
+      this.onSearch();
     });
   }
 
@@ -54,8 +57,10 @@ export class ListComponent implements OnInit {
       (data) => {},
       (error) => console.log(error)
     );
-    this.getBooks();
-    console.log(this.getBooks());
+    // this.getBooks();
+    // console.log(this.getBooks());
+    this.onSearch();
+    console.log(this.onSearch());
   }
 
   onSearch() {
@@ -71,9 +76,12 @@ export class ListComponent implements OnInit {
     return book.signatures.length;
   }
 
-  // private getBooksSearch(text: string) {
-  //   this.api.getBooksSearch(text).subscribe((data) => {
-  //     this.books = data;
-  //   });
-  // }
+  isBookServed(bookId: number): boolean {
+    console.log('isbookreserved ' + bookId);
+    return true;
+  }
+
+  private async bookReservedById(id: number, login: string): Promise<void> {
+    this.books = await firstValueFrom(this.api.getReservedBookByIdAndLogin(id, login));
+  }
 }

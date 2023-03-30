@@ -23,7 +23,7 @@ public class BookController {
     }
 
     @GetMapping(ApiUrl.Book.FOR_USER)
-    public List<Book> getBooksForUser(@RequestParam String login) {
+    public List<Book> getBooksForUser(String login) {
         return bookService.getBooksBorrowedByUser(login);
     }
 
@@ -33,7 +33,7 @@ public class BookController {
     }
 
     @GetMapping(ApiUrl.Book.RESERVED_FOR_USER)
-    public List<Book> getReservedBooksForUser(@RequestParam String login) {
+    public List<Book> getReservedBooksForUser(String login) {
         return bookService.getBooksReservedByUser(login);
     }
 
@@ -52,5 +52,19 @@ public class BookController {
         bookService.cancelReservedBookByUser(login, title);
         return ResponseEntity.ok(title + " " + login);
     }
+
+    @GetMapping(ApiUrl.Book.IS_BOOK_RESERVED_BY_USER)
+    public boolean isBookReservedByUser(String login, int bookId) {
+
+        System.out.println(login + " " + bookId);
+
+
+        return true;
+    }
+
+//    @GetMapping(ApiUrl.Book.SEARCH)
+//    public List<Book> findBooks(String title, String genre, String authorLastName, String authorFirstName) {
+//        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName, authorFirstName);
+//    }
 
 }
