@@ -5,6 +5,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
+import { User } from '../../core/auth/model/user';
 import { Book } from '../../shared/interface/book';
 
 @UntilDestroy()
@@ -18,7 +19,8 @@ import { Book } from '../../shared/interface/book';
 export class ListComponent implements OnInit {
   books: Book[] = [];
   search: string = '';
-  currentUser: string = '';
+  currentUserLogin: string = '';
+  user?: User;
   isBookServedByUser: boolean = false;
 
   constructor(private api: ApiService, private authService: AuthService) {}
@@ -33,7 +35,8 @@ export class ListComponent implements OnInit {
         this.onSearch();
         return;
       }
-      this.currentUser = user.username;
+      this.user = user;
+      this.currentUserLogin = user.username;
 
       console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
@@ -53,7 +56,7 @@ export class ListComponent implements OnInit {
   // }
 
   postReservedBookByUser(book: Book) {
-    this.api.postReserveBookByUser(this.currentUser, book.title).subscribe(
+    this.api.postReserveBookByUser(this.currentUserLogin, book.title).subscribe(
       (data) => {},
       (error) => console.log(error)
     );

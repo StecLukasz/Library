@@ -28,8 +28,33 @@ public class BookService {
         books = removeDuplicateBooks(books);
         books = sortBooksByTitle(books);
         books = countAvailableBooks(books);
+        //books = getAvailableBooks(books);
         return books;
     }
+
+    public List<Book> getAvailableBooks(List<Book> books) {
+        String login = "dmichna";
+        List<Book> availableBooks = books;
+
+        for (int i = 0; i < availableBooks.size(); i++) {
+            for (Signature signature : availableBooks.get(i).getSignatures() ) {
+                if (isSignatureReservedByUser(signature, login)) {
+                    availableBooks.remove(i);
+                }
+            }
+        }
+        return availableBooks;
+    }
+
+    public boolean isSignatureReservedByUser(Signature signature, String login) {
+        List<Borrowed> borrowedBookList = signature.getBorrowedBookList();
+        Borrowed latestBorrowed = borrowedBookList.get(borrowedBookList.size() - 1);
+        if ("reserved".equals(latestBorrowed.getStatus()) && login.equals(latestBorrowed.getLogin())) {
+            return true;
+        }
+        return false;
+    }
+
 
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
