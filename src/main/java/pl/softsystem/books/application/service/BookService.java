@@ -245,7 +245,10 @@ public class BookService {
     }
 
     public void addBook(Book book) {
-        //Book addNewBook = new Book();
+
+        bookRepository.save(book);
+    }
+    //Book addNewBook = new Book();
 //       addNewBook.setId(book.getId());
 //        addNewBook.setTitle(book.getTitle());
 //        addNewBook.setPages(book.getPages());
@@ -274,8 +277,6 @@ public class BookService {
 //
 //        addNewBook.setSignatures(signatures);
 
-        bookRepository.save(book);
-    }
 
     public Book getLatestBook() {
         return bookRepository.findTopByOrderByIdDesc();
