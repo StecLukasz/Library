@@ -58,7 +58,6 @@ public class BookController {
 
         System.out.println(login + " " + bookId);
 
-
         return true;
     }
 
