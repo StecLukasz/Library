@@ -29,6 +29,8 @@ public class Book {
     private String genre;
     @Transient
     private int availableQuantity;
+    @Transient
+    private String bookStatusForUser;
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)

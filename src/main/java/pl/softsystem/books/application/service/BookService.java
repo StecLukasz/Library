@@ -39,7 +39,7 @@ public class BookService {
         for (int i = 0; i < availableBooks.size(); i++) {
             for (Signature signature : availableBooks.get(i).getSignatures() ) {
                 if (isSignatureReservedByUser(signature, login)) {
-                    availableBooks.get(i).setTitle("Reserved");
+                    availableBooks.get(i).setBookStatusForUser("Reserved");
                 }
             }
         }
