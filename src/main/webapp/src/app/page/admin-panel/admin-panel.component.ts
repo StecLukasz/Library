@@ -19,6 +19,7 @@ export class AdminPanelComponent implements OnInit {
   adminPanelDTOs: AdminSignatureDTO[] = [];
   sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction is ascending
   currentUser: string = '';
+  search: string = '';
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -58,6 +59,14 @@ export class AdminPanelComponent implements OnInit {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortByStatus();
   }
+  onSearch() {
+    this.getBooksSearch(this.search);
+    console.log(this.search);
+  }
+
+  // private async getBooksSearch(text: string): Promise<void> {
+  //   this.adminPanelDTOs = await firstValueFrom(this.api.getSignaturesForAdminPanel(text));
+  // }
 
   async editBook(book: AdminSignatureDTO): Promise<void> {
     // TODO: implementacja metody edytującej książkę

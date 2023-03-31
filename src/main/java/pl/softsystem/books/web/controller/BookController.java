@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
 import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.BookDTO;
+import pl.softsystem.books.domain.BookRepository;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class BookController {
 
     private final BookService bookService;
+    private BookRepository bookRepository;
 
 
     @GetMapping()
@@ -26,9 +28,12 @@ public class BookController {
 
     //TODO: TO NIE DZIAŁA
     @PostMapping(ApiUrl.Book.ADD_BOOK)
-    public void addNewBookToList(@RequestBody Book book) {
-        bookService.addBook(book);
-//        return book;
+    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+        Book savedBook = bookService.addBook(book);
+        return ResponseEntity.ok(savedBook);
+//        System.out.println(book);
+//        System.out.println(book);
+//        return bookRepository.save(book);
     }
 
     @GetMapping(ApiUrl.Book.FOR_USER)

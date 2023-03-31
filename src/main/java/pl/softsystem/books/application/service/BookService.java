@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.*;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BorrowedRepository borrowedRepository;
+    private final SignatureService signatureService;
 
     public List<Book> getAll() {
         List<Book> books = bookRepository.findAllByOrderByTitle();
@@ -242,41 +244,54 @@ public class BookService {
         return now.after(other);
     }
 
-    public void addBook(Book book) {
+    public Book addBook(Book book) {
         Book addNewBook = new Book();
-        addNewBook.setId(book.getId());
-        addNewBook.setTitle(book.getTitle());
-        addNewBook.setPages(book.getPages());
-        addNewBook.setGenre(book.getGenre());
-        Set<Author> authors = book.getAuthors();
-        if (authors != null && !authors.isEmpty()) {
-            for (Author author : authors) {
-                addNewBook.getAuthors().add(author);
-            }
-        }
-        addNewBook.setAvailableQuantity(1);
+//        addNewBook.setId(book.getId());
+//        addNewBook.setTitle(book.getTitle());
+//        addNewBook.setPages(book.getPages());
+//        addNewBook.setGenre(book.getGenre());
+//        Set<Author> authors = book.getAuthors();
+//        if (authors != null && !authors.isEmpty()) {
+//            for (Author author : authors) {
+//                addNewBook.getAuthors().add(author);
+//            }
+//        }
+//        addNewBook.setAvailableQuantity(1);
+//
+//        List<Signature> signatures = new ArrayList<>();
+//        Signature signature = new Signature();
+//        signature.setBookId(addNewBook.getId());
+//        signature.setBookSignature("null");
+//
+//        List<Borrowed> borrowedList = new ArrayList<>();
+//        Borrowed borrowed = new Borrowed();
+//        borrowed.setSignatureId(signature.getId());
+//        borrowed.setStatus("available");
+//        borrowedList.add(borrowed);
+//
+//        signature.setBorrowedBookList(borrowedList);
+//        signatures.add(signature);
+//
+//        addNewBook.setSignatures(signatures);
 
-        List<Signature> signatures = new ArrayList<>();
-        Signature signature = new Signature();
-        signature.setBookId(addNewBook.getId());
-        signature.setBookSignature("11111y");
-
-        List<Borrowed> borrowedList = new ArrayList<>();
-        Borrowed borrowed = new Borrowed();
-        borrowed.setSignatureId(signature.getId());
-        borrowed.setStatus("available");
-        borrowedList.add(borrowed);
-
-        signature.setBorrowedBookList(borrowedList);
-        signatures.add(signature);
-
-        addNewBook.setSignatures(signatures);
-
-        System.out.println(addNewBook);
-        bookRepository.save(addNewBook);
-
+        return bookRepository.save(addNewBook);
     }
 
-
+    public Book getLatestBook() {
+        return bookRepository.findTopByOrderByIdDesc();
+    }
+//    @Transactional
+//    public Book addBookWithSignatures(BookDTO bookDTO, List<String> signatureList) {
+//        Book book = addBook(bookDTO);
+//        for (String signature : signatureList) {
+//            SignatureDTO signatureDTO = new SignatureDTO();
+//            signatureDTO.setBookId(book.getId());
+//            signatureDTO.setBookSignature(signature);
+//            signatureService.addSignature(signatureDTO);
+//        }
+//        book.setSignatures(signatureService.getSignaturesByBookId(book.getId()));
+//        book.setAvailableQuantity(bookDTO.getQuantity());
+//        return book;
+//    }
 }
 
