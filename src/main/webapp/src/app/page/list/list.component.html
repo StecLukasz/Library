@@ -43,7 +43,10 @@
     <!--    </td>-->
 
     <td class="p-2">
-      <button *ngIf="book.availableQuantity > 0 && user?.role === 0" (click)="postReservedBookByUser(book)">
+      <button
+        *ngIf="book.availableQuantity > 0 && user?.role === 0 && book.title !== 'Reserved'"
+        (click)="postReservedBookByUser(book)"
+      >
         <span class="material-icons">add_box</span>
       </button>
     </td>

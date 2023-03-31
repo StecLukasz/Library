@@ -22,24 +22,24 @@ public class BookService {
         return books;
     }
 
-    public List<Book> findBooksByTitleAndGenreAndAuthor(String title, String genre, String authorLastName, String authorFirstName) {
+    public List<Book> findBooksByTitleAndGenreAndAuthor(String title, String genre, String authorLastName, String authorFirstName, String login) {
         List<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrGenreContainingIgnoreCaseOrAuthorsLastNameContainingIgnoreCaseOrAuthorsFirstNameContainingIgnoreCase(title, genre, authorLastName, authorFirstName);
         books = sortAuthorsByLastName(books);
         books = removeDuplicateBooks(books);
         books = sortBooksByTitle(books);
         books = countAvailableBooks(books);
-        //books = getAvailableBooks(books);
+        books = getAvailableBooks(books, login);
         return books;
     }
 
-    public List<Book> getAvailableBooks(List<Book> books) {
-        String login = "dmichna";
+    public List<Book> getAvailableBooks(List<Book> books, String login) {
+        //String login = "dmichna";
         List<Book> availableBooks = books;
 
         for (int i = 0; i < availableBooks.size(); i++) {
             for (Signature signature : availableBooks.get(i).getSignatures() ) {
                 if (isSignatureReservedByUser(signature, login)) {
-                    availableBooks.remove(i);
+                    availableBooks.get(i).setTitle("Reserved");
                 }
             }
         }

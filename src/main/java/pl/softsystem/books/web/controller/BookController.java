@@ -28,8 +28,8 @@ public class BookController {
     }
 
     @GetMapping(ApiUrl.Book.SEARCH)
-    public List<Book> findBooks(String title, String genre, String authorLastName, String authorFirstName) {
-        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName, authorFirstName);
+    public List<Book> findBooks(String title, String genre, String authorLastName, String authorFirstName, String login) {
+        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName, authorFirstName, login);
     }
 
     @GetMapping(ApiUrl.Book.RESERVED_FOR_USER)

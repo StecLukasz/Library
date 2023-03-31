@@ -72,7 +72,7 @@ export class ListComponent implements OnInit {
   }
 
   private async getBooksSearch(text: string): Promise<void> {
-    this.books = await firstValueFrom(this.api.getBooksSearch(text));
+    this.books = await firstValueFrom(this.api.getBooksSearch(text, this.currentUserLogin));
   }
 
   getSignatureQuantity(book: Book): number {
