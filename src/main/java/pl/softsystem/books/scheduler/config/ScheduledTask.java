@@ -11,7 +11,8 @@ public class ScheduledTask {
     @Autowired
     private BookService bookService;
 
-    @Scheduled(cron = "0 0 4 * * ?")
+//    @Scheduled(cron = "0 0 4 * * ?")
+    @Scheduled(cron = "*/30 * * * * ?")
     public void computePrice() throws InterruptedException {
         bookService.changeToAvailableAfterOneWeek();
     }

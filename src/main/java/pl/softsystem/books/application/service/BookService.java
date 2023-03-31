@@ -208,8 +208,8 @@ public class BookService {
         for (Book book : books) {
             for (Signature signature : book.getSignatures()) {
                 Borrowed borrowed = signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1);
-                if (borrowed.getStatus().equals("reserved")) {
-                    if (isOneWeekLater(borrowed.getStatusDate())) {
+                if (borrowed.getStatus().equals("ready") ) {
+                    if (inOneMinute(borrowed.getStatusDate())) {
                         Borrowed newBorrowed = new Borrowed();
                         newBorrowed.setLogin(borrowed.getLogin());
                         newBorrowed.setSignatureId(borrowed.getSignatureId());
@@ -227,6 +227,14 @@ public class BookService {
         Calendar other = Calendar.getInstance();
         other.setTime(date);
         other.add(Calendar.WEEK_OF_YEAR, 1);
+        return now.after(other);
+    }
+
+    public boolean inOneMinute(Date date) {
+        Calendar now = Calendar.getInstance();
+        Calendar other = Calendar.getInstance();
+        other.setTime(date);
+        other.add(Calendar.MINUTE, 1);
         return now.after(other);
     }
 
