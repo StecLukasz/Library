@@ -7,6 +7,7 @@ import pl.softsystem.books.application.service.BookService;
 import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -55,10 +56,14 @@ public class BookController {
 
     @GetMapping(ApiUrl.Book.IS_BOOK_RESERVED_BY_USER)
     public boolean isBookReservedByUser(String login, int bookId) {
-
         System.out.println(login + " " + bookId);
-
         return true;
+    }
+
+    @GetMapping(ApiUrl.Schedule.RUN_SCHEDULER_AVAILABLE_AFTER_ONE_WEEK)
+    public String runSchedulerChangeStatusToAvailableAfterOneWeek(){
+        bookService.changeStatusToAvailableAfterOneWeek();
+        return "changeStatusToAvailableAfterOneWeek started: " + LocalDateTime.now();
     }
 
 //    @GetMapping(ApiUrl.Book.SEARCH)

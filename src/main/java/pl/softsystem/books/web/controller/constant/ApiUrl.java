@@ -22,4 +22,9 @@ public class ApiUrl {
         public final String BORROW_SIGNATURE_RESERVATION = "/borrowSignatureReservation";
         public final String SEARCH = "/search";
     }
+
+    @UtilityClass
+    public class Schedule{
+        public final String RUN_SCHEDULER_AVAILABLE_AFTER_ONE_WEEK = "/runSchedulerAvailableAfterOneWeek";
+    }
 }

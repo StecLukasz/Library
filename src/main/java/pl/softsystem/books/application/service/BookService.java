@@ -202,7 +202,7 @@ public class BookService {
         return result;
     }
 
-    public void changeToAvailableAfterOneWeek() {
+    public void changeStatusToAvailableAfterOneWeek() {
         System.out.println("changeToAvailableAfterOneWeek started: " + LocalDateTime.now());
         List<Book> books = bookRepository.findAllByOrderByTitle();
         for (Book book : books) {
