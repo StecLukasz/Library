@@ -281,18 +281,5 @@ public class BookService {
     public Book getLatestBook() {
         return bookRepository.findTopByOrderByIdDesc();
     }
-//    @Transactional
-//    public Book addBookWithSignatures(BookDTO bookDTO, List<String> signatureList) {
-//        Book book = addBook(bookDTO);
-//        for (String signature : signatureList) {
-//            SignatureDTO signatureDTO = new SignatureDTO();
-//            signatureDTO.setBookId(book.getId());
-//            signatureDTO.setBookSignature(signature);
-//            signatureService.addSignature(signatureDTO);
-//        }
-//        book.setSignatures(signatureService.getSignaturesByBookId(book.getId()));
-//        book.setAvailableQuantity(bookDTO.getQuantity());
-//        return book;
-//    }
 }
 
