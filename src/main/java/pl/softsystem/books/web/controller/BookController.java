@@ -27,14 +27,14 @@ public class BookController {
     }
 
     //TODO: TO NIE DZIAŁA
-    @PostMapping(ApiUrl.Book.ADD_BOOK)
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
-        Book savedBook = bookService.addBook(book);
-        return ResponseEntity.ok(savedBook);
+//    @PostMapping(ApiUrl.Book.ADD_BOOK)
+//    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+//        Book savedBook = bookService.addBook(book);
+//        return ResponseEntity.ok(savedBook);
 //        System.out.println(book);
 //        System.out.println(book);
 //        return bookRepository.save(book);
-    }
+//    }
 
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {
@@ -63,6 +63,11 @@ public class BookController {
         String title = (String) data.get("title");
         bookService.makeReservationBookByUser(login, title);
         return ResponseEntity.ok(title + " " + login);
+    }
+
+    @PostMapping("/add")
+    public void reserveBookByUser(@RequestBody Book book) {
+        bookService.addBook(book);
     }
 
 }

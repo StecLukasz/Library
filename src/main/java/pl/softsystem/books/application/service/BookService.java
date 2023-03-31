@@ -244,12 +244,12 @@ public class BookService {
         return now.after(other);
     }
 
-    public Book addBook(Book book) {
-        Book addNewBook = new Book();
-//        addNewBook.setId(book.getId());
+    public void addBook(Book book) {
+        //Book addNewBook = new Book();
+//       addNewBook.setId(book.getId());
 //        addNewBook.setTitle(book.getTitle());
 //        addNewBook.setPages(book.getPages());
-//        addNewBook.setGenre(book.getGenre());
+//        book.setGenre("xxxx");
 //        Set<Author> authors = book.getAuthors();
 //        if (authors != null && !authors.isEmpty()) {
 //            for (Author author : authors) {
@@ -274,7 +274,7 @@ public class BookService {
 //
 //        addNewBook.setSignatures(signatures);
 
-        return bookRepository.save(addNewBook);
+        bookRepository.save(book);
     }
 
     public Book getLatestBook() {
