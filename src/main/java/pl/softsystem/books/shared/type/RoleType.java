@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public enum RoleType {
-    USER, MANAGER, DIRECTOR, HR
+    USER, MANAGER, DIRECTOR, HR, LIBRARIAN
 }

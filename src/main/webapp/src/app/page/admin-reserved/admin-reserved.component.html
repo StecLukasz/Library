@@ -35,10 +35,11 @@
     </ng-template>
 
     <td class="p-2" *ngIf="DTO.status !== 'reserved'; else reserved">
-      <button (click)="postBorrowReservedSignatureByUser(DTO)">
+      <button (click)="postBorrowReservedSignatureByUser(DTO)" [disabled]="isButtonDisabled">
         <span class="material-icons">add_box</span>
       </button>
     </td>
+
     <ng-template #reserved>
       <td class="p-2"></td>
     </ng-template>

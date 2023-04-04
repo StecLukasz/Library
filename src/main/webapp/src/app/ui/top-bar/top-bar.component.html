@@ -30,19 +30,15 @@
         >
       </li>
       <li>
-        <a *ngIf="user?.username === 'akielar'" class="nav-item" routerLink="list" routerLinkActive="active"
-          >Admin List</a
-        >
+        <a *ngIf="user?.role === 4" class="nav-item" routerLink="list" routerLinkActive="active">Admin List</a>
       </li>
       <li>
-        <a *ngIf="user?.username === 'akielar'" class="nav-item" routerLink="admin-reserved" routerLinkActive="active"
+        <a *ngIf="user?.role === 4" class="nav-item" routerLink="admin-reserved" routerLinkActive="active"
           >Admin Reserved</a
         >
       </li>
       <li>
-        <a *ngIf="user?.username === 'akielar'" class="nav-item" routerLink="list" routerLinkActive="active"
-          >Admin Borrowed</a
-        >
+        <a *ngIf="user?.role === 4" class="nav-item" routerLink="list" routerLinkActive="active">Admin Borrowed</a>
       </li>
       <li><a class="nav-item" routerLink="about" routerLinkActive="active">About</a></li>
     </ul>

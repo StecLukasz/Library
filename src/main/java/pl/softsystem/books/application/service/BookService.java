@@ -209,7 +209,7 @@ public class BookService {
             for (Signature signature : book.getSignatures()) {
                 Borrowed borrowed = signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1);
                 if (borrowed.getStatus().equals("ready") ) {
-                    if (inOneMinute(borrowed.getStatusDate())) {
+                    if (isOneWeekLater(borrowed.getStatusDate())) {
                         Borrowed newBorrowed = new Borrowed();
                         newBorrowed.setLogin(borrowed.getLogin());
                         newBorrowed.setSignatureId(borrowed.getSignatureId());

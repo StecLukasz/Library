@@ -39,11 +39,11 @@ public class BookController {
     }
 
     @PostMapping(ApiUrl.Book.RESERVE)
-    public ResponseEntity<String> reserveBookByUser(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<Integer> reserveBookByUser(@RequestBody Map<String, Object> data) {
         String login = (String) data.get("login");
         String title = (String) data.get("title");
         bookService.makeReservationBookByUser(login, title);
-        return ResponseEntity.ok(title + " " + login);
+        return ResponseEntity.ok(1);
     }
 
     @PostMapping(ApiUrl.Book.CANCEL_RESERVED)

@@ -18,6 +18,7 @@ export class AdminReservedComponent implements OnInit {
   AdminSignatureReservedDTOs: AdminSignatureReservedDTO[] = [];
   sortDirection: 'asc' | 'desc' = 'asc';
   currentUser: string = '';
+  isButtonDisabled = false;
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -47,30 +48,51 @@ export class AdminReservedComponent implements OnInit {
   }
 
   postCancelReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
-    this.api.postCancelReservedSignatureByUser(DTO.username, DTO.id).subscribe(
-      (data) => {},
-      (error) => console.log(error)
-    );
-    this.getBooks();
-    console.log(this.getBooks());
+    if (this.isButtonDisabled === false) {
+      this.isButtonDisabled = true; // Disable the button
+      this.api.postCancelReservedSignatureByUser(DTO.username, DTO.id).subscribe(
+        (data) => {},
+        (error) => console.log(error)
+      );
+
+      setTimeout(() => {
+        this.isButtonDisabled = false;
+      }, 350);
+      this.getBooks();
+      console.log(this.getBooks());
+    }
   }
 
   postReadyReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
-    this.api.postReadyReservedSignatureByUser(DTO.username, DTO.id).subscribe(
-      (data) => {},
-      (error) => console.log(error)
-    );
-    this.getBooks();
-    console.log(this.getBooks());
+    if (this.isButtonDisabled === false) {
+      this.isButtonDisabled = true; // Disable the button
+      this.api.postReadyReservedSignatureByUser(DTO.username, DTO.id).subscribe(
+        (data) => {},
+        (error) => console.log(error)
+      );
+      setTimeout(() => {
+        this.isButtonDisabled = false;
+      }, 350);
+      this.getBooks();
+      console.log(this.getBooks());
+    }
   }
 
   postBorrowReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
+    this.isButtonDisabled = true; // Disable the button
     this.api.postBorrowReservedSignatureByUser(DTO.username, DTO.id).subscribe(
       (data) => {},
-      (error) => console.log(error)
+      (error) => console.log(error),
+      () => {
+        this.isButtonDisabled = false;
+      }
     );
     this.getBooks();
     console.log(this.getBooks());
+
+    setTimeout(() => {
+      this.isButtonDisabled = false;
+    }, 350);
   }
 
   sortByStatus(): void {

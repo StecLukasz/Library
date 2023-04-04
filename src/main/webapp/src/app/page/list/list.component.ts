@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
   search: string = '';
   currentUserLogin: string = '';
   user?: User;
-  isBookServedByUser: boolean = false;
+  isButtonDisabled = false;
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -44,6 +44,7 @@ export class ListComponent implements OnInit {
       //this.getBooks();
       this.onSearch();
     });
+    this.isButtonDisabled = false;
   }
 
   private async getBooks(): Promise<void> {
@@ -56,14 +57,26 @@ export class ListComponent implements OnInit {
   // }
 
   postReservedBookByUser(book: Book) {
-    this.api.postReserveBookByUser(this.currentUserLogin, book.title).subscribe(
-      (data) => {},
-      (error) => console.log(error)
-    );
-    // this.getBooks();
-    // console.log(this.getBooks());
+    this.postReservation(book);
     this.onSearch();
-    console.log(this.onSearch());
+  }
+
+  postReservation(book: Book) {
+    if (this.isButtonDisabled === false) {
+      this.isButtonDisabled = true;
+
+      this.api.postReserveBookByUser(this.currentUserLogin, book.title).subscribe(
+        (data) => {
+          if (data === 1) {
+            setTimeout(() => {
+              this.isButtonDisabled = false;
+            }, 450);
+          }
+        },
+        (error) => console.log(error)
+      );
+    }
+    this.onSearch();
   }
 
   onSearch() {
@@ -77,11 +90,6 @@ export class ListComponent implements OnInit {
 
   getSignatureQuantity(book: Book): number {
     return book.signatures.length;
-  }
-
-  isBookServed(bookId: number): boolean {
-    console.log('isbookreserved ' + bookId);
-    return true;
   }
 
   private async bookReservedById(id: number, login: string): Promise<void> {
