@@ -55,6 +55,7 @@ export class AdminPanelComponent implements OnInit {
       }
     });
   }
+
   sortByUser(): void {
     this.adminPanelDTOs.sort((a, b) => {
       if (a.username > b.username) {
@@ -72,6 +73,7 @@ export class AdminPanelComponent implements OnInit {
     this.sortByStatus();
     this.sortByUser();
   }
+
   onSearch() {
     this.getBooksSearch(this.search);
   }

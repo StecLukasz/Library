@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from '../../../api.service';
 
 @Component({
   selector: 'app-add-book-modal',
@@ -12,13 +14,24 @@ import { FormsModule } from '@angular/forms';
 export class AddBookModalComponent {
   book: any = {};
 
-  constructor() {}
+  constructor(private api: ApiService, private router: Router) {}
+
+  addBook() {
+    this.api.addBookAdmin(this.book).subscribe(
+      (data) => {
+        console.log(data);
+        this.goToAdminPanel();
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  goToAdminPanel() {
+    this.router.navigate(['/admin-panel']);
+  }
 
   onSubmit() {
     console.log(this.book);
+    this.addBook();
   }
-
-  // showDialog() {
-  //   this.displayDialog = true;
-  // }
 }

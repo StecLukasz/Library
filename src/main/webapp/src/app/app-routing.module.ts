@@ -27,7 +27,10 @@ const routes: Routes = [
     path: 'admin-panel',
     component: AdminPanelComponent,
   },
-  { path: 'add-book', component: AddBookModalComponent },
+  {
+    path: 'add-book',
+    component: AddBookModalComponent,
+  },
   {
     path: 'about',
     canActivate: [AuthGuard],

@@ -80,11 +80,7 @@
         name="signature"
       />
     </div>
-    <button class="btn btn-success nav-link" type="submit" routerLink="/admin-panel" routerLinkActive="active">
-      Add Book
-    </button>
-    <button class="btn btn-danger nav-link" type="submit" routerLink="/admin-panel" routerLinkActive="active">
-      Close
-    </button>
+    <button class="btn btn-success nav-link" type="submit">Add Book</button>
+    <button class="btn btn-danger" type="button" (click)="goToAdminPanel()">Close</button>
   </form>
 </div>

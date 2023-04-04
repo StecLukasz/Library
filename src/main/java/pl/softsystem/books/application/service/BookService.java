@@ -247,8 +247,8 @@ public class BookService {
 
     public void addBook(Book book) {
 
-        Borrowed borrowed = new Borrowed();
-        borrowed.setStatus("available");
+//        Borrowed borrowed = new Borrowed();
+//        borrowed.setStatus("available");
         bookRepository.save(book);
     }
     //Book addNewBook = new Book();
