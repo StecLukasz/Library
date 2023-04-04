@@ -64,9 +64,9 @@ export class ApiService {
   getBooksSearchForAdmin(text: string): Observable<AdminSignatureDTO[]> {
     return this.http.get<AdminSignatureDTO[]>(api.books.url + `/search?title=${text}`);
   }
-  addBookAdmin(book: Book): Observable<Object> {
+  addBookAdmin(book: Book): Observable<Book> {
     const data = { book };
     console.log(data);
-    return this.http.post(api.books.addBook, data);
+    return this.http.post<Book>(api.books.addBook, data);
   }
 }

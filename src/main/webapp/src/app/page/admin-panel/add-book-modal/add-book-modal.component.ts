@@ -17,9 +17,11 @@ export class AddBookModalComponent {
   constructor(private api: ApiService, private router: Router) {}
 
   addBook() {
+    this.book.status = 'available';
+    this.book.statusDate = new Date().toISOString();
     this.api.addBookAdmin(this.book).subscribe(
-      (data) => {
-        console.log(data);
+      (book) => {
+        console.log(book);
         this.goToAdminPanel();
       },
       (error) => console.log(error)

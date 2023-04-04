@@ -24,7 +24,7 @@
     <th
       class="font-medium p-2 text-left"
       class="font-medium p-2 text-left"
-      (click)="toggleSortDirection()"
+      (click)="toggleSortDirectionByUsername()"
       [style.cursor]="sortDirection ? 'pointer' : 'auto'"
       (mouseleave)="sortDirection ? (sortDirection = sortDirection) : ''"
     >
@@ -34,7 +34,7 @@
     </th>
     <th
       class="font-medium p-2 text-left"
-      (click)="toggleSortDirection()"
+      (click)="toggleSortDirectionByStatus()"
       [style.cursor]="sortDirection ? 'pointer' : 'auto'"
       (mouseleave)="sortDirection ? (sortDirection = sortDirection) : ''"
     >

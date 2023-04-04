@@ -46,9 +46,13 @@ export class AdminPanelComponent implements OnInit {
 
   sortByStatus(): void {
     this.adminPanelDTOs.sort((a, b) => {
-      if (a.status > b.status) {
+      const statusOrder = ['available', 'reserved', 'ready', 'borrowed'];
+      const aIndex = statusOrder.indexOf(a.status);
+      const bIndex = statusOrder.indexOf(b.status);
+
+      if (aIndex > bIndex) {
         return this.sortDirection === 'asc' ? 1 : -1;
-      } else if (a.status < b.status) {
+      } else if (aIndex < bIndex) {
         return this.sortDirection === 'asc' ? -1 : 1;
       } else {
         return 0;
@@ -58,19 +62,25 @@ export class AdminPanelComponent implements OnInit {
 
   sortByUser(): void {
     this.adminPanelDTOs.sort((a, b) => {
-      if (a.username > b.username) {
-        return this.sortDirection === 'asc' ? 1 : -1;
-      } else if (a.username < b.username) {
+      const usernameA = a.username.toLowerCase();
+      const usernameB = b.username.toLowerCase();
+      if (usernameA < usernameB) {
         return this.sortDirection === 'asc' ? -1 : 1;
+      } else if (usernameA > usernameB) {
+        return this.sortDirection === 'asc' ? 1 : -1;
       } else {
         return 0;
       }
     });
   }
 
-  toggleSortDirection(): void {
+  toggleSortDirectionByStatus(): void {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortByStatus();
+    // this.sortByUser();
+  }
+  toggleSortDirectionByUsername(): void {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortByUser();
   }
 
