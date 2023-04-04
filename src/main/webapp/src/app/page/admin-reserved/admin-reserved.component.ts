@@ -49,7 +49,7 @@ export class AdminReservedComponent implements OnInit {
 
   postCancelReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
     if (this.isButtonDisabled === false) {
-      this.isButtonDisabled = true; // Disable the button
+      this.isButtonDisabled = true;
       this.api.postCancelReservedSignatureByUser(DTO.username, DTO.id).subscribe(
         (data) => {},
         (error) => console.log(error)

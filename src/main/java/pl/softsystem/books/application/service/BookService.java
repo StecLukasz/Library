@@ -37,7 +37,7 @@ public class BookService {
         List<Book> availableBooks = books;
 
         for (int i = 0; i < availableBooks.size(); i++) {
-            for (Signature signature : availableBooks.get(i).getSignatures() ) {
+            for (Signature signature : availableBooks.get(i).getSignatures()) {
                 if (isSignatureReservedByUser(signature, login)) {
                     availableBooks.get(i).setBookStatusForUser("Reserved");
                 }
@@ -131,16 +131,11 @@ public class BookService {
         return books;
     }
 
-    public int countHowManySignatures(Book book) {
-        List<Signature> signatures = book.getSignatures();
-        return signatures.size();
-    }
-
     public void makeReservationBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Long availableSignatureIndex = getAvailableSignaturesQuantity(books, title);
 
-        if (availableSignatureIndex > 0) {
+        if (availableSignatureIndex > 0 && isSignatureNotReservedByUser(login, title)) {
 
             Borrowed borrowed = new Borrowed();
             borrowed.setLogin(login);
@@ -151,6 +146,20 @@ public class BookService {
             System.out.println(borrowed);
             borrowedRepository.save(borrowed);
         }
+    }
+
+    public boolean isSignatureNotReservedByUser(String login, String title) {
+        boolean result = true;
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+        Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+        for (Signature signature : book.getSignatures()) {
+            int end = signature.getBorrowedBookList().size() - 1;
+            if (signature.getBorrowedBookList().get(end).getStatus().equals("reserved")
+                    && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
+                result = false;
+            }
+        }
+        return result;
     }
 
     public void cancelReservedBookByUser(String login, String title) {
@@ -208,7 +217,7 @@ public class BookService {
         for (Book book : books) {
             for (Signature signature : book.getSignatures()) {
                 Borrowed borrowed = signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1);
-                if (borrowed.getStatus().equals("ready") ) {
+                if (borrowed.getStatus().equals("ready")) {
                     if (isOneWeekLater(borrowed.getStatusDate())) {
                         Borrowed newBorrowed = new Borrowed();
                         newBorrowed.setLogin(borrowed.getLogin());

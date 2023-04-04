@@ -17,8 +17,8 @@ import { Book } from '../../shared/interface/book';
 })
 export class ReservedComponent implements OnInit {
   books: Book[] = [];
-  search: string = '';
   currentUser: string = '';
+  isButtonDisabled = false;
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -48,11 +48,19 @@ export class ReservedComponent implements OnInit {
   }
 
   postCancelReservedBookByUser(book: Book) {
-    this.api.postCancelReservedBookByUser(this.currentUser, book.title).subscribe(
-      (data) => {},
-      (error) => console.log(error)
-    );
-    this.getReservedBooksForUser(this.currentUser);
-    console.log(this.getReservedBooksForUser(this.currentUser));
+    if (this.isButtonDisabled === false) {
+      this.isButtonDisabled = true;
+
+      this.api.postCancelReservedBookByUser(this.currentUser, book.title).subscribe(
+        (data) => {},
+        (error) => console.log(error)
+      );
+
+      setTimeout(() => {
+        this.isButtonDisabled = false;
+      }, 250);
+
+      this.getReservedBooksForUser(this.currentUser);
+    }
   }
 }
