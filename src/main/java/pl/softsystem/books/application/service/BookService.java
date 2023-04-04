@@ -28,18 +28,18 @@ public class BookService {
         books = removeDuplicateBooks(books);
         books = sortBooksByTitle(books);
         books = countAvailableBooks(books);
-        books = getAvailableBooks(books, login);
+        books = getLastBookStatusForUser(books, login);
         return books;
     }
 
-    public List<Book> getAvailableBooks(List<Book> books, String login) {
+    public List<Book> getLastBookStatusForUser(List<Book> books, String login) {
         //String login = "dmichna";
         List<Book> availableBooks = books;
 
         for (int i = 0; i < availableBooks.size(); i++) {
             for (Signature signature : availableBooks.get(i).getSignatures()) {
                 if (isSignatureReservedByUser(signature, login)) {
-                    availableBooks.get(i).setBookStatusForUser("Reserved");
+                    availableBooks.get(i).setBookStatusForUser("reserved");
                 }
             }
         }
@@ -135,7 +135,7 @@ public class BookService {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Long availableSignatureIndex = getAvailableSignaturesQuantity(books, title);
 
-        if (availableSignatureIndex > 0 && isSignatureNotReservedByUser(login, title)) {
+        if (availableSignatureIndex > 0 && isLastStatusEqualsTo("reserved", login, title)) {
 
             Borrowed borrowed = new Borrowed();
             borrowed.setLogin(login);
@@ -148,14 +148,29 @@ public class BookService {
         }
     }
 
-    public boolean isSignatureNotReservedByUser(String login, String title) {
+    public boolean isLastStatusEqualsTo(String lastStatus, String login, String title) {
         boolean result = true;
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
         for (Signature signature : book.getSignatures()) {
             int end = signature.getBorrowedBookList().size() - 1;
-            if (signature.getBorrowedBookList().get(end).getStatus().equals("reserved")
+            if (signature.getBorrowedBookList().get(end).getStatus().equals(lastStatus)
                     && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
+                result = false;
+            }
+        }
+        return result;
+    }
+
+    public boolean isSignatureNotAvailableByUser(String login, String title) {
+        boolean result = true;
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+        Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+        for (Signature signature : book.getSignatures()) {
+            int end = signature.getBorrowedBookList().size() - 1;
+            if (signature.getBorrowedBookList().get(end).getStatus().equals("available")
+                    && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
+                System.out.println(signature);
                 result = false;
             }
         }
@@ -176,12 +191,14 @@ public class BookService {
                 }
             }
         }
-        Borrowed borrowed = new Borrowed();
-        borrowed.setLogin(login);
-        borrowed.setSignatureId(reservedSignatureByUser.getId());
-        borrowed.setOverdueDate(new Date(System.currentTimeMillis()));
-        borrowed.setStatus("available");
-        borrowedRepository.save(borrowed);
+        if (isLastStatusEqualsTo("available", login, title)) {
+            Borrowed borrowed = new Borrowed();
+            borrowed.setLogin(login);
+            borrowed.setSignatureId(reservedSignatureByUser.getId());
+            borrowed.setOverdueDate(new Date(System.currentTimeMillis()));
+            borrowed.setStatus("available");
+            borrowedRepository.save(borrowed);
+        }
     }
 
     public Long getAvailableSignaturesQuantity(List<Book> books, String title) {

@@ -39,7 +39,9 @@
     <td class="p-2">
       <button
         *ngIf="
-          book.availableQuantity > 0 && book.bookStatusForUser !== 'Reserved' && (user?.role === 0 || user?.role === 4)
+          book.availableQuantity > 0 &&
+          (user?.role === 0 || user?.role === 4) &&
+          !(book.bookStatusForUser === 'reserved' || book.bookStatusForUser === 'ready')
         "
         (click)="postReservedBookByUser(book)"
         [disabled]="isButtonDisabled"

@@ -58,9 +58,10 @@ export class ReservedComponent implements OnInit {
 
       setTimeout(() => {
         this.isButtonDisabled = false;
-      }, 250);
+      }, 350);
 
       this.getReservedBooksForUser(this.currentUser);
+      console.log(this.getReservedBooksForUser(this.currentUser));
     }
   }
 }

@@ -16,7 +16,7 @@
     </td>
     <td class="p-2">{{ book.genre }}</td>
     <td class="p-2">
-      <button (click)="postCancelReservedBookByUser(book)">
+      <button (click)="postCancelReservedBookByUser(book)" [disabled]="isButtonDisabled">
         <span class="material-icons">disabled_by_default</span>
       </button>
     </td>

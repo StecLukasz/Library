@@ -45,7 +45,7 @@
     </ng-template>
 
     <td class="p-2">
-      <button (click)="postCancelReservedSignatureByUser(DTO)">
+      <button (click)="postCancelReservedSignatureByUser(DTO)" [disabled]="isButtonDisabled">
         <span class="material-icons">disabled_by_default</span>
       </button>
     </td>
