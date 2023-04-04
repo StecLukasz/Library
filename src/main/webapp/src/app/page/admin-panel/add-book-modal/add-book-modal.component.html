@@ -1,71 +1,90 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add New Book</button>
-
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New Book</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="col-md-4 offset-md-3">
+  <h3>Add new book schema</h3>
+  <br />
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" class="form-control" id="title" placeholder="Title..." [(ngModel)]="book.title" name="title" />
+    </div>
+    <div class="form-group">
+      <label for="pages">Pages</label>
+      <input
+        type="number"
+        class="form-control"
+        id="pages"
+        placeholder="Number of pages..."
+        [(ngModel)]="book.pages"
+        name="pages"
+      />
+    </div>
+    <div class="form-group">
+      <label for="genre">Genre</label>
+      <input type="text" class="form-control" id="genre" placeholder="Genre..." [(ngModel)]="book.genre" name="genre" />
+    </div>
+    <div class="form-group">
+      <label for="quantity">Available Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        id="quantity"
+        placeholder="Available quantity..."
+        [(ngModel)]="book.availableQuantity"
+        name="availableQuantity"
+      />
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="firstName">Author First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          placeholder="Author first name..."
+          [(ngModel)]="book.firstName"
+          name="firstName"
+        />
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter book title" />
-          </div>
-          <div class="form-group">
-            <label for="pages">Pages</label>
-            <input type="number" class="form-control" id="pages" placeholder="Enter number of pages" />
-          </div>
-          <div class="form-group">
-            <label for="genre">Genre</label>
-            <input type="text" class="form-control" id="genre" placeholder="Enter book genre" />
-          </div>
-          <div class="form-group">
-            <label for="quantity">Available Quantity</label>
-            <input type="number" class="form-control" id="quantity" placeholder="Enter available quantity" />
-          </div>
-          <div class="form-group">
-            <label for="firstName">Author First Name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Enter author first name" />
-          </div>
-          <div class="form-group">
-            <label for="lastName">Author Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Enter author last name" />
-          </div>
-          <div class="form-group">
-            <label for="gender">Author Gender</label>
-            <select class="form-control" id="gender">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="birthDate">Author Birth Date</label>
-            <input type="date" class="form-control" id="birthDate" />
-          </div>
-          <div class="form-group">
-            <label for="bookSignature">Book Signature</label>
-            <input type="text" class="form-control" id="bookSignature" placeholder="Enter book signature" />
-          </div>
-        </form>
+      <div class="form-group">
+        <label for="lastName">Author Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          placeholder="Author last name..."
+          [(ngModel)]="book.lastName"
+          name="lastName"
+        />
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addBook()">Add Book</button>
+      <div class="form-group">
+        <label for="gender">Author Gender</label>
+        <select class="form-control" id="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="birthDate">Author Birth Date</label>
+        <input type="date" class="form-control" id="birthDate" [(ngModel)]="book.birthDate" name="birthDate" />
       </div>
     </div>
-  </div>
+    <div class="form-group">
+      <label for="bookSignature">Book Signature</label>
+      <input
+        type="text"
+        class="form-control"
+        id="bookSignature"
+        placeholder="Book signature.."
+        [(ngModel)]="book.signature"
+        name="signature"
+      />
+    </div>
+    <button class="btn btn-success nav-link" type="submit" routerLink="/admin-panel" routerLinkActive="active">
+      Add Book
+    </button>
+    <button class="btn btn-danger nav-link" type="submit" routerLink="/admin-panel" routerLinkActive="active">
+      Close
+    </button>
+  </form>
 </div>

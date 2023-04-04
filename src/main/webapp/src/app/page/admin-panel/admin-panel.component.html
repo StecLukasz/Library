@@ -1,5 +1,7 @@
-<form>
-  <!--  <button class="float-right" (click)="openAddBookModal()">Add Book</button>-->
+<form #bookForm="ngForm">
+  <button type="submit" class="float-right btn btn-primary nav- link" routerLink="/add-book" routerLinkActive="active">
+    Add Book
+  </button>
   <div>
     <input
       type="text"
@@ -19,7 +21,17 @@
   <tr class="border-b-2 border-gray-400">
     <th class="font-medium p-2 text-left">Signature</th>
     <th class="font-medium p-2 text-left">Title</th>
-    <th class="font-medium p-2 text-left">User</th>
+    <th
+      class="font-medium p-2 text-left"
+      class="font-medium p-2 text-left"
+      (click)="toggleSortDirection()"
+      [style.cursor]="sortDirection ? 'pointer' : 'auto'"
+      (mouseleave)="sortDirection ? (sortDirection = sortDirection) : ''"
+    >
+      User
+      <span *ngIf="sortDirection === 'asc'">&#x25B2;</span>
+      <span *ngIf="sortDirection === 'desc'">&#x25BC;</span>
+    </th>
     <th
       class="font-medium p-2 text-left"
       (click)="toggleSortDirection()"
@@ -53,7 +65,11 @@
     >
       {{ DTO.status }}
     </td>
-    <td class="p-2"><button (click)="editBook(DTO)">Edit</button></td>
-    <td class="p-2"><button (click)="deleteBook(DTO)">Delete</button></td>
+    <td class="p-2">
+      <button (click)="editBook(DTO)">Edit</button>
+    </td>
+    <td class="p-2">
+      <button (click)="deleteBook(DTO)">Delete</button>
+    </td>
   </tr>
 </table>

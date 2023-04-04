@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -11,7 +12,7 @@ import { AdminSignatureDTO } from '../../shared/interface/adminSignatureDTO';
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.scss'],
 })
@@ -54,19 +55,30 @@ export class AdminPanelComponent implements OnInit {
       }
     });
   }
+  sortByUser(): void {
+    this.adminPanelDTOs.sort((a, b) => {
+      if (a.username > b.username) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      } else if (a.username < b.username) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      } else {
+        return 0;
+      }
+    });
+  }
 
   toggleSortDirection(): void {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortByStatus();
+    this.sortByUser();
   }
   onSearch() {
     this.getBooksSearch(this.search);
-    console.log(this.search);
   }
 
-  // private async getBooksSearch(text: string): Promise<void> {
-  //   this.adminPanelDTOs = await firstValueFrom(this.api.getSignaturesForAdminPanel(text));
-  // }
+  private async getBooksSearch(text: string): Promise<void> {
+    this.adminPanelDTOs = await firstValueFrom(this.api.getBooksSearchForAdmin(text));
+  }
 
   async editBook(book: AdminSignatureDTO): Promise<void> {
     // TODO: implementacja metody edytującej książkę
@@ -76,13 +88,14 @@ export class AdminPanelComponent implements OnInit {
     // TODO: implementacja metody usuwającej książkę
   }
 
-  // openAddBookModal(): void {
-  //   const dialogRef = this.dialog.open(AddBookModalComponent);
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     console.log('The dialog was closed');
-  //     console.log(result);
-  //
-  //     // tu możesz dodać logikę zapisującą nową książkę do bazy danych
-  //   });
+  // addBook() {
+  //   this.api.addBookAdmin(this.book).subscribe(
+  //     (book) => {
+  //       console.log('Książka dodana', book);
+  //     },
+  //     (error) => {
+  //       console.log('Błąd podczas dodawania książki', error);
+  //     }
+  //   );
   // }
 }

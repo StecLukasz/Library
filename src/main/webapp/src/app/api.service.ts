@@ -60,4 +60,11 @@ export class ApiService {
   getSignaturesForAdminPanel(): Observable<AdminSignatureDTO[]> {
     return this.http.get<AdminSignatureDTO[]>(api.books.adminPanelList);
   }
+
+  getBooksSearchForAdmin(text: string): Observable<AdminSignatureDTO[]> {
+    return this.http.get<AdminSignatureDTO[]>(api.books.url + `/search?title=${text}`);
+  }
+  addBookAdmin(book: Book): Observable<Book> {
+    return this.http.post<Book>(api.books.addBook, book);
+  }
 }

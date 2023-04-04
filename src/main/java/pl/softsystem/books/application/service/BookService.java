@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -246,6 +247,8 @@ public class BookService {
 
     public void addBook(Book book) {
 
+        Borrowed borrowed = new Borrowed();
+        borrowed.setStatus("available");
         bookRepository.save(book);
     }
     //Book addNewBook = new Book();

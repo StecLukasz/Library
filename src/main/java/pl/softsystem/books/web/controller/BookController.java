@@ -26,11 +26,9 @@ public class BookController {
         return bookService.getAll();
     }
 
-    //TODO: TO NIE DZIAŁA
-
 
     @PostMapping(ApiUrl.Book.ADD_BOOK)
-    public void addBook(@RequestBody Book book){
+    public void addBookAdmin(@RequestBody Book book){
         bookService.addBook(book);
     }
 

@@ -1,18 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-book-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './add-book-modal.component.html',
   styleUrls: ['./add-book-modal.component.scss'],
 })
 export class AddBookModalComponent {
-  constructor(public dialogRef: MatDialogRef<AddBookModalComponent>) {}
+  book: any = {};
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  constructor() {}
+
+  onSubmit() {
+    console.log(this.book);
   }
+
+  // showDialog() {
+  //   this.displayDialog = true;
+  // }
 }
