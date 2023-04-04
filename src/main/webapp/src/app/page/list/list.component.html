@@ -41,7 +41,11 @@
         *ngIf="
           book.availableQuantity > 0 &&
           (user?.role === 0 || user?.role === 4) &&
-          !(book.bookStatusForUser === 'reserved' || book.bookStatusForUser === 'ready')
+          !(
+            book.bookStatusForUser === 'reserved' ||
+            book.bookStatusForUser === 'ready' ||
+            book.bookStatusForUser === 'borrowed'
+          )
         "
         (click)="postReservedBookByUser(book)"
         [disabled]="isButtonDisabled"

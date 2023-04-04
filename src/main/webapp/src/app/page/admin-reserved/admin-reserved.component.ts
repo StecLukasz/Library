@@ -57,7 +57,7 @@ export class AdminReservedComponent implements OnInit {
 
       setTimeout(() => {
         this.isButtonDisabled = false;
-      }, 350);
+      }, 450);
       this.getBooks();
       console.log(this.getBooks());
     }
@@ -72,7 +72,7 @@ export class AdminReservedComponent implements OnInit {
       );
       setTimeout(() => {
         this.isButtonDisabled = false;
-      }, 350);
+      }, 450);
       this.getBooks();
       console.log(this.getBooks());
     }
@@ -92,7 +92,7 @@ export class AdminReservedComponent implements OnInit {
 
     setTimeout(() => {
       this.isButtonDisabled = false;
-    }, 350);
+    }, 450);
   }
 
   sortByStatus(): void {

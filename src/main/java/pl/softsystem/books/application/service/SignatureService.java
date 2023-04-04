@@ -15,25 +15,25 @@ public class SignatureService {
     private final BookRepository bookRepository;
 
 
-    public List<reservedSignaturesForAdminDTO> getReservedSignaturesForAdmin() {
+    public List<ReservedSignaturesForAdminDTO> getReservedSignaturesForAdmin() {
         List<Signature> signatures = signatureRepository.findAll();
-        List<reservedSignaturesForAdminDTO> reservedSignaturesForAdminDTOS = new ArrayList<>();
+        List<ReservedSignaturesForAdminDTO> ReservedSignaturesForAdminDTOS = new ArrayList<>();
         List<Book> books = bookRepository.findAllByOrderByTitle();
 
         for (int i = 0; i < signatures.size(); i++) {
             if (getLatestStatusForSignature(signatures.get(i)).equals("reserved") ||
                     getLatestStatusForSignature(signatures.get(i)).equals("ready")) {
-                reservedSignaturesForAdminDTO reservedSignaturesForAdminDTO = new reservedSignaturesForAdminDTO();
+                ReservedSignaturesForAdminDTO reservedSignaturesForAdminDTO = new ReservedSignaturesForAdminDTO();
                 String titleBySignatureIf = getTitleBySignatureId(books, (long) i + 1);
                 reservedSignaturesForAdminDTO.setId(signatures.get(i).getId());
                 reservedSignaturesForAdminDTO.setTitle(titleBySignatureIf);
                 reservedSignaturesForAdminDTO.setBookSignature(signatures.get(i).getBookSignature());
                 reservedSignaturesForAdminDTO.setUsername(getUsernameForLatestStatus(signatures.get(i)));
                 reservedSignaturesForAdminDTO.setStatus(getLatestStatusForSignature(signatures.get(i)));
-                reservedSignaturesForAdminDTOS.add(reservedSignaturesForAdminDTO);
+                ReservedSignaturesForAdminDTOS.add(reservedSignaturesForAdminDTO);
             }
         }
-        return reservedSignaturesForAdminDTOS;
+        return ReservedSignaturesForAdminDTOS;
     }
 
     public String getLatestStatusForSignature(Signature signature) {

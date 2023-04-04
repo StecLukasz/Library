@@ -33,28 +33,19 @@ public class BookService {
     }
 
     public List<Book> getLastBookStatusForUser(List<Book> books, String login) {
-        //String login = "dmichna";
         List<Book> availableBooks = books;
 
         for (int i = 0; i < availableBooks.size(); i++) {
             for (Signature signature : availableBooks.get(i).getSignatures()) {
-                if (isSignatureReservedByUser(signature, login)) {
-                    availableBooks.get(i).setBookStatusForUser("reserved");
+                List<Borrowed> borrowedBookList = signature.getBorrowedBookList();
+                Borrowed latestBorrowed = borrowedBookList.get(borrowedBookList.size() - 1);
+                if (login.equals(latestBorrowed.getLogin())){
+                    availableBooks.get(i).setBookStatusForUser(latestBorrowed.getStatus());
                 }
             }
         }
         return availableBooks;
     }
-
-    public boolean isSignatureReservedByUser(Signature signature, String login) {
-        List<Borrowed> borrowedBookList = signature.getBorrowedBookList();
-        Borrowed latestBorrowed = borrowedBookList.get(borrowedBookList.size() - 1);
-        if ("reserved".equals(latestBorrowed.getStatus()) && login.equals(latestBorrowed.getLogin())) {
-            return true;
-        }
-        return false;
-    }
-
 
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
@@ -134,15 +125,12 @@ public class BookService {
     public void makeReservationBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Long availableSignatureIndex = getAvailableSignaturesQuantity(books, title);
-
         if (availableSignatureIndex > 0 && isLastStatusEqualsTo("reserved", login, title)) {
-
             Borrowed borrowed = new Borrowed();
             borrowed.setLogin(login);
             borrowed.setSignatureId(firstAvailableSignatureId(books, title, availableSignatureIndex));
             borrowed.setOverdueDate(new Date(System.currentTimeMillis()));
             borrowed.setStatus("reserved");
-
             System.out.println(borrowed);
             borrowedRepository.save(borrowed);
         }
@@ -162,20 +150,20 @@ public class BookService {
         return result;
     }
 
-    public boolean isSignatureNotAvailableByUser(String login, String title) {
-        boolean result = true;
-        List<Book> books = bookRepository.findAllByOrderByTitle();
-        Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
-        for (Signature signature : book.getSignatures()) {
-            int end = signature.getBorrowedBookList().size() - 1;
-            if (signature.getBorrowedBookList().get(end).getStatus().equals("available")
-                    && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
-                System.out.println(signature);
-                result = false;
-            }
-        }
-        return result;
-    }
+//    public boolean isSignatureNotAvailableByUser(String login, String title) {
+//        boolean result = true;
+//        List<Book> books = bookRepository.findAllByOrderByTitle();
+//        Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+//        for (Signature signature : book.getSignatures()) {
+//            int end = signature.getBorrowedBookList().size() - 1;
+//            if (signature.getBorrowedBookList().get(end).getStatus().equals("available")
+//                    && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
+//                System.out.println(signature);
+//                result = false;
+//            }
+//        }
+//        return result;
+//    }
 
     public void cancelReservedBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
@@ -263,7 +251,6 @@ public class BookService {
         other.add(Calendar.MINUTE, 1);
         return now.after(other);
     }
-
 
 }
 

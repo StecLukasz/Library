@@ -22,7 +22,7 @@ public class BorrowedController {
         System.out.println(data);
         String login = (String) data.get("login");
         int id = (int) data.get("id");
-        borrowedService.cancelReservedSignatureByUser(login, id);
+        borrowedService.changeSignatureStatusTo("available", login, id);
         return ResponseEntity.ok(login + " " + id);
     }
 
@@ -31,7 +31,7 @@ public class BorrowedController {
         System.out.println(data);
         String login = (String) data.get("login");
         int id = (int) data.get("id");
-        borrowedService.readyReservedSignatureByUser(login, id);
+        borrowedService.changeSignatureStatusTo("ready", login, id);
         return ResponseEntity.ok(login + " " + id);
     }
 
@@ -40,7 +40,7 @@ public class BorrowedController {
         System.out.println(data);
         String login = (String) data.get("login");
         int id = (int) data.get("id");
-        borrowedService.borrowReservedSignatureByUser(login, id);
+        borrowedService.changeSignatureStatusTo("borrowed", login, id);
         return ResponseEntity.ok(login + " " + id);
     }
 }
