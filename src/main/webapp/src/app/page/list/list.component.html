@@ -40,7 +40,7 @@
       <button
         *ngIf="
           book.availableQuantity > 0 &&
-          (user?.role === 0 || user?.role === 4) &&
+          user?.username !== null &&
           !(
             book.bookStatusForUser === 'reserved' ||
             book.bookStatusForUser === 'ready' ||
