@@ -39,7 +39,7 @@ public class BookService {
             for (Signature signature : availableBooks.get(i).getSignatures()) {
                 List<Borrowed> borrowedBookList = signature.getBorrowedBookList();
                 Borrowed latestBorrowed = borrowedBookList.get(borrowedBookList.size() - 1);
-                if (login.equals(latestBorrowed.getLogin())){
+                if (login.equals(latestBorrowed.getLogin())) {
                     availableBooks.get(i).setBookStatusForUser(latestBorrowed.getStatus());
                 }
             }
@@ -125,7 +125,7 @@ public class BookService {
     public void makeReservationBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Long availableSignatureIndex = getAvailableSignaturesQuantity(books, title);
-        if (availableSignatureIndex > 0 && isLastStatusEqualsTo("reserved", login, title)) {
+        if (availableSignatureIndex > 0 && isLastStatusNotEqualsTo("reserved", login, title)) {
             Borrowed borrowed = new Borrowed();
             borrowed.setLogin(login);
             borrowed.setSignatureId(firstAvailableSignatureId(books, title, availableSignatureIndex));
@@ -136,7 +136,7 @@ public class BookService {
         }
     }
 
-    public boolean isLastStatusEqualsTo(String lastStatus, String login, String title) {
+    public boolean isLastStatusNotEqualsTo(String lastStatus, String login, String title) {
         boolean result = true;
         List<Book> books = bookRepository.findAllByOrderByTitle();
         Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
@@ -147,23 +147,10 @@ public class BookService {
                 result = false;
             }
         }
+        System.out.println("isLastStatusNotEqualsTo is: " + result + ". and laststatus is not: " + lastStatus);
         return result;
     }
 
-//    public boolean isSignatureNotAvailableByUser(String login, String title) {
-//        boolean result = true;
-//        List<Book> books = bookRepository.findAllByOrderByTitle();
-//        Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
-//        for (Signature signature : book.getSignatures()) {
-//            int end = signature.getBorrowedBookList().size() - 1;
-//            if (signature.getBorrowedBookList().get(end).getStatus().equals("available")
-//                    && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
-//                System.out.println(signature);
-//                result = false;
-//            }
-//        }
-//        return result;
-//    }
 
     public void cancelReservedBookByUser(String login, String title) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
@@ -179,7 +166,7 @@ public class BookService {
                 }
             }
         }
-        if (isLastStatusEqualsTo("available", login, title)) {
+        if (isLastStatusNotEqualsTo("available", login, title)) {
             Borrowed borrowed = new Borrowed();
             borrowed.setLogin(login);
             borrowed.setSignatureId(reservedSignatureByUser.getId());
