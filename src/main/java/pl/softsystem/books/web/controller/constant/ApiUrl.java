@@ -25,6 +25,6 @@ public class ApiUrl {
 
     @UtilityClass
     public class Schedule{
-        public final String RUN_SCHEDULER_AVAILABLE_AFTER_ONE_WEEK = "/runSchedulerAvailableAfterOneWeek";
+        public final String RUN_SCHEDULER_AVAILABLE_AFTER_ONE_WEEK = "/scheduler";
     }
 }

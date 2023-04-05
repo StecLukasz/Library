@@ -42,4 +42,11 @@ export class TopBarComponent {
       //this.getReservedBooksForUser(this.currentUser);
     });
   }
+
+  runScheduler() {
+    this.api.scheduler().subscribe(
+      (data) => {},
+      (error) => console.log(error)
+    );
+  }
 }

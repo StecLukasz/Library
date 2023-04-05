@@ -32,6 +32,8 @@
       <li>
         <a *ngIf="user?.role === 4" class="nav-item" routerLink="list" routerLinkActive="active">Admin Borrowed</a>
       </li>
+      <button (click)="runScheduler()" class="nav-item" routerLinkActive="active">scheduler</button>
+
       <li><a class="nav-item" routerLink="about" routerLinkActive="active">About</a></li>
     </ul>
   </nav>

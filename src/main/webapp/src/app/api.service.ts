@@ -79,4 +79,8 @@ export class ApiService {
 
     return this.http.post(api.books.url + `/borrowSignatureReservation`, data);
   }
+
+  scheduler(): Observable<Object> {
+    return this.http.get(api.books.url + `/scheduler`);
+  }
 }
