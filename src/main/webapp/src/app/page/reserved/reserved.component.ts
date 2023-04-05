@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -20,7 +21,7 @@ export class ReservedComponent implements OnInit {
   currentUser: string = '';
   isButtonDisabled = false;
 
-  constructor(private api: ApiService, private authService: AuthService) {}
+  constructor(private api: ApiService, private authService: AuthService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
     // stream obserwujacy aktualnie zalogowanego użytkownika
@@ -64,4 +65,9 @@ export class ReservedComponent implements OnInit {
       console.log(this.getReservedBooksForUser(this.currentUser));
     }
   }
+
+  // navigateToReserved() {
+  //   this.router.navigate(['reserved']);
+  //   console.log('nav');
+  // }
 }

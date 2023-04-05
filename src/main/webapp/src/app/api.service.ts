@@ -54,32 +54,32 @@ export class ApiService {
 
   postReserveBookByUser(login: string, title: string): Observable<Object> {
     const data = { login, title };
-    return this.http.post(api.books.url + `/reserve`, data);
+    return this.http.post(api.books.reserve, data);
   }
 
   //TODO URL ENUMS
   postCancelReservedBookByUser(login: string, title: string): Observable<Object> {
     const data = { login, title };
-    return this.http.post(api.books.url + `/cancelReserved`, data);
+    return this.http.post(api.books.cancel_reserved, data);
   }
 
   postCancelReservedSignatureByUser(login: string, id: number): Observable<Object> {
     const data = { login, id };
 
-    return this.http.post(api.books.url + `/cancelSignatureReservation`, data);
+    return this.http.post(api.books.cancel_signature_reservation, data);
   }
 
   postReadyReservedSignatureByUser(login: string, id: number): Observable<Object> {
     const data = { login, id };
-    return this.http.post(api.books.url + `/readySignatureReservation`, data);
+    return this.http.post(api.books.ready_signature_reservation, data);
   }
 
   postBorrowReservedSignatureByUser(login: string, id: number): Observable<Object> {
     const data = { login, id };
 
-    return this.http.post(api.books.url + `/borrowSignatureReservation`, data);
+    return this.http.post(api.books.borrow_signature, data);
   }
-
+  //TODO remove after tests
   scheduler(): Observable<Object> {
     return this.http.get(api.books.url + `/scheduler`);
   }

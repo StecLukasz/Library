@@ -9,6 +9,11 @@ const apiBase = {
     userBooks: '/books-for-user',
     reservedUserBooks: '/reserved-books-for-user',
     reservedAdminSignatures: '/reserved-signatures-for-admin',
+    reserve: '/reserve',
+    cancel_reserved: '/cancelReserved',
+    cancel_signature_reservation: '/cancelSignatureReservation',
+    ready_signature_reservation: '/readySignatureReservation',
+    borrow_signature: '/borrowSignature',
   },
 };
 
