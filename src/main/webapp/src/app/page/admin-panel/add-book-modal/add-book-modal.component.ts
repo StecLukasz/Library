@@ -18,7 +18,6 @@ export class AddBookModalComponent {
 
   addBook() {
     this.book.status = 'available';
-    this.book.statusDate = new Date().toISOString();
     this.api.addBookAdmin(this.book).subscribe(
       (book) => {
         console.log(book);
