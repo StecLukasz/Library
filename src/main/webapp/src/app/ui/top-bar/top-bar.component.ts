@@ -48,5 +48,6 @@ export class TopBarComponent {
       (data) => {},
       (error) => console.log(error)
     );
+    console.log('schedulerRun');
   }
 }
