@@ -29,6 +29,8 @@ public class BookController {
 
     @PostMapping(ApiUrl.Book.ADD_BOOK)
     public void addBookAdmin(@RequestBody Book book){
+        System.out.println(book);
+        System.out.println(book);
         bookService.addBook(book);
     }
 
