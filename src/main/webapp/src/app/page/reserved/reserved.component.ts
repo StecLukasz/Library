@@ -38,7 +38,7 @@ export class ReservedComponent implements OnInit {
 
       console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
-      this.getReservedBooksForUser(this.currentUser);
+      this.getReservedBooksForUser();
     });
   }
 
@@ -46,7 +46,7 @@ export class ReservedComponent implements OnInit {
     this.books = await firstValueFrom(this.api.getBooks());
   }
 
-  private async getReservedBooksForUser(user: string): Promise<void> {
+  private async getReservedBooksForUser(): Promise<void> {
     this.reservedBooks = await firstValueFrom(this.api.getReservedBooksForUser(this.currentUser));
   }
 
@@ -61,15 +61,8 @@ export class ReservedComponent implements OnInit {
 
       setTimeout(() => {
         this.isButtonDisabled = false;
-      }, 350);
-
-      this.getReservedBooksForUser(this.currentUser);
-      console.log(this.getReservedBooksForUser(this.currentUser));
+        this.getReservedBooksForUser();
+      }, 300);
     }
   }
-
-  // navigateToReserved() {
-  //   this.router.navigate(['reserved']);
-  //   console.log('nav');
-  // }
 }
