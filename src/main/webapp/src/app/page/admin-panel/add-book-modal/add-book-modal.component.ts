@@ -51,4 +51,10 @@ export class AddBookModalComponent {
       birthDate: new Date(),
     });
   }
+
+  addSignature(): void {
+    this.bookDTO.adminSignatureDTO.push({
+      bookSignature: '',
+    });
+  }
 }
