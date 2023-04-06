@@ -2,12 +2,15 @@ package pl.softsystem.books.domain;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 @Data
-@Getter
-@Setter
+@RequiredArgsConstructor
 public class BookDTO {
 
     private Long bookId;
@@ -16,12 +19,12 @@ public class BookDTO {
     private Date returnDate;
     private String status;
 
+    private int pages;
+    private String genre;
+    private Set<AuthorDTO> authorDTO;
+    private List<AdminSignatureDTO> adminSignatureDTO;
 
-    public BookDTO(Long bookId, String title, Date borrowedDate, Date returnDate, String status) {
 
-    }
 
-    public BookDTO() {
 
-    }
 }

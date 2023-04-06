@@ -7,6 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { AdminSignatureDTO } from '../../shared/interface/adminSignatureDTO';
+import { SignatureDTO } from '../../shared/interface/signatureDTO';
 
 @UntilDestroy()
 @Component({
@@ -17,7 +18,7 @@ import { AdminSignatureDTO } from '../../shared/interface/adminSignatureDTO';
   styleUrls: ['./admin-panel.component.scss'],
 })
 export class AdminPanelComponent implements OnInit {
-  adminPanelDTOs: AdminSignatureDTO[] = [];
+  adminPanelDTOs: SignatureDTO[] = [];
   sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction is ascending
   currentUser: string = '';
   search: string = '';

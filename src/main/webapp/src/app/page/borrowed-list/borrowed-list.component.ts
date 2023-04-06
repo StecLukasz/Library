@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { User } from '../../core/auth/model/user';
-import { Book } from '../../shared/interface/book';
+import { Book } from '../../shared/interface/Book';
 import { BookDTO } from '../../shared/interface/bookDTO';
 
 @UntilDestroy()

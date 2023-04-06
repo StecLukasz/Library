@@ -5,5 +5,6 @@ export interface Borrowed {
   borrowedDate?: Date;
   overdueDate?: Date;
   returnDate?: Date;
+  statusDate?: Date;
   status: string;
 }

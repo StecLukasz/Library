@@ -8,6 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SignatureDTO {
-    private Long bookId;
+    private Long id;
+    private String title;
     private String bookSignature;
+    private String username;
+    private String status;
 }

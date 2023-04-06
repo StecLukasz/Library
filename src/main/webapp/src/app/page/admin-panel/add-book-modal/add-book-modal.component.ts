@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../api.service';
+import { BookDTO } from '../../../shared/interface/bookDTO';
 
 @Component({
   selector: 'app-add-book-modal',
@@ -13,15 +14,22 @@ import { ApiService } from '../../../api.service';
 })
 export class AddBookModalComponent {
   book: any = {};
+  bookDTO: BookDTO = {
+    title: '',
+    genre: '',
+    pages: 0,
+    adminSignatureDTO: [{ bookSignature: '' }],
+    authorsDTOS: [{ firstName: '', lastName: '', gender: '', birthDate: new Date() }],
+  };
+
+  //bookDTO: BookDTO = { signatures: [{ id: 0, bookId: 0, bookSignature: '', borrowedBookList: [{ status: '' }] }] };
 
   constructor(private api: ApiService, private router: Router) {}
 
   addBook() {
-    this.book.status = 'available';
-    this.api.addBookAdmin(this.book).subscribe(
-      (book) => {
-        console.log(book);
-        this.goToAdminPanel();
+    this.api.addBookAdmin(this.bookDTO).subscribe(
+      (data) => {
+        console.log(data);
       },
       (error) => console.log(error)
     );
@@ -32,7 +40,15 @@ export class AddBookModalComponent {
   }
 
   onSubmit() {
-    console.log(this.book);
     this.addBook();
+  }
+
+  addAuthor(): void {
+    this.bookDTO.authorsDTOS.push({
+      firstName: '',
+      lastName: '',
+      gender: '',
+      birthDate: new Date(),
+    });
   }
 }

@@ -1,3 +1,101 @@
+<!--<form (ngSubmit)="onSubmit()">-->
+<!--  <div class="grid-wrapper-main">-->
+<!--    <div class="rounded-input">-->
+<!--      <label>title: </label>-->
+<!--      <input type="text" class="rounded" [(ngModel)]="bookDTO.title" name="title" />-->
+<!--    </div>-->
+<!--    <div class="rounded-input">-->
+<!--      <label>genre: </label>-->
+<!--      <input type="text" class="rounded" [(ngModel)]="bookDTO.genre" name="genre" />-->
+<!--    </div>-->
+<!--    <div class="rounded-input">-->
+<!--      <label>pages: </label>-->
+<!--      <input type="text" class="rounded" [(ngModel)]="bookDTO.pages" name="pages" />-->
+<!--    </div>-->
+<!--    <div class="rounded-input">-->
+<!--      <label>signature1: </label>-->
+<!--      <input type="text" class="rounded" [(ngModel)]="bookDTO.adminSignatureDTO[0].bookSignature" name="status" />-->
+<!--    </div>-->
+<!--    <div class="rounded-input">-->
+<!--      <label>signature2: </label>-->
+<!--      <input type="text" class="rounded" [(ngModel)]="bookDTO.adminSignatureDTO[1].bookSignature" name="status" />-->
+<!--    </div>-->
+<!--    &lt;!&ndash;    <div class="rounded-input">&ndash;&gt;-->
+<!--    &lt;!&ndash;      <label>Author First Name: </label>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <input type="text" class="rounded" [(ngModel)]="bookDTO.authorsDTOS[0].firstName" name="status" />&ndash;&gt;-->
+<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    &lt;!&ndash;    <div class="rounded-input">&ndash;&gt;-->
+<!--    &lt;!&ndash;      <label>Author Last Name: </label>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <input type="text" class="rounded" [(ngModel)]="bookDTO.authorsDTOS[0].lastName" name="status" />&ndash;&gt;-->
+<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--    &lt;!&ndash;    <div class="form-group">&ndash;&gt;-->
+<!--    &lt;!&ndash;      <label for="birthDate">Author Birth Date</label>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <input&ndash;&gt;-->
+<!--    &lt;!&ndash;        type="date"&ndash;&gt;-->
+<!--    &lt;!&ndash;        class="form-control"&ndash;&gt;-->
+<!--    &lt;!&ndash;        id="birthDate"&ndash;&gt;-->
+<!--    &lt;!&ndash;        [(ngModel)]="bookDTO.authorsDTOS[0].birthDate"&ndash;&gt;-->
+<!--    &lt;!&ndash;        name="birthDate"&ndash;&gt;-->
+<!--    &lt;!&ndash;      />&ndash;&gt;-->
+<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    &lt;!&ndash;  </div>&ndash;&gt;-->
+<!--    &lt;!&ndash;  <div class="form-group">&ndash;&gt;-->
+<!--    &lt;!&ndash;    <label for="gender">Author Gender</label>&ndash;&gt;-->
+<!--    &lt;!&ndash;    <select class="form-control" id="gender" [(ngModel)]="bookDTO.authorsDTOS[0].gender" )]>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <option value="male">Male</option>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <option value="female">Female</option>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <option value="other">Other</option>&ndash;&gt;-->
+<!--    &lt;!&ndash;    </select>&ndash;&gt;-->
+<!--  </div>-->
+<!--  <div *ngFor="let author of bookDTO.authorsDTOS; let i = index">-->
+<!--    <div class="form-group author-info">-->
+<!--      <div class="row">-->
+<!--        <div class="col-md-3">-->
+<!--          <div class="rounded-input">-->
+<!--            <label>Author First Name: </label>-->
+<!--            <input type="text" class="rounded" [(ngModel)]="author.firstName" name="status{{ i }}" />-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-3">-->
+<!--          <div class="rounded-input">-->
+<!--            <label>Author Last Name: </label>-->
+<!--            <input type="text" class="rounded" [(ngModel)]="author.lastName" name="status{{ i }}" />-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-3">-->
+<!--          <div class="form-group">-->
+<!--            <label for="birthDate{{ i }}">Author Birth Date</label>-->
+<!--            <input-->
+<!--              type="date"-->
+<!--              class="form-control"-->
+<!--              id="birthDate{{ i }}"-->
+<!--              [(ngModel)]="author.birthDate"-->
+<!--              name="birthDate{{ i }}"-->
+<!--            />-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-3">-->
+<!--          <div class="form-group">-->
+<!--            <label for="gender{{ i }}">Author Gender</label>-->
+<!--            <select class="form-control" id="gender{{ i }}" [(ngModel)]="author.gender">-->
+<!--              <option value="male">Male</option>-->
+<!--              <option value="female">Female</option>-->
+<!--              <option value="other">Other</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="form-group">-->
+<!--    <button type="button" class="btn btn-primary" (click)="addAuthor()">Add Author</button>-->
+<!--  </div>-->
+
+<!--  <button class="btn btn-success nav-link" type="submit">Add Book</button>-->
+<!--  <button class="btn btn-danger" type="button" (click)="goToAdminPanel()">Close</button>-->
+<!--</form>-->
+
 <!-- Button trigger modal -->
 <div class="col-md-4 offset-md-3">
   <h3>Add new book schema</h3>
@@ -5,7 +103,14 @@
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Title..." [(ngModel)]="book.title" name="title" />
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        placeholder="Title..."
+        [(ngModel)]="bookDTO.title"
+        name="title"
+      />
     </div>
     <div class="form-group">
       <label for="pages">Pages</label>
@@ -14,60 +119,64 @@
         class="form-control"
         id="pages"
         placeholder="Number of pages..."
-        [(ngModel)]="book.pages"
+        [(ngModel)]="bookDTO.pages"
         name="pages"
       />
     </div>
     <div class="form-group">
       <label for="genre">Genre</label>
-      <input type="text" class="form-control" id="genre" placeholder="Genre..." [(ngModel)]="book.genre" name="genre" />
+      <input
+        type="text"
+        class="form-control"
+        id="genre"
+        placeholder="Genre..."
+        [(ngModel)]="bookDTO.genre"
+        name="genre"
+      />
     </div>
-    <!--    <div class="form-group">-->
-    <!--      <label for="quantity">Available Quantity</label>-->
-    <!--      <input-->
-    <!--        type="number"-->
-    <!--        class="form-control"-->
-    <!--        id="quantity"-->
-    <!--        placeholder="Available quantity..."-->
-    <!--        [(ngModel)]="book.availableQuantity"-->
-    <!--        name="availableQuantity"-->
-    <!--      />-->
-    <!--    </div>-->
-    <div>
-      <div class="form-group">
-        <label for="firstName">Author First Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="firstName"
-          placeholder="Author first name..."
-          [(ngModel)]="book.firstName"
-          name="firstName"
-        />
+    Sekcja Autora:
+    <div *ngFor="let author of bookDTO.authorsDTOS; let i = index">
+      <div class="form-group author-info">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="rounded-input">
+              <label>Author First Name: </label>
+              <input type="text" class="rounded" [(ngModel)]="author.firstName" name="status{{ i }}" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="rounded-input">
+              <label>Author Last Name: </label>
+              <input type="text" class="rounded" [(ngModel)]="author.lastName" name="status{{ i }}" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="birthDate{{ i }}">Author Birth Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="birthDate{{ i }}"
+                [(ngModel)]="author.birthDate"
+                name="birthDate{{ i }}"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="gender{{ i }}">Author Gender</label>
+              <select class="form-control" id="gender{{ i }}" [(ngModel)]="author.gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="lastName">Author Last Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="lastName"
-          placeholder="Author last name..."
-          [(ngModel)]="book.lastName"
-          name="lastName"
-        />
-      </div>
-      <div class="form-group">
-        <label for="gender">Author Gender</label>
-        <select class="form-control" id="gender">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="birthDate">Author Birth Date</label>
-        <input type="date" class="form-control" id="birthDate" [(ngModel)]="book.birthDate" name="birthDate" />
-      </div>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary" (click)="addAuthor()">Add Author</button>
     </div>
     <div class="form-group">
       <label for="bookSignature">Book Signature</label>
@@ -76,8 +185,8 @@
         class="form-control"
         id="bookSignature"
         placeholder="Book signature.."
-        [(ngModel)]="book.signature"
-        name="signature"
+        [(ngModel)]="bookDTO.adminSignatureDTO[0].bookSignature"
+        name="bookSignature"
       />
     </div>
     <button class="btn btn-success nav-link" type="submit">Add Book</button>

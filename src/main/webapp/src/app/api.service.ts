@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { api } from './shared/const/api';
-import { AdminSignatureDTO } from './shared/interface/adminSignatureDTO';
 import { AppInfo } from './shared/interface/app-info';
-import { Book } from './shared/interface/book';
+import { Book } from './shared/interface/Book';
 import { BookDTO } from './shared/interface/bookDTO';
+import { SignatureDTO } from './shared/interface/signatureDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -57,14 +57,14 @@ export class ApiService {
     return this.http.post(api.books.url + `/reserve`, data);
   }
 
-  getSignaturesForAdminPanel(): Observable<AdminSignatureDTO[]> {
-    return this.http.get<AdminSignatureDTO[]>(api.books.adminPanelList);
+  getSignaturesForAdminPanel(): Observable<SignatureDTO[]> {
+    return this.http.get<SignatureDTO[]>(api.books.adminPanelList);
   }
 
-  getBooksSearchForAdmin(text: string): Observable<AdminSignatureDTO[]> {
-    return this.http.get<AdminSignatureDTO[]>(api.books.url + `/search?title=${text}`);
+  getBooksSearchForAdmin(text: string): Observable<SignatureDTO[]> {
+    return this.http.get<SignatureDTO[]>(api.books.url + `/search?title=${text}`);
   }
-  addBookAdmin(book: Book): Observable<Book> {
-    return this.http.post<Book>(api.books.addBook, book);
+  addBookAdmin(bookDTO: BookDTO): Observable<BookDTO> {
+    return this.http.post<BookDTO>(api.books.addBook, bookDTO);
   }
 }

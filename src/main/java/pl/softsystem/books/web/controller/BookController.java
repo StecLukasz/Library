@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
-import pl.softsystem.books.domain.Book;
-import pl.softsystem.books.domain.BookDTO;
-import pl.softsystem.books.domain.BookRepository;
+import pl.softsystem.books.domain.*;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,12 +25,44 @@ public class BookController {
 
 
     @PostMapping(ApiUrl.Book.ADD_BOOK)
-    public void addBookAdmin(@RequestBody Book book){
-        System.out.println(book);
-        System.out.println(book);
-        bookService.addBook(book);
+    public void addBookAdmin(@RequestBody BookDTO bookDTO){
+        System.out.println(bookDTO);
+        System.out.println(bookDTO);
+        bookService.addBook(bookDTO);
     }
 
+//    @PostMapping(ApiUrl.Book.ADD_BOOK)
+//    public void addBookAsAdmin(@RequestBody BookDTO bookDTO) {
+//        Book book = new Book();
+//        book.setTitle(bookDTO.getTitle());
+//        book.setPages(bookDTO.getPages());
+//        book.setGenre(bookDTO.getGenre());
+////        List<Author> authors = new ArrayList<>();
+////        for (AuthorsDTO authorsDTO : addBookDTO.getAuthorsDTOS()) {
+////            Author author = new Author();
+////            author.setFirstName(authorsDTO.getFirstName());
+////            author.setLastName(authorsDTO.getLastName());
+////            author.setGender(authorsDTO.getGender());
+////            author.setBirthDate(authorsDTO.getBirthDate());
+////            authors.add(author);
+////        }
+////        book.setAuthors((Set<Author>) authors);
+//        List<Signature> signatures = new ArrayList<>();
+//        for (SignatureDTO signatureDTO : bookDTO.getSignaturesDTOS()) {
+//            Signature signature = new Signature();
+//            signature.setBookSignature(signatureDTO.getBookSignature());
+//
+//////            List<Borrowed> borrowedList = new ArrayList<>();
+//////            for (BorrowedDTO borrowedDTO : signatureDTO.getBorrowedBookList()) {
+//////                Borrowed borrowed = new Borrowed();
+//////                borrowed.setStatus("available");
+//////                borrowedList.add(borrowed);
+//////            }
+////            signatures.add(signature);
+//        }
+//        book.setSignatures(signatures);
+//        bookService.addBook(book);
+//    }
 
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {

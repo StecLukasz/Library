@@ -13,20 +13,20 @@ public class SignatureService {
     private final SignatureRepository signatureRepository;
     private final BookRepository bookRepository;
 
-    public List<AdminSignatureDTO> getSignaturesForAdminList() {
+    public List<SignatureDTO> getSignaturesForAdminList() {
         List<Signature> signatures = signatureRepository.findAll();
-        List<AdminSignatureDTO> adminSignatureDTOS = new ArrayList<>();
+        List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();
         List<Book> books = bookRepository.findAllByOrderByTitle();
 
         for (int i = 0; i < signatures.size(); i++) {
-                AdminSignatureDTO adminSignatureDTO = new AdminSignatureDTO();
+            SignatureDTO signatureDTO = new SignatureDTO();
                 String titleBySignatureIf = getTitleBySignatureId(books, (long) i + 1);
-                adminSignatureDTO.setId(signatures.get(i).getId());
-                adminSignatureDTO.setTitle(titleBySignatureIf);
-                adminSignatureDTO.setBookSignature(signatures.get(i).getBookSignature());
-                adminSignatureDTO.setUsername(getUsernameForLatestStatus(signatures.get(i)));
-                adminSignatureDTO.setStatus(getLatestStatusForSignature(signatures.get(i)));
-                adminSignatureDTOS.add(adminSignatureDTO);
+                signatureDTO.setId(signatures.get(i).getId());
+                signatureDTO.setTitle(titleBySignatureIf);
+                signatureDTO.setBookSignature(signatures.get(i).getBookSignature());
+                signatureDTO.setUsername(getUsernameForLatestStatus(signatures.get(i)));
+                signatureDTO.setStatus(getLatestStatusForSignature(signatures.get(i)));
+                adminSignatureDTOS.add(signatureDTO);
             }
         return adminSignatureDTOS;
     }
