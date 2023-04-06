@@ -43,10 +43,6 @@ export class AdminReservedComponent implements OnInit {
     this.sortByStatus();
   }
 
-  signatureReady(): void {
-    console.log('ready');
-  }
-
   postCancelReservedSignatureByUser(DTO: AdminSignatureReservedDTO) {
     if (this.isButtonDisabled === false) {
       this.isButtonDisabled = true;
@@ -57,9 +53,8 @@ export class AdminReservedComponent implements OnInit {
 
       setTimeout(() => {
         this.isButtonDisabled = false;
-      }, 450);
-      this.getBooks();
-      console.log(this.getBooks());
+        this.getBooks();
+      }, 350);
     }
   }
 
@@ -72,8 +67,8 @@ export class AdminReservedComponent implements OnInit {
       );
       setTimeout(() => {
         this.isButtonDisabled = false;
-      }, 450);
-      this.getBooks();
+        this.getBooks();
+      }, 350);
       console.log(this.getBooks());
     }
   }
@@ -87,12 +82,11 @@ export class AdminReservedComponent implements OnInit {
         this.isButtonDisabled = false;
       }
     );
-    this.getBooks();
-    console.log(this.getBooks());
 
     setTimeout(() => {
       this.isButtonDisabled = false;
-    }, 450);
+      this.getBooks();
+    }, 350);
   }
 
   sortByStatus(): void {

@@ -43,7 +43,7 @@ export class ListComponent implements OnInit {
       console.log('zalogowany user' + user.username);
       // zalogowany - user nie jest undefined
       // this.getBooksForUser(user);
-      //this.getBooks();
+
       this.onSearch();
     });
     this.isButtonDisabled = false;
@@ -53,14 +53,8 @@ export class ListComponent implements OnInit {
     this.books = await firstValueFrom(this.api.getBooks());
   }
 
-  // private async getBooksForUser(user: User): Promise<void> {
-  //   this.books = await firstValueFrom(this.api.getBooksForUser(user.username));
-  //   console.log(this.books);
-  // }
-
   postReservedBookByUser(searchBook: SearchDTO) {
     this.postReservation(searchBook);
-    this.onSearch();
   }
 
   postReservation(searchBook: SearchDTO) {
@@ -72,29 +66,20 @@ export class ListComponent implements OnInit {
           if (data === 1) {
             setTimeout(() => {
               this.isButtonDisabled = false;
-            }, 450);
+              this.getBooksSearch(this.search);
+            }, 350);
           }
         },
         (error) => console.log(error)
       );
     }
-    this.onSearch();
   }
 
   onSearch() {
     this.getBooksSearch(this.search);
-    console.log(this.search);
   }
 
   private async getBooksSearch(text: string): Promise<void> {
     this.searchBooks = await firstValueFrom(this.api.getBooksSearch(text, this.currentUserLogin));
-  }
-
-  // getSignatureQuantity(searchBook: SearchDTO): number {
-  //   return book.signatures.length;
-  // }
-
-  private async bookReservedById(id: number, login: string): Promise<void> {
-    this.books = await firstValueFrom(this.api.getReservedBookByIdAndLogin(id, login));
   }
 }
