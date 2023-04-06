@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
 import pl.softsystem.books.domain.Book;
+import pl.softsystem.books.domain.ReservedSignaturesForUserDTO;
+import pl.softsystem.books.domain.SearchDTO;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
 import java.time.LocalDateTime;
@@ -29,12 +31,12 @@ public class BookController {
     }
 
     @GetMapping(ApiUrl.Book.SEARCH)
-    public List<Book> findBooks(String title, String genre, String authorLastName, String authorFirstName, String login) {
-        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName, authorFirstName, login);
+    public List<SearchDTO> findBooks(String title, String genre, String authorLastName, String authorFirstName, String login) {
+        return bookService.findBooksByTitleAndGenreAndAuthorForUser(title, genre, authorLastName, authorFirstName, login);
     }
 
     @GetMapping(ApiUrl.Book.RESERVED_FOR_USER)
-    public List<Book> getReservedBooksForUser(String login) {
+    public List<ReservedSignaturesForUserDTO> getReservedBooksForUser(String login) {
         return bookService.getBooksReservedByUser(login);
     }
 

@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { api } from './shared/const/api';
-import { AdminSignatureReservedDTO } from './shared/interface/AdminSignatureReservedDTO';
+import { AdminSignatureReservedDTO } from './shared/interface/adminSignatureReservedDTO';
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/book';
+import { ReservedSignaturesForUserDTO } from './shared/interface/reservedSignaturesForUserDTO';
+import { SearchDTO } from './shared/interface/searchDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -38,12 +40,12 @@ export class ApiService {
     return this.http.get<Book[]>(api.books.userBooks, { params });
   }
 
-  getReservedBooksForUser(login: string): Observable<Book[]> {
-    return this.http.get<Book[]>(api.books.reservedUserBooks + `?login=${login}`);
+  getReservedBooksForUser(login: string): Observable<ReservedSignaturesForUserDTO[]> {
+    return this.http.get<ReservedSignaturesForUserDTO[]>(api.books.reservedUserBooks + `?login=${login}`);
   }
 
-  getBooksSearch(text: string, login: string): Observable<Book[]> {
-    return this.http.get<Book[]>(
+  getBooksSearch(text: string, login: string): Observable<SearchDTO[]> {
+    return this.http.get<SearchDTO[]>(
       api.books.url +
         `/search?title=${text}&genre=${text}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
     );

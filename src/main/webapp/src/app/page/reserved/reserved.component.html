@@ -6,7 +6,7 @@
     <th class="font-medium p-2 text-left">Genre</th>
     <th class="font-medium p-2 text-left">Cancel</th>
   </tr>
-  <tr class="border-b hover:bg-gray-50" *ngFor="let book of books; let i = index">
+  <tr class="border-b hover:bg-gray-50" *ngFor="let book of reservedBooks; let i = index">
     <td class="p-2">{{ i + 1 }}</td>
     <td class="p-2">{{ book.title }}</td>
     <td class="p-2">

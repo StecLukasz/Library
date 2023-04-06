@@ -7,6 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { Book } from '../../shared/interface/book';
+import { ReservedSignaturesForUserDTO } from '../../shared/interface/reservedSignaturesForUserDTO';
 
 @UntilDestroy()
 @Component({
@@ -18,6 +19,7 @@ import { Book } from '../../shared/interface/book';
 })
 export class ReservedComponent implements OnInit {
   books: Book[] = [];
+  reservedBooks: ReservedSignaturesForUserDTO[] = [];
   currentUser: string = '';
   isButtonDisabled = false;
 
@@ -45,14 +47,14 @@ export class ReservedComponent implements OnInit {
   }
 
   private async getReservedBooksForUser(user: string): Promise<void> {
-    this.books = await firstValueFrom(this.api.getReservedBooksForUser(this.currentUser));
+    this.reservedBooks = await firstValueFrom(this.api.getReservedBooksForUser(this.currentUser));
   }
 
-  postCancelReservedBookByUser(book: Book) {
+  postCancelReservedBookByUser(reservedBook: ReservedSignaturesForUserDTO) {
     if (this.isButtonDisabled === false) {
       this.isButtonDisabled = true;
 
-      this.api.postCancelReservedBookByUser(this.currentUser, book.title).subscribe(
+      this.api.postCancelReservedBookByUser(this.currentUser, reservedBook.title).subscribe(
         (data) => {},
         (error) => console.log(error)
       );

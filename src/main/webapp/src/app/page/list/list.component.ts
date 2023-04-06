@@ -7,6 +7,7 @@ import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { User } from '../../core/auth/model/user';
 import { Book } from '../../shared/interface/book';
+import { SearchDTO } from '../../shared/interface/searchDTO';
 
 @UntilDestroy()
 @Component({
@@ -18,6 +19,7 @@ import { Book } from '../../shared/interface/book';
 })
 export class ListComponent implements OnInit {
   books: Book[] = [];
+  searchBooks: SearchDTO[] = [];
   search: string = '';
   currentUserLogin: string = '';
   user?: User;
@@ -56,16 +58,16 @@ export class ListComponent implements OnInit {
   //   console.log(this.books);
   // }
 
-  postReservedBookByUser(book: Book) {
-    this.postReservation(book);
+  postReservedBookByUser(searchBook: SearchDTO) {
+    this.postReservation(searchBook);
     this.onSearch();
   }
 
-  postReservation(book: Book) {
+  postReservation(searchBook: SearchDTO) {
     if (this.isButtonDisabled === false) {
       this.isButtonDisabled = true;
 
-      this.api.postReserveBookByUser(this.currentUserLogin, book.title).subscribe(
+      this.api.postReserveBookByUser(this.currentUserLogin, searchBook.title).subscribe(
         (data) => {
           if (data === 1) {
             setTimeout(() => {
@@ -85,12 +87,12 @@ export class ListComponent implements OnInit {
   }
 
   private async getBooksSearch(text: string): Promise<void> {
-    this.books = await firstValueFrom(this.api.getBooksSearch(text, this.currentUserLogin));
+    this.searchBooks = await firstValueFrom(this.api.getBooksSearch(text, this.currentUserLogin));
   }
 
-  getSignatureQuantity(book: Book): number {
-    return book.signatures.length;
-  }
+  // getSignatureQuantity(searchBook: SearchDTO): number {
+  //   return book.signatures.length;
+  // }
 
   private async bookReservedById(id: number, login: string): Promise<void> {
     this.books = await firstValueFrom(this.api.getReservedBookByIdAndLogin(id, login));

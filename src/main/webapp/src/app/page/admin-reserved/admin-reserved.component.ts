@@ -4,7 +4,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
-import { AdminSignatureReservedDTO } from '../../shared/interface/AdminSignatureReservedDTO';
+import { AdminSignatureReservedDTO } from '../../shared/interface/adminSignatureReservedDTO';
 
 @UntilDestroy()
 @Component({
