@@ -53,3 +53,6 @@ logging:
 oauth:
   clientId: BooksClient
   clientPassword: fsqwe34xklad7564381243912fsfh734612hfksy7824393fkdshf78634sxw
+
+notifications:
+  clientId: booksClient

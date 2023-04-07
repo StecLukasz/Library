@@ -27,4 +27,10 @@ public class ApiUrl {
     public class Schedule{
         public final String RUN_SCHEDULER_AVAILABLE_AFTER_ONE_WEEK = "/scheduler";
     }
+
+    @UtilityClass
+    public class ManualTrigger {
+        public final String BASE = ApiUrl.BASE + "/manual-trigger";
+        public final String SEND_TEST_NOTIFICATION = "/send-test-notification";
+    }
 }
