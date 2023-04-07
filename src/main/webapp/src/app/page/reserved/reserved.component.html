@@ -3,6 +3,7 @@
     <th class="font-medium p-2 text-left">Nr</th>
     <th class="font-medium p-2 text-left">Title</th>
     <th class="font-medium p-2 text-left">Author</th>
+    <th class="font-medium p-2 text-left">Status</th>
     <th class="font-medium p-2 text-left">Genre</th>
     <th class="font-medium p-2 text-left">Cancel</th>
   </tr>
@@ -14,6 +15,7 @@
         ><p>{{ author.firstName }} {{ author.lastName }}<br /></p
       ></span>
     </td>
+    <td class="p-2">{{ book.status }}</td>
     <td class="p-2">{{ book.genre }}</td>
     <td class="p-2">
       <button (click)="postCancelReservedBookByUser(book)" [disabled]="isButtonDisabled">

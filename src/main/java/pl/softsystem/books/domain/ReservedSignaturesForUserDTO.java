@@ -11,5 +11,6 @@ import java.util.Set;
 public class ReservedSignaturesForUserDTO {
     private String title;
     private String genre;
+    private String status;
     private Set<Author> authors = new HashSet<>();
 }
