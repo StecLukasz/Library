@@ -19,7 +19,7 @@ export class AddBookModalComponent {
     genre: '',
     pages: 0,
     adminSignatureDTO: [{ bookSignature: '' }],
-    authorsDTOS: [{ firstName: '', lastName: '', gender: '', birthDate: new Date() }],
+    authorDTO: [{ firstName: '', lastName: '', gender: '', birthDate: new Date() }],
   };
 
   //bookDTO: BookDTO = { signatures: [{ id: 0, bookId: 0, bookSignature: '', borrowedBookList: [{ status: '' }] }] };
@@ -40,11 +40,12 @@ export class AddBookModalComponent {
   }
 
   onSubmit() {
+    console.log(this.bookDTO);
     this.addBook();
   }
 
   addAuthor(): void {
-    this.bookDTO.authorsDTOS.push({
+    this.bookDTO.authorDTO.push({
       firstName: '',
       lastName: '',
       gender: '',

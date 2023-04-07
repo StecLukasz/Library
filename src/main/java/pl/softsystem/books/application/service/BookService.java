@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
     private final BorrowedRepository borrowedRepository;
     private final SignatureService signatureService;
 
@@ -245,11 +246,12 @@ public class BookService {
 
     public void addBook(BookDTO bookDTO) {
 
+        System.out.println(bookDTO);
         Book book = new Book();
         book.setTitle(bookDTO.getTitle());
         book.setPages(bookDTO.getPages());
         book.setGenre(bookDTO.getGenre());
-        List<Author> authors = new ArrayList<>();
+        Set<Author> authors = new HashSet<>();
         for (AuthorDTO authorDTO : bookDTO.getAuthorDTO()) {
             Author author = new Author();
             author.setFirstName(authorDTO.getFirstName());
@@ -257,18 +259,22 @@ public class BookService {
             author.setGender(authorDTO.getGender());
             author.setBirthDate(authorDTO.getBirthDate());
             authors.add(author);
+            authorRepository.save(author);
         }
-        book.setAuthors((Set<Author>) authors);
+        book.setAuthors(authors);
+//        book.setAuthors(new HashSet(authors)); tak miałem
+
         List<Signature> signatures = new ArrayList<>();
         for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
             Signature signature = new Signature();
+            signature.setBookId(1L);
             signature.setBookSignature(adminSignatureDTO.getBookSignature());
-            List<Borrowed> borrowedList = new ArrayList<>();
-            for (Borrowed borrowedDTO : adminSignatureDTO.getBorrowedBookList()) {
-                Borrowed borrowed = new Borrowed();
-                borrowed.setStatus("available");
-                borrowedList.add(borrowed);
-            }
+//            List<Borrowed> borrowedList = new ArrayList<>();
+//            for (Borrowed borrowedDTO : adminSignatureDTO.getBorrowedBookList()) {
+//                Borrowed borrowed = new Borrowed();
+//                borrowed.setStatus("available");
+//                borrowedList.add(borrowed);
+//            }
             signatures.add(signature);
         }
         book.setSignatures(signatures);

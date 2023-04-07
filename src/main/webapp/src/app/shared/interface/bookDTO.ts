@@ -9,6 +9,6 @@ export interface BookDTO {
   status?: string;
   pages?: number;
   genre: string;
-  authorsDTOS: AuthorDTO[];
+  authorDTO: AuthorDTO[];
   adminSignatureDTO: AdminSignatureDTO[];
 }
