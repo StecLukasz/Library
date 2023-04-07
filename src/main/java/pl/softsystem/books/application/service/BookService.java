@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.*;
 
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -247,9 +245,35 @@ public class BookService {
 
     public void addBook(BookDTO bookDTO) {
 
-
+        Book book = new Book();
+        book.setTitle(bookDTO.getTitle());
+        book.setPages(bookDTO.getPages());
+        book.setGenre(bookDTO.getGenre());
+        List<Author> authors = new ArrayList<>();
+        for (AuthorDTO authorDTO : bookDTO.getAuthorDTO()) {
+            Author author = new Author();
+            author.setFirstName(authorDTO.getFirstName());
+            author.setLastName(authorDTO.getLastName());
+            author.setGender(authorDTO.getGender());
+            author.setBirthDate(authorDTO.getBirthDate());
+            authors.add(author);
+        }
+        book.setAuthors((Set<Author>) authors);
+        List<Signature> signatures = new ArrayList<>();
+        for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
+            Signature signature = new Signature();
+            signature.setBookSignature(adminSignatureDTO.getBookSignature());
+            List<Borrowed> borrowedList = new ArrayList<>();
+            for (Borrowed borrowedDTO : adminSignatureDTO.getBorrowedBookList()) {
+                Borrowed borrowed = new Borrowed();
+                borrowed.setStatus("available");
+                borrowedList.add(borrowed);
+            }
+            signatures.add(signature);
+        }
+        book.setSignatures(signatures);
         System.out.println(bookDTO);
-        //bookRepository.save(book);
+        bookRepository.save(book);
     }
 
 

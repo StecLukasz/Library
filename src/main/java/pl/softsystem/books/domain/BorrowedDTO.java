@@ -1,4 +1,14 @@
 package pl.softsystem.books.domain;
 
-public interface BorrowedDTO {
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
+public class BorrowedDTO {
+    private String status;
+
+
 }
