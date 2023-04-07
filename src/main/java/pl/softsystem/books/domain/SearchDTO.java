@@ -11,7 +11,7 @@ import java.util.Set;
 public class SearchDTO {
     private String title;
     private String genre;
-    private Set<Author> authors = new HashSet<>();
+    private Set<AuthorAdminDTO> authors = new HashSet<>();
     private long availableQuantity;
     private long signatureQuantity;
     private String bookStatusForUser;

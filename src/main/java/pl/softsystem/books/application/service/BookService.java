@@ -6,7 +6,6 @@ import pl.softsystem.books.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +40,16 @@ public class BookService {
             searchDTO.setGenre(book.getGenre());
             searchDTO.setAvailableQuantity(book.getAvailableQuantity());
             searchDTO.setSignatureQuantity(book.getSignatures().size());
-            searchDTO.setAuthors(book.getAuthors());
+
+            Set<AuthorAdminDTO> authorAdminDTOs = new HashSet<>();
+            for(Author author : book.getAuthors()){
+                AuthorAdminDTO authorAdminDTO = new AuthorAdminDTO();
+                authorAdminDTO.setFirstName(author.getFirstName());
+                authorAdminDTO.setLastName(author.getLastName());
+                authorAdminDTOs.add(authorAdminDTO);
+                searchDTO.setAuthors(authorAdminDTOs);
+            }
+
             searchDTO.setBookStatusForUser(book.getBookStatusForUser());
             searchBooks.add(searchDTO);
         }
