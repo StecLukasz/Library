@@ -33,9 +33,9 @@ public class BookService {
         return searchBooks;
     }
 
-    public List<SearchDTO> searchBooksMapper(List<Book> books) {
+    public List<SearchDTO> searchBooksMapper(List<Book> books){
         List<SearchDTO> searchBooks = new ArrayList<>();
-        for (Book book : books) {
+        for(Book book : books){
             SearchDTO searchDTO = new SearchDTO();
             searchDTO.setTitle(book.getTitle());
             searchDTO.setGenre(book.getGenre());
@@ -93,16 +93,28 @@ public class BookService {
 
     public List<ReservedSignaturesForUserDTO> getBooksReservedByUser(String login) {
         List<Book> books = bookRepository.findAllByOrderByTitle();
-        List<Book> filteredBooks = new ArrayList<>();
+        books = books.stream()
+                .filter(book -> {
+                    Optional<Borrowed> latestReserved = getLatestReserved(book, login);
+                    return latestReserved.isPresent() && latestReserved.get().getStatus().equals("reserved");
+                })
+                .collect(Collectors.toList());
+        books = sortAuthorsByLastName(books);
+        return reservedUserBookMapper(books);
+    }
+
+    public List<ReservedSignaturesForUserDTO> reservedUserBookMapper(List<Book> books) {
+        List<ReservedSignaturesForUserDTO> reservedBooks = new ArrayList<>();
+
         for (Book book : books) {
-            Optional<Borrowed> latestReserved = getLatestReserved(book, login);
-            if (latestReserved.isPresent() && (latestReserved.get().getStatus().equals("reserved")||
-                    latestReserved.get().getStatus().equals("ready"))) {
-                filteredBooks.add(book);
-            }
+            ReservedSignaturesForUserDTO reservedBook = new ReservedSignaturesForUserDTO();
+            reservedBook.setTitle(book.getTitle());
+            reservedBook.setGenre(book.getGenre());
+            reservedBook.setAuthors(book.getAuthors());
+            reservedBooks.add(reservedBook);
+
         }
-        filteredBooks = sortAuthorsByLastName(filteredBooks);
-        return reservedUserBookMapper(filteredBooks, login);
+        return reservedBooks;
     }
 
     private Optional<Borrowed> getLatestReserved(Book book, String login) {
@@ -111,36 +123,6 @@ public class BookService {
                 .filter(borrowed -> borrowed.getLogin().equals(login))
                 .max(Comparator.comparing(Borrowed::getStatusDate));
     }
-
-    public List<ReservedSignaturesForUserDTO> reservedUserBookMapper(List<Book> books, String login) {
-        List<ReservedSignaturesForUserDTO> reservedBooks = new ArrayList<>();
-
-        for (Book book : books) {
-            System.out.println(book.getSignatures());
-
-            ReservedSignaturesForUserDTO reservedBook = new ReservedSignaturesForUserDTO();
-            reservedBook.setTitle(book.getTitle());
-            reservedBook.setGenre(book.getGenre());
-            reservedBook.setAuthors(book.getAuthors());
-            reservedBook.setStatus(getLastBookStatusForUser(book, login));
-            reservedBooks.add(reservedBook);
-        }
-        return reservedBooks;
-    }
-
-    public String getLastBookStatusForUser(Book book, String login) {
-        String result = "";
-        for (Signature signature : book.getSignatures()) {
-            List<Borrowed> borrowedList = signature.getBorrowedBookList();
-            if (borrowedList.get(borrowedList.size() - 1).getLogin().equals(login)) {
-                result = borrowedList.get(borrowedList.size() - 1).getStatus();
-            }
-        }
-        return result;
-    }
-
-
-
 
     public List<Book> removeDuplicateBooks(List<Book> books) {
         List<Book> uniqueBooks = new ArrayList<>();
