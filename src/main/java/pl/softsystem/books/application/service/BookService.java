@@ -13,6 +13,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final SignatureRepository signatureRepository;
     private final BorrowedRepository borrowedRepository;
     private final SignatureService signatureService;
 
@@ -269,22 +270,41 @@ public class BookService {
             Signature signature = new Signature();
             signature.setBookId(1L);
             signature.setBookSignature(adminSignatureDTO.getBookSignature());
-//            List<Borrowed> borrowedList = new ArrayList<>();
-//            for (Borrowed borrowedDTO : adminSignatureDTO.getBorrowedBookList()) {
-//                Borrowed borrowed = new Borrowed();
-//                borrowed.setStatus("available");
-//                borrowedList.add(borrowed);
-//            }
+
+//            setBookStatusAsAvailable(signature);
+            Borrowed borrowed = new Borrowed();
+            borrowed.setStatus("available");
+            borrowed.setSignatureId(1L);
+            borrowed.setLogin("none");
+            List<Borrowed> borrowedList= new ArrayList<>();
+            borrowedList.add(borrowed);
+            signature.setBorrowedBookList(borrowedList);
+
+//            BorrowedDTO borrowedDTO = new BorrowedDTO();
+//            borrowedDTO.setStatus("available");
+//            Borrowed borrowed = new Borrowed();
+//            borrowed.setStatus(borrowedDTO.getStatus());
+//            borrowed.setSignatureId(signature.getId());
+//            borrowedList.add(borrowed);
+//            signature.setBorrowedBookList(borrowedList);
+
             signatures.add(signature);
         }
         book.setSignatures(signatures);
+
         System.out.println(bookDTO);
         bookRepository.save(book);
     }
 
 
-    public Book getLatestBook() {
-        return bookRepository.findTopByOrderByIdDesc();
+    public void setBookStatusAsAvailable(Signature signature) {
+        List<Borrowed> borrowedList = signature.getBorrowedBookList();
+        if (borrowedList != null && !borrowedList.isEmpty()) {
+            for (Borrowed borrowed : borrowedList) {
+                borrowed.setStatus("available");
+            }
+        }
     }
+
 }
 

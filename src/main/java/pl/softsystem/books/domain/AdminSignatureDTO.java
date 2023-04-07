@@ -8,7 +8,7 @@ import java.util.List;
 public class AdminSignatureDTO {
 
     private String bookSignature;
-    private List<Borrowed> borrowedBookList;
+
 
 
 

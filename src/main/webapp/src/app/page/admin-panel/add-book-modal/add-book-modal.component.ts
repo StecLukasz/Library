@@ -22,8 +22,6 @@ export class AddBookModalComponent {
     authorDTO: [{ firstName: '', lastName: '', gender: '', birthDate: new Date() }],
   };
 
-  //bookDTO: BookDTO = { signatures: [{ id: 0, bookId: 0, bookSignature: '', borrowedBookList: [{ status: '' }] }] };
-
   constructor(private api: ApiService, private router: Router) {}
 
   addBook() {

@@ -23,6 +23,7 @@ public class BookDTO {
     private String genre;
     private Set<AuthorDTO> authorDTO;
     private List<AdminSignatureDTO> adminSignatureDTO;
+    private List<BorrowedDTO> borrowedBookDTO;
 
 
 
