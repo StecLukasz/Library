@@ -16,7 +16,12 @@ public class ManualTriggerController {
     @GetMapping(value = ApiUrl.ManualTrigger.SEND_TEST_NOTIFICATION)
     public String sendTestNotification(String recipient, String message) {
         bookSender.sendTestNotification(recipient, message);
+        return "Send test notification successfully";
+    }
 
+    @GetMapping(value = ApiUrl.ManualTrigger.SEND_REQUEST_DENIED_NOTIFICATION)
+    public String sendRequestDeniedNotification(String recipient, String message) {
+        bookSender.sendRequestDeniedNotification(recipient, message);
         return "Send test notification successfully";
     }
 }

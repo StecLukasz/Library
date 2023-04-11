@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/auth/auth.guard';
 import { AboutComponent } from './page/about/about.component';
+
 import { AdminReservedComponent } from './page/admin-reserved/admin-reserved.component';
 import { ListComponent } from './page/list/list.component';
 import { LoginComponent } from './page/login/login.component';

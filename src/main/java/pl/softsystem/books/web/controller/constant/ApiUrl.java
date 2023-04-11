@@ -32,5 +32,6 @@ public class ApiUrl {
     public class ManualTrigger {
         public final String BASE = ApiUrl.BASE + "/manual-trigger";
         public final String SEND_TEST_NOTIFICATION = "/send-test-notification";
+        public final String SEND_REQUEST_DENIED_NOTIFICATION = "/send-request-denied-notification";
     }
 }

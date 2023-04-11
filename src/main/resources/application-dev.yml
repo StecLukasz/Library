@@ -12,8 +12,8 @@ notifications:
   prodEnabled: false
   clientPassword: Kb6q6ccbpc3EsGkmsUi6zuqkV2xyPcWb2hyQHLWjiSqea
   url: https://intranet3.softsystem.pl/mails-console
-  devRecipients: dsowins@softsystem.pl
+  devRecipients: jchyla@softsystem.pl
   id:
     testNotification: 204
-    reservationNotification: 205
+    bookRequestDenied: 205
     remindNotification: 206
