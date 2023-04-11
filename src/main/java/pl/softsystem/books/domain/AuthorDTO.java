@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class AuthorDTO {
+    private Long Id;
     private String firstName;
     private String lastName;
     private String gender;

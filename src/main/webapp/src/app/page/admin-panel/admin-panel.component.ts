@@ -42,7 +42,7 @@ export class AdminPanelComponent implements OnInit {
 
   private async getListBookForAdmin(): Promise<void> {
     this.adminPanelDTOs = await firstValueFrom(this.api.getSignaturesForAdminPanel());
-    this.sortByStatus(); // sort by status after fetching the data
+    // this.sortByStatus(); // sort by status after fetching the data
   }
 
   sortByStatus(): void {

@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface SignatureRepository extends JpaRepository<Signature, Long> {
 
+    Signature findByBookSignature(String bookSignature);
 }

@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.*;
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -263,7 +265,6 @@ public class BookService {
             authorRepository.save(author);
         }
         book.setAuthors(authors);
-//        book.setAuthors(new HashSet(authors)); tak miałem
 
         List<Signature> signatures = new ArrayList<>();
         for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
@@ -271,22 +272,13 @@ public class BookService {
             signature.setBookId(1L);
             signature.setBookSignature(adminSignatureDTO.getBookSignature());
 
-//            setBookStatusAsAvailable(signature);
             Borrowed borrowed = new Borrowed();
             borrowed.setStatus("available");
             borrowed.setSignatureId(1L);
             borrowed.setLogin("none");
-            List<Borrowed> borrowedList= new ArrayList<>();
+            List<Borrowed> borrowedList = new ArrayList<>();
             borrowedList.add(borrowed);
             signature.setBorrowedBookList(borrowedList);
-
-//            BorrowedDTO borrowedDTO = new BorrowedDTO();
-//            borrowedDTO.setStatus("available");
-//            Borrowed borrowed = new Borrowed();
-//            borrowed.setStatus(borrowedDTO.getStatus());
-//            borrowed.setSignatureId(signature.getId());
-//            borrowedList.add(borrowed);
-//            signature.setBorrowedBookList(borrowedList);
 
             signatures.add(signature);
         }
@@ -297,14 +289,66 @@ public class BookService {
     }
 
 
-    public void setBookStatusAsAvailable(Signature signature) {
-        List<Borrowed> borrowedList = signature.getBorrowedBookList();
-        if (borrowedList != null && !borrowedList.isEmpty()) {
-            for (Borrowed borrowed : borrowedList) {
-                borrowed.setStatus("available");
+    @Transactional
+    public void editBook(Long bookId, BookDTO bookDTO) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookId));
+
+        bookDTO.setBookId(bookId);
+        /** Edytuj atrybuty książki */
+        book.setTitle(bookDTO.getTitle());
+        book.setPages(bookDTO.getPages());
+        book.setGenre(bookDTO.getGenre());
+
+        /** Edytuj autorów */
+        Set<AuthorDTO> authorDTOs = bookDTO.getAuthorDTO();
+        saveOrUpdateAuthors(authorDTOs);
+        // pobierz aktualne encje Author z bazy danych na podstawie informacji z DTO
+        Set<Author> updatedAuthors = new HashSet<>();
+        for (AuthorDTO authorDTO : authorDTOs) {
+            Author author = authorRepository.findByFirstNameAndLastName(authorDTO.getFirstName(), authorDTO.getLastName());
+            if (author == null) {
+                throw new EntityNotFoundException("Author not found with name: " + authorDTO.getFirstName() + " " + authorDTO.getLastName());
             }
+            updatedAuthors.add(author);
+        }
+        book.setAuthors(updatedAuthors);
+
+        /** Edytuj sygnatury */
+        List<AdminSignatureDTO> signatureDTOs = bookDTO.getAdminSignatureDTO();
+        saveOrUpdateSignatures(signatureDTOs, bookDTO.getBookId());
+
+        bookRepository.save(book);
+    }
+
+    public void saveOrUpdateAuthors(Set<AuthorDTO> authorDTOs) {
+        for (AuthorDTO authorDTO : authorDTOs) {
+            Author author = authorRepository.findByFirstNameAndLastName(authorDTO.getFirstName(), authorDTO.getLastName());
+            if (author == null) {
+                author = new Author();
+                author.setFirstName(authorDTO.getFirstName());
+                author.setLastName(authorDTO.getLastName());
+            }
+            author.setGender(authorDTO.getGender());
+            author.setBirthDate(authorDTO.getBirthDate());
+            authorRepository.save(author);
         }
     }
+    public void saveOrUpdateSignatures(List<AdminSignatureDTO> signatureDTOs, Long bookId) {
+        List<Signature> signatures = new ArrayList<>();
+        for (AdminSignatureDTO signatureDTO : signatureDTOs) {
+            Signature signature = signatureRepository.findByBookSignature(signatureDTO.getBookSignature());
+            if (signature == null) {
+                signature = new Signature();
+                signature.setBookId(bookId);
+                signature.setBookSignature(signatureDTO.getBookSignature());
+                signatureRepository.save(signature);
+            }
+            signatures.add(signature);
+        }
+    }
+
 
 }
 

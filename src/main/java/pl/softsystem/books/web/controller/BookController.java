@@ -25,15 +25,19 @@ public class BookController {
 
 
     @PostMapping(ApiUrl.Book.ADD_BOOK)
-    public void addBookAdmin(@RequestBody BookDTO bookDTO){
+    public void addBookAdmin(@RequestBody BookDTO bookDTO) {
         System.out.println(bookDTO);
         System.out.println(bookDTO);
         bookService.addBook(bookDTO);
     }
 
-//    @PostMapping(ApiUrl.Book.ADD_BOOK)
-//    public void addBookAsAdmin(@RequestBody BookDTO bookDTO) {
-//
+    @PatchMapping(ApiUrl.Book.EDIT_BOOK)
+    public void editBookAdmin(@PathVariable Long bookId, @RequestBody BookDTO bookDTO) {
+        System.out.println(bookDTO);
+
+        bookService.editBook(bookId, bookDTO);
+    }
+
 
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {

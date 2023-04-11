@@ -24,8 +24,4 @@ public class BookDTO {
     private Set<AuthorDTO> authorDTO;
     private List<AdminSignatureDTO> adminSignatureDTO;
     private List<BorrowedDTO> borrowedBookDTO;
-
-
-
-
 }
