@@ -16,4 +16,4 @@ notifications:
   id:
     testNotification: 204
     bookRequestDenied: 205
-    remindNotification: 206
+    bookReady: 206

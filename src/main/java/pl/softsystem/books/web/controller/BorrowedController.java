@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.softsystem.books.application.notification.BookSender;
 import pl.softsystem.books.application.service.BorrowedService;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
@@ -16,6 +17,7 @@ import java.util.Map;
 @RequestMapping(ApiUrl.Book.BASE)
 public class BorrowedController {
     private final BorrowedService borrowedService;
+    private final BookSender bookSender;
 
     @PostMapping(ApiUrl.Book.CANCEL_SIGNATURE_RESERVATION)
     public ResponseEntity<String> cancelReservedBookByUser(@RequestBody Map<String, Object> data) {
@@ -23,6 +25,7 @@ public class BorrowedController {
         String login = (String) data.get("login");
         int id = (int) data.get("id");
         borrowedService.changeSignatureStatusTo("available", login, id);
+        bookSender.sendTemplateEmailNotification(205L, login, "Your request denied, contact with librarian.");
         return ResponseEntity.ok(login + " " + id);
     }
 
@@ -32,6 +35,7 @@ public class BorrowedController {
         String login = (String) data.get("login");
         int id = (int) data.get("id");
         borrowedService.changeSignatureStatusTo("ready", login, id);
+        bookSender.sendTemplateEmailNotification(206L, login, "Book is ready!");
         return ResponseEntity.ok(login + " " + id);
     }
 

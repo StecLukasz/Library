@@ -30,9 +30,7 @@ public class BookSender {
         AppLogger.MAIL.info("Test notification send successfully for {}", recipient);
     }
 
-    public void sendRequestDeniedNotification(String recipient, String message) {
-        Long templateId = 205L;
-
+    public void sendTemplateEmailNotification(Long templateId, String recipient, String message) {
         if (templateId == null) {
             AppLogger.MAIL.warn("No notification template id assigned for notification, Notification wasn't send");
             return;
@@ -42,7 +40,6 @@ public class BookSender {
         notifyService.send(templateId, new TestNotificationData(appUrl, recipient, message));
         AppLogger.MAIL.info("Test notification send successfully for {}", recipient);
     }
-
 
     @Getter
     @AllArgsConstructor
