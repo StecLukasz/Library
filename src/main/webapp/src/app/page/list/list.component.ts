@@ -58,6 +58,14 @@ export class ListComponent implements OnInit {
     console.log(this.searchBooks);
   }
 
+  filterBooksByAll(): void {
+    this.genre = '';
+    setTimeout(() => {
+      this.getBooksSearch(this.search, this.genre);
+    }, 50);
+    console.log(this.searchBooks);
+  }
+
   private async getBooks(): Promise<void> {
     this.books = await firstValueFrom(this.api.getBooks());
   }
