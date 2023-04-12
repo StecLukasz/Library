@@ -45,12 +45,9 @@ export class ApiService {
   }
 
   getBooksSearch(text: string, login: string, genre: string): Observable<SearchDTO[]> {
-    console.log(
-      `/search-with-genre-list?title=${text}&genre=${genre}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
-    );
     return this.http.get<SearchDTO[]>(
-      api.books.url +
-        `/search-with-genre-list?title=${text}&genre=${genre}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
+      api.books.searchWithGenreList +
+        `title=${text}&genre=${genre}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
     );
   }
 

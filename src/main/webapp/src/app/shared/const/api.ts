@@ -14,6 +14,7 @@ const apiBase = {
     cancel_signature_reservation: '/cancelSignatureReservation',
     ready_signature_reservation: '/readySignatureReservation',
     borrow_signature: '/borrowSignature',
+    searchWithGenreList: '/search-with-genre-list?',
   },
 };
 

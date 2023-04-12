@@ -73,9 +73,4 @@ public class BookController {
         return "changeStatusToAvailableAfterOneWeek started: " + LocalDateTime.now();
     }
 
-//    @GetMapping(ApiUrl.Book.SEARCH)
-//    public List<Book> findBooks(String title, String genre, String authorLastName, String authorFirstName) {
-//        return bookService.findBooksByTitleAndGenreAndAuthor(title, genre, authorLastName, authorFirstName);
-//    }
-
 }
