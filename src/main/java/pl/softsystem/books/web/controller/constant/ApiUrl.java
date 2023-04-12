@@ -21,6 +21,7 @@ public class ApiUrl {
         public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
         public final String BORROW_SIGNATURE = "/borrowSignature";
         public final String SEARCH = "/search";
+        public final String SEARCH_WITH_GENRE_LIST = "/search-with-genre-list";
     }
 
     @UtilityClass

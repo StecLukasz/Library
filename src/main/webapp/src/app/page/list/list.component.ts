@@ -24,6 +24,7 @@ export class ListComponent implements OnInit {
   currentUserLogin: string = '';
   user?: User;
   isButtonDisabled = false;
+  genre: string = '';
 
   constructor(private api: ApiService, private authService: AuthService) {}
 
@@ -49,6 +50,14 @@ export class ListComponent implements OnInit {
     this.isButtonDisabled = false;
   }
 
+  filterBooksByGenre(genre: string): void {
+    this.genre = genre;
+    setTimeout(() => {
+      this.getBooksSearch(this.search, this.genre);
+    }, 50);
+    console.log(this.searchBooks);
+  }
+
   private async getBooks(): Promise<void> {
     this.books = await firstValueFrom(this.api.getBooks());
   }
@@ -66,7 +75,7 @@ export class ListComponent implements OnInit {
           if (data === 1) {
             setTimeout(() => {
               this.isButtonDisabled = false;
-              this.getBooksSearch(this.search);
+              this.getBooksSearch(this.search, this.genre);
             }, 350);
           }
         },
@@ -76,10 +85,11 @@ export class ListComponent implements OnInit {
   }
 
   onSearch() {
-    this.getBooksSearch(this.search);
+    this.getBooksSearch(this.search, this.genre);
+    if (this.search === '') this.genre = '';
   }
 
-  private async getBooksSearch(text: string): Promise<void> {
-    this.searchBooks = await firstValueFrom(this.api.getBooksSearch(text, this.currentUserLogin));
+  private async getBooksSearch(text: string, genre: string): Promise<void> {
+    this.searchBooks = await firstValueFrom(this.api.getBooksSearch(text, this.currentUserLogin, genre));
   }
 }

@@ -1,57 +1,74 @@
-<form>
-  <div>
-    <input
-      type="text"
-      id="text"
-      placeholder="Search"
-      class="px-3 py-2 placeholder-gray-500 text-black rounded-sm ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"
-      style="border: 1px solid black"
-      [(ngModel)]="search"
-      name="text"
-      (keyup)="onSearch()"
-    />
-    <button type="submit"></button>
+<div class="container">
+  <div class="sidebar">
+    <ul>
+      <li class="genertitle">Genre</li>
+      <li (click)="filterBooksByGenre('cooking')">Cooking</li>
+      <li (click)="filterBooksByGenre('programing')">Programming</li>
+      <li (click)="filterBooksByGenre('history')">History</li>
+      <li (click)="filterBooksByGenre('fantasy')">Fantasy</li>
+      <li (click)="filterBooksByGenre('horror')">Horror</li>
+      <li (click)="filterBooksByGenre('romance')">Romance</li>
+      <li (click)="filterBooksByGenre('')">All</li>
+    </ul>
   </div>
-</form>
 
-<table class="w-full">
-  <tr class="border-b-2 border-gray-400">
-    <th class="font-medium p-2 text-left">Nr</th>
-    <th class="font-medium p-2 text-left">Title</th>
-    <th class="font-medium p-2 text-left">Author</th>
-    <th class="font-medium p-2 text-left">Genre</th>
-    <th class="font-medium p-2 text-left">Available</th>
-    <th class="font-medium p-2 text-left">Quantity</th>
-    <th *ngIf="user?.role === 0" class="font-medium p-2 text-left">Reserve</th>
-  </tr>
-  <tr class="border-b hover:bg-gray-50" *ngFor="let book of searchBooks; let i = index">
-    <td class="p-2">{{ i + 1 }}</td>
-    <td class="p-2">{{ book.title }}</td>
-    <td class="p-2">
-      <span *ngFor="let author of book.authors"
-        ><p>{{ author.firstName }} {{ author.lastName }}<br /></p
-      ></span>
-    </td>
-    <td class="p-2">{{ book.genre }}</td>
-    <td class="p-2">{{ book.availableQuantity }}</td>
-    <td class="p-2">{{ book.signatureQuantity }}</td>
+  <div class="main">
+    <form>
+      <div>
+        <input
+          type="text"
+          id="text"
+          placeholder="Search"
+          class="px-3 py-2 placeholder-gray-500 text-black rounded-sm ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"
+          style="border: 1px solid black"
+          [(ngModel)]="search"
+          name="text"
+          (keyup)="onSearch()"
+        />
+        <button type="submit"></button>
+      </div>
+    </form>
 
-    <td class="p-2">
-      <button
-        *ngIf="
-          book.availableQuantity > 0 &&
-          user?.username !== null &&
-          !(
-            book.bookStatusForUser === 'reserved' ||
-            book.bookStatusForUser === 'ready' ||
-            book.bookStatusForUser === 'borrowed'
-          )
-        "
-        (click)="postReservedBookByUser(book)"
-        [disabled]="isButtonDisabled"
-      >
-        <span class="material-icons">add_box</span>
-      </button>
-    </td>
-  </tr>
-</table>
+    <table class="w-full">
+      <tr class="border-b-2 border-gray-400">
+        <th class="font-medium p-2 text-left">Nr</th>
+        <th class="font-medium p-2 text-left">Title</th>
+        <th class="font-medium p-2 text-left">Author</th>
+        <th class="font-medium p-2 text-left">Genre</th>
+        <th class="font-medium p-2 text-left">Available</th>
+        <th class="font-medium p-2 text-left">Quantity</th>
+        <th *ngIf="user?.role === 0" class="font-medium p-2 text-left">Reserve</th>
+      </tr>
+      <tr class="border-b hover:bg-gray-50" *ngFor="let book of searchBooks; let i = index">
+        <td class="p-2">{{ i + 1 }}</td>
+        <td class="p-2">{{ book.title }}</td>
+        <td class="p-2">
+          <span *ngFor="let author of book.authors"
+            ><p>{{ author.firstName }} {{ author.lastName }}<br /></p
+          ></span>
+        </td>
+        <td class="p-2">{{ book.genre }}</td>
+        <td class="p-2">{{ book.availableQuantity }}</td>
+        <td class="p-2">{{ book.signatureQuantity }}</td>
+
+        <td class="p-2">
+          <button
+            *ngIf="
+              book.availableQuantity > 0 &&
+              user?.username !== null &&
+              !(
+                book.bookStatusForUser === 'reserved' ||
+                book.bookStatusForUser === 'ready' ||
+                book.bookStatusForUser === 'borrowed'
+              )
+            "
+            (click)="postReservedBookByUser(book)"
+            [disabled]="isButtonDisabled"
+          >
+            <span class="material-icons">add_box</span>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -44,12 +44,16 @@ export class ApiService {
     return this.http.get<ReservedSignaturesForUserDTO[]>(api.books.reservedUserBooks + `?login=${login}`);
   }
 
-  getBooksSearch(text: string, login: string): Observable<SearchDTO[]> {
+  getBooksSearch(text: string, login: string, genre: string): Observable<SearchDTO[]> {
+    console.log(
+      `/search-with-genre-list?title=${text}&genre=${genre}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
+    );
     return this.http.get<SearchDTO[]>(
       api.books.url +
-        `/search?title=${text}&genre=${text}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
+        `/search-with-genre-list?title=${text}&genre=${genre}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
     );
   }
+
   getReservedBookByIdAndLogin(id: number, login: string): Observable<Book[]> {
     return this.http.get<Book[]>(api.books.url + `/is-book-reserved-by-user?id=${id}&login=${login}`);
   }
@@ -81,6 +85,7 @@ export class ApiService {
 
     return this.http.post(api.books.borrow_signature, data);
   }
+
   //TODO remove after tests
   scheduler(): Observable<Object> {
     return this.http.get(api.books.url + `/scheduler`);

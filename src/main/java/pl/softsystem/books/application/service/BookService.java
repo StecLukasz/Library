@@ -32,9 +32,33 @@ public class BookService {
         return searchBooks;
     }
 
-    public List<SearchDTO> searchBooksMapper(List<Book> books){
+    public List<SearchDTO> findBooksWithGenreList(String title, String genre, String authorLastName, String authorFirstName, String login) {
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrAuthorsLastNameContainingIgnoreCaseOrAuthorsFirstNameContainingIgnoreCase(title, authorLastName, authorFirstName);
+        books = sortAuthorsByLastName(books);
+        books = removeDuplicateBooks(books);
+        books = sortBooksByTitle(books);
+        books = countAvailableBooks(books);
+        books = getLastBookStatusForUser(books, login);
+        books = removeEveryGenreExcept(books, genre);
+        List<SearchDTO> searchBooks = searchBooksMapper(books);
+        return searchBooks;
+    }
+
+    public List<Book> removeEveryGenreExcept(List<Book> books, String genre) {
+        List<Book> result = new ArrayList<>();
+        if (!genre.equals("")) {
+            for (Book book : books) {
+                if (book.getGenre().equals(genre)) {
+                    result.add(book);
+                }
+            }
+        } else result = books;
+        return result;
+    }
+
+    public List<SearchDTO> searchBooksMapper(List<Book> books) {
         List<SearchDTO> searchBooks = new ArrayList<>();
-        for(Book book : books){
+        for (Book book : books) {
             SearchDTO searchDTO = new SearchDTO();
             searchDTO.setTitle(book.getTitle());
             searchDTO.setGenre(book.getGenre());
@@ -42,7 +66,7 @@ public class BookService {
             searchDTO.setSignatureQuantity(book.getSignatures().size());
 
             Set<AuthorAdminDTO> authorAdminDTOs = new HashSet<>();
-            for(Author author : book.getAuthors()){
+            for (Author author : book.getAuthors()) {
                 AuthorAdminDTO authorAdminDTO = new AuthorAdminDTO();
                 authorAdminDTO.setFirstName(author.getFirstName());
                 authorAdminDTO.setLastName(author.getLastName());
@@ -104,7 +128,7 @@ public class BookService {
         List<Book> filteredBooks = new ArrayList<>();
         for (Book book : books) {
             Optional<Borrowed> latestReserved = getLatestReserved(book, login);
-            if (latestReserved.isPresent() && (latestReserved.get().getStatus().equals("reserved")||
+            if (latestReserved.isPresent() && (latestReserved.get().getStatus().equals("reserved") ||
                     latestReserved.get().getStatus().equals("ready"))) {
                 filteredBooks.add(book);
             }

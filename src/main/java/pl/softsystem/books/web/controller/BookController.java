@@ -35,6 +35,11 @@ public class BookController {
         return bookService.findBooksByTitleAndGenreAndAuthorForUser(title, genre, authorLastName, authorFirstName, login);
     }
 
+    @GetMapping(ApiUrl.Book.SEARCH_WITH_GENRE_LIST)
+    public List<SearchDTO> findBooksWithGenreList(String title, String genre, String authorLastName, String authorFirstName, String login) {
+        return bookService.findBooksWithGenreList(title, genre, authorLastName, authorFirstName, login);
+    }
+
     @GetMapping(ApiUrl.Book.RESERVED_FOR_USER)
     public List<ReservedSignaturesForUserDTO> getReservedBooksForUser(String login) {
         return bookService.getBooksReservedByUser(login);
