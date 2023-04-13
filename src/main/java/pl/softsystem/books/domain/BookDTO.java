@@ -1,9 +1,7 @@
 package pl.softsystem.books.domain;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;

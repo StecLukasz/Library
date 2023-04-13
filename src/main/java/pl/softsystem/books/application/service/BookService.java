@@ -291,7 +291,6 @@ public class BookService {
 
     @Transactional
     public void editBook(Long bookId, BookDTO bookDTO) {
-
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookId));
 
@@ -316,9 +315,18 @@ public class BookService {
         book.setAuthors(updatedAuthors);
 
         /** Edytuj sygnatury */
-        List<AdminSignatureDTO> signatureDTOs = bookDTO.getAdminSignatureDTO();
-        saveOrUpdateSignatures(signatureDTOs, bookDTO.getBookId());
+        List<Signature> signatures = book.getSignatures();
+        Long idSignarute = getSignatureIdByTitle(bookRepository.findAllByOrderByTitle(), bookDTO.getTitle());
 
+        for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
+            adminSignatureDTO.setId(idSignarute);
+
+            for (Signature signature : signatures) {
+                if (signature.getId() == idSignarute) {
+                    signature.setBookSignature(adminSignatureDTO.getBookSignature());
+                }
+            }
+        }
         bookRepository.save(book);
     }
 
@@ -335,18 +343,16 @@ public class BookService {
             authorRepository.save(author);
         }
     }
-    public void saveOrUpdateSignatures(List<AdminSignatureDTO> signatureDTOs, Long bookId) {
-        List<Signature> signatures = new ArrayList<>();
-        for (AdminSignatureDTO signatureDTO : signatureDTOs) {
-            Signature signature = signatureRepository.findByBookSignature(signatureDTO.getBookSignature());
-            if (signature == null) {
-                signature = new Signature();
-                signature.setBookId(bookId);
-                signature.setBookSignature(signatureDTO.getBookSignature());
-                signatureRepository.save(signature);
+
+    public Long getSignatureIdByTitle(List<Book> books, String title) {
+        for (Book book : books) {
+            if (book.getTitle().equals(title)) {
+                for (Signature signature : book.getSignatures()) {
+                    return signature.getId(); // zwracamy pierwsze znalezione id sygnatury
+                }
             }
-            signatures.add(signature);
         }
+        return null; // zwracamy null jeśli nie udało się znaleźć sygnatury o określonym tytule
     }
 
 
