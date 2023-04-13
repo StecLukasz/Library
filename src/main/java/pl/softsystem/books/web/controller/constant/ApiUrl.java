@@ -16,10 +16,10 @@ public class ApiUrl {
         public final String RESERVED_FOR_ADMIN = "/reserved-signatures-for-admin";
         public final String IS_BOOK_RESERVED_BY_USER = "/is-book-reserved-by-user";
         public final String RESERVE = "/reserve";
-        public final String CANCEL_RESERVED = "/cancelReserved";
-        public final String CANCEL_SIGNATURE_RESERVATION = "/cancelSignatureReservation";
-        public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
-        public final String BORROW_SIGNATURE = "/borrowSignature";
+        public final String CANCEL_RESERVED = "/cancel-reserved";
+        public final String CANCEL_SIGNATURE_RESERVATION = "/cancel-signature-reservation";
+        public final String READY_SIGNATURE_RESERVATION = "/ready-signature-reservation";
+        public final String BORROW_SIGNATURE = "/borrow-signature";
         public final String SEARCH = "/search";
         public final String SEARCH_WITH_GENRE_LIST = "/search-with-genre-list";
     }
