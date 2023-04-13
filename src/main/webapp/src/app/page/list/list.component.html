@@ -1,14 +1,14 @@
 <div class="container">
   <div class="sidebar">
     <ul>
-      <li class="genertitle">Genre</li>
-      <li (click)="filterBooksByGenre('cooking')">Cooking</li>
-      <li (click)="filterBooksByGenre('programing')">Programming</li>
-      <li (click)="filterBooksByGenre('history')">History</li>
-      <li (click)="filterBooksByGenre('fantasy')">Fantasy</li>
-      <li (click)="filterBooksByGenre('horror')">Horror</li>
-      <li (click)="filterBooksByGenre('romance')">Romance</li>
-      <li (click)="filterBooksByAll()">All</li>
+      <li class="genretitle">Genre</li>
+      <li (click)="filterBooksByGenre('cooking')" [ngClass]="{ bold: genre === 'cooking' }">Cooking</li>
+      <li (click)="filterBooksByGenre('programing')" [ngClass]="{ bold: genre === 'programing' }">Programing</li>
+      <li (click)="filterBooksByGenre('history')" [ngClass]="{ bold: genre === 'history' }">History</li>
+      <li (click)="filterBooksByGenre('fantasy')" [ngClass]="{ bold: genre === 'fantasy' }">Fantasy</li>
+      <li (click)="filterBooksByGenre('horror')" [ngClass]="{ bold: genre === 'horror' }">Horror</li>
+      <li (click)="filterBooksByGenre('romance')" [ngClass]="{ bold: genre === 'romance' }">Romance</li>
+      <li (click)="filterBooksByAll()" [ngClass]="{ bold: genre === '' }">All</li>
     </ul>
   </div>
 

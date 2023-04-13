@@ -25,7 +25,7 @@ public class BorrowedController {
         String login = (String) data.get("login");
         int id = (int) data.get("id");
         borrowedService.changeSignatureStatusTo("available", login, id);
-        bookSender.sendTemplateEmailNotification(205L, login, "Your request denied, contact with librarian.");
+        bookSender.sendRequestDeniedNotification(205L, login, "Your request denied, contact with librarian.");
         return ResponseEntity.ok(login + " " + id);
     }
 
@@ -35,7 +35,7 @@ public class BorrowedController {
         String login = (String) data.get("login");
         int id = (int) data.get("id");
         borrowedService.changeSignatureStatusTo("ready", login, id);
-        bookSender.sendTemplateEmailNotification(206L, login, "Book is ready!");
+        bookSender.sendBookReadyNotification(206L, login, "Book is ready!");
         return ResponseEntity.ok(login + " " + id);
     }
 
