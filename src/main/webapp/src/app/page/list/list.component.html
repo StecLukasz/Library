@@ -3,7 +3,11 @@
     <ul>
       <li class="genretitle">Genre</li>
       <span *ngFor="let genreDTO of genreDTOs">
-        <p (click)="filterBooksByGenre(genreDTO.genre)" [ngClass]="{ bold: genre === genreDTO.genre }">
+        <p
+          (click)="filterBooksByGenre(genreDTO.genre)"
+          [ngClass]="{ bold: genre === genreDTO.genre }"
+          class="genre-item"
+        >
           {{ genreDTO.genre }}<br />
         </p>
       </span>
