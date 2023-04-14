@@ -314,5 +314,16 @@ public class BookService {
         return now.after(other);
     }
 
+    public Set<ResponseGenreDTO> getGenreDTOList(){
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+        HashSet<ResponseGenreDTO> genreDTOs = new HashSet<>();
+        for(Book book : books){
+            ResponseGenreDTO genreDTO = new ResponseGenreDTO();
+            genreDTO.setGenre(book.getGenre());
+            genreDTOs.add(genreDTO);
+        }
+        return genreDTOs;
+    }
+
 }
 

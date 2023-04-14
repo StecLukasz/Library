@@ -22,6 +22,7 @@ public class ApiUrl {
         public final String BORROW_SIGNATURE = "/borrow-signature";
         public final String SEARCH = "/search";
         public final String SEARCH_WITH_GENRE_LIST = "/search-with-genre-list";
+        public final String GENRE_LIST = "/genre-list";
     }
 
     @UtilityClass

@@ -7,6 +7,7 @@ import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { User } from '../../core/auth/model/user';
 import { Book } from '../../shared/interface/book';
+import { ResponseGenreDTO } from '../../shared/interface/ResponseGenreDTO';
 import { SearchDTO } from '../../shared/interface/searchDTO';
 
 @UntilDestroy()
@@ -20,6 +21,7 @@ import { SearchDTO } from '../../shared/interface/searchDTO';
 export class ListComponent implements OnInit {
   books: Book[] = [];
   searchBooks: SearchDTO[] = [];
+  genreDTOs: ResponseGenreDTO[] = [];
   search: string = '';
   currentUserLogin: string = '';
   user?: User;
@@ -46,6 +48,7 @@ export class ListComponent implements OnInit {
       // this.getBooksForUser(user);
 
       this.onSearch();
+      this.getGenreDTOs();
     });
     this.isButtonDisabled = false;
   }
@@ -99,5 +102,9 @@ export class ListComponent implements OnInit {
 
   private async getBooksSearch(text: string, genre: string): Promise<void> {
     this.searchBooks = await firstValueFrom(this.api.getBooksSearch(text, this.currentUserLogin, genre));
+  }
+
+  private async getGenreDTOs(): Promise<void> {
+    this.genreDTOs = await firstValueFrom(this.api.getGenreDTOs());
   }
 }

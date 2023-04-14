@@ -2,12 +2,11 @@
   <div class="sidebar">
     <ul>
       <li class="genretitle">Genre</li>
-      <li (click)="filterBooksByGenre('cooking')" [ngClass]="{ bold: genre === 'cooking' }">Cooking</li>
-      <li (click)="filterBooksByGenre('programing')" [ngClass]="{ bold: genre === 'programing' }">Programing</li>
-      <li (click)="filterBooksByGenre('history')" [ngClass]="{ bold: genre === 'history' }">History</li>
-      <li (click)="filterBooksByGenre('fantasy')" [ngClass]="{ bold: genre === 'fantasy' }">Fantasy</li>
-      <li (click)="filterBooksByGenre('horror')" [ngClass]="{ bold: genre === 'horror' }">Horror</li>
-      <li (click)="filterBooksByGenre('romance')" [ngClass]="{ bold: genre === 'romance' }">Romance</li>
+      <span *ngFor="let genreDTO of genreDTOs">
+        <p (click)="filterBooksByGenre(genreDTO.genre)" [ngClass]="{ bold: genre === genreDTO.genre }">
+          {{ genreDTO.genre }}<br />
+        </p>
+      </span>
       <li (click)="filterBooksByAll()" [ngClass]="{ bold: genre === '' }">All</li>
     </ul>
   </div>

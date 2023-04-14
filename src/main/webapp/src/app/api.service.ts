@@ -6,6 +6,7 @@ import { AdminSignatureReservedDTO } from './shared/interface/adminSignatureRese
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/book';
 import { ReservedSignaturesForUserDTO } from './shared/interface/reservedSignaturesForUserDTO';
+import { ResponseGenreDTO } from './shared/interface/ResponseGenreDTO';
 import { SearchDTO } from './shared/interface/searchDTO';
 
 @Injectable({
@@ -49,6 +50,10 @@ export class ApiService {
       api.books.searchWithGenreList +
         `title=${text}&genre=${genre}&authorLastName=${text}&authorFirstName=${text}&login=${login}`
     );
+  }
+
+  getGenreDTOs(): Observable<ResponseGenreDTO[]> {
+    return this.http.get<ResponseGenreDTO[]>(api.books.GenreList);
   }
 
   getReservedBookByIdAndLogin(id: number, login: string): Observable<Book[]> {

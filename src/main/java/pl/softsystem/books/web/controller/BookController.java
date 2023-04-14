@@ -6,12 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
 import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.ReservedSignaturesForUserDTO;
+import pl.softsystem.books.domain.ResponseGenreDTO;
 import pl.softsystem.books.domain.SearchDTO;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -71,6 +74,11 @@ public class BookController {
     public String runSchedulerChangeStatusToAvailableAfterOneWeek(){
         bookService.changeStatusToAvailableAfterOneWeek();
         return "changeStatusToAvailableAfterOneWeek started: " + LocalDateTime.now();
+    }
+
+    @GetMapping(ApiUrl.Book.GENRE_LIST)
+    public Set<ResponseGenreDTO> getGenreDTOList(){
+        return bookService.getGenreDTOList();
     }
 
 }
