@@ -37,8 +37,8 @@ public class BookController {
     }
 
     @GetMapping(ApiUrl.Book.GET_BOOK_BY_ID)
-    public ResponseEntity<Book> getBookForAdmin(@PathVariable Long bookId) {
-        Book book = bookService.findById(bookId);
+    public ResponseEntity<BookDTO> getBookForAdmin(@PathVariable Long bookId) {
+        BookDTO book = bookService.getBookDTOById(bookId);
         return ResponseEntity.ok(book);
     }
 

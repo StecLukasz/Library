@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.softsystem.books.domain.AdminSignatureDTO;
 import pl.softsystem.books.domain.BookRepository;
 import pl.softsystem.books.domain.SignatureDTO;
-import pl.softsystem.books.domain.SignatureService;
+import pl.softsystem.books.application.service.SignatureService;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
 import java.util.List;

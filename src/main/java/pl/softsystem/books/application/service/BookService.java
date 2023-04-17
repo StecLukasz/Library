@@ -1,6 +1,7 @@
 package pl.softsystem.books.application.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.*;
 
@@ -25,6 +26,7 @@ public class BookService {
         books = sortAuthorsByLastName(books);
         return books;
     }
+
     public List<Book> findBooksByTitleAndGenreAndAuthor(String title, String genre, String authorLastName) {
         List<Book> books = bookRepository
                 .findByTitleContainingIgnoreCaseOrGenreContainingIgnoreCaseOrAuthorsLastNameContainingIgnoreCase(title, genre, authorLastName);
@@ -56,6 +58,9 @@ public class BookService {
         });
         return borrowedBooks;
     }
+
+
+
 
     public List<BookDTO> getBooksBorrowedByUserDto(String login) {
         List<Book> allBooks = bookRepository.findAllByOrderByTitle();
@@ -298,37 +303,37 @@ public class BookService {
 
         bookDTO.setBookId(bookId);
         /** Edytuj atrybuty książki */
-//        book.setTitle(bookDTO.getTitle());
-//        book.setPages(bookDTO.getPages());
-//        book.setGenre(bookDTO.getGenre());
+        book.setTitle(bookDTO.getTitle());
+        book.setPages(bookDTO.getPages());
+        book.setGenre(bookDTO.getGenre());
 
         /** Edytuj autorów */
-//        Set<AuthorDTO> authorDTOs = bookDTO.getAuthorDTO();
-//        saveOrUpdateAuthors(authorDTOs);
-//        // pobierz aktualne encje Author z bazy danych na podstawie informacji z DTO
-//        Set<Author> updatedAuthors = new HashSet<>();
-//        for (AuthorDTO authorDTO : authorDTOs) {
-//            Author author = authorRepository.findByFirstNameAndLastName(authorDTO.getFirstName(), authorDTO.getLastName());
-//            if (author == null) {
-//                throw new EntityNotFoundException("Author not found with name: " + authorDTO.getFirstName() + " " + authorDTO.getLastName());
-//            }
-//            updatedAuthors.add(author);
-//        }
-//        book.setAuthors(updatedAuthors);
+        Set<AuthorDTO> authorDTOs = bookDTO.getAuthorDTO();
+        saveOrUpdateAuthors(authorDTOs);
+        // pobierz aktualne encje Author z bazy danych na podstawie informacji z DTO
+        Set<Author> updatedAuthors = new HashSet<>();
+        for (AuthorDTO authorDTO : authorDTOs) {
+            Author author = authorRepository.findByFirstNameAndLastName(authorDTO.getFirstName(), authorDTO.getLastName());
+            if (author == null) {
+                throw new EntityNotFoundException("Author not found with name: " + authorDTO.getFirstName() + " " + authorDTO.getLastName());
+            }
+            updatedAuthors.add(author);
+        }
+        book.setAuthors(updatedAuthors);
 
         /** Edytuj sygnatury */
-//        List<Signature> signatures = book.getSignatures();
-//        Long idSignarute = getSignatureIdByTitle(bookRepository.findAllByOrderByTitle(), bookDTO.getTitle());
-//
-//        for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
-//            adminSignatureDTO.setId(idSignarute);
-//
-//            for (Signature signature : signatures) {
-//                if (signature.getId() == idSignarute) {
-//                    signature.setBookSignature(adminSignatureDTO.getBookSignature());
-//                }
-//            }
-//        }
+        List<Signature> signatures = book.getSignatures();
+        Long idSignarute = getSignatureIdByTitle(bookRepository.findAllByOrderByTitle(), bookDTO.getTitle());
+
+        for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
+            adminSignatureDTO.setId(idSignarute);
+
+            for (Signature signature : signatures) {
+                if (signature.getId() == idSignarute) {
+                    signature.setBookSignature(adminSignatureDTO.getBookSignature());
+                }
+            }
+        }
         bookRepository.save(book);
     }
 
@@ -361,6 +366,73 @@ public class BookService {
     public Book findById(Long bookId) {
         return bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
     }
+    public BookDTO getBookDTOById(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
 
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setBookId(book.getId());
+        bookDTO.setTitle(book.getTitle());
+        bookDTO.setPages(book.getPages());
+        bookDTO.setGenre(book.getGenre());
+
+        List<AdminSignatureDTO> adminSignatureDTOs = new ArrayList<>();
+        for (Signature signature : book.getSignatures()) {
+            AdminSignatureDTO adminSignatureDTO = new AdminSignatureDTO();
+            adminSignatureDTO.setBookSignature(signature.getBookSignature());
+
+            Set<AuthorDTO> authorDTOS = new HashSet<>();
+            for (Author author : book.getAuthors()) {
+                AuthorDTO authorDTO = new AuthorDTO();
+                authorDTO.setFirstName(author.getFirstName());
+                authorDTO.setLastName(author.getLastName());
+                authorDTO.setGender(author.getGender());
+                authorDTO.setBirthDate(author.getBirthDate());
+                authorDTOS.add(authorDTO);
+            }
+
+            adminSignatureDTOs.add(adminSignatureDTO);
+            bookDTO.setAuthorDTO(authorDTOS);
+        }
+        bookDTO.setAdminSignatureDTO(adminSignatureDTOs);
+
+        return bookDTO;
+    }
+
+
+    public List<BookDTO> getSignaturesForAdminList() {
+        List<BookDTO> adminBookDTO = new ArrayList<>();
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+
+        for (int i = 0; i < books.size(); i++) {
+            BookDTO bookDTO = new BookDTO();
+            bookDTO.setBookId(books.get(i).getId());
+            bookDTO.setTitle(books.get(i).getTitle());
+            bookDTO.setPages(books.get(i).getPages());
+            bookDTO.setGenre(books.get(i).getGenre());
+
+            List<AdminSignatureDTO> adminSignatureDTOs = new ArrayList<>();
+            for (Signature signature : books.get(i).getSignatures()) {
+                AdminSignatureDTO adminSignatureDTO = new AdminSignatureDTO();
+                adminSignatureDTO.setBookSignature(signature.getBookSignature());
+
+                List<AuthorDTO> authorDTOS = new ArrayList<>();
+                for (Author author : books.get(i).getAuthors()) {
+                    AuthorDTO authorDTO = new AuthorDTO();
+                    authorDTO.setFirstName(author.getFirstName());
+                    authorDTO.setLastName(author.getLastName());
+                    authorDTO.setGender(author.getGender());
+                    authorDTO.setBirthDate(author.getBirthDate());
+                    authorDTOS.add(authorDTO);
+                }
+                adminSignatureDTOs.add(adminSignatureDTO);
+            }
+            bookDTO.setAdminSignatureDTO(adminSignatureDTOs);
+
+            adminBookDTO.add(bookDTO);
+        }
+
+        return adminBookDTO;
+    }
 }
 
