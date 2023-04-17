@@ -286,6 +286,7 @@ public class BookService {
         book.setSignatures(signatures);
 
         System.out.println(bookDTO);
+        System.out.println(book);
         bookRepository.save(book);
     }
 
@@ -297,37 +298,37 @@ public class BookService {
 
         bookDTO.setBookId(bookId);
         /** Edytuj atrybuty książki */
-        book.setTitle(bookDTO.getTitle());
-        book.setPages(bookDTO.getPages());
-        book.setGenre(bookDTO.getGenre());
+//        book.setTitle(bookDTO.getTitle());
+//        book.setPages(bookDTO.getPages());
+//        book.setGenre(bookDTO.getGenre());
 
         /** Edytuj autorów */
-        Set<AuthorDTO> authorDTOs = bookDTO.getAuthorDTO();
-        saveOrUpdateAuthors(authorDTOs);
-        // pobierz aktualne encje Author z bazy danych na podstawie informacji z DTO
-        Set<Author> updatedAuthors = new HashSet<>();
-        for (AuthorDTO authorDTO : authorDTOs) {
-            Author author = authorRepository.findByFirstNameAndLastName(authorDTO.getFirstName(), authorDTO.getLastName());
-            if (author == null) {
-                throw new EntityNotFoundException("Author not found with name: " + authorDTO.getFirstName() + " " + authorDTO.getLastName());
-            }
-            updatedAuthors.add(author);
-        }
-        book.setAuthors(updatedAuthors);
+//        Set<AuthorDTO> authorDTOs = bookDTO.getAuthorDTO();
+//        saveOrUpdateAuthors(authorDTOs);
+//        // pobierz aktualne encje Author z bazy danych na podstawie informacji z DTO
+//        Set<Author> updatedAuthors = new HashSet<>();
+//        for (AuthorDTO authorDTO : authorDTOs) {
+//            Author author = authorRepository.findByFirstNameAndLastName(authorDTO.getFirstName(), authorDTO.getLastName());
+//            if (author == null) {
+//                throw new EntityNotFoundException("Author not found with name: " + authorDTO.getFirstName() + " " + authorDTO.getLastName());
+//            }
+//            updatedAuthors.add(author);
+//        }
+//        book.setAuthors(updatedAuthors);
 
         /** Edytuj sygnatury */
-        List<Signature> signatures = book.getSignatures();
-        Long idSignarute = getSignatureIdByTitle(bookRepository.findAllByOrderByTitle(), bookDTO.getTitle());
-
-        for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
-            adminSignatureDTO.setId(idSignarute);
-
-            for (Signature signature : signatures) {
-                if (signature.getId() == idSignarute) {
-                    signature.setBookSignature(adminSignatureDTO.getBookSignature());
-                }
-            }
-        }
+//        List<Signature> signatures = book.getSignatures();
+//        Long idSignarute = getSignatureIdByTitle(bookRepository.findAllByOrderByTitle(), bookDTO.getTitle());
+//
+//        for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
+//            adminSignatureDTO.setId(idSignarute);
+//
+//            for (Signature signature : signatures) {
+//                if (signature.getId() == idSignarute) {
+//                    signature.setBookSignature(adminSignatureDTO.getBookSignature());
+//                }
+//            }
+//        }
         bookRepository.save(book);
     }
 

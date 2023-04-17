@@ -23,7 +23,7 @@ public class ApiUrl {
         public final String SEARCH = "/search";
 
         public final String ADD_BOOK = "/add-book";
-        public static final String EDIT_BOOK = "/edit-book/{bookId}";
+        public final String EDIT_BOOK = "/edit-book/{bookId}";
         public final String GET_BOOK_BY_ID = "/{bookId}";
         public final String DELETE_BOOK = "/{bookId}";
     }

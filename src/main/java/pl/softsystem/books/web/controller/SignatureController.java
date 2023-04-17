@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.softsystem.books.domain.AdminSignatureDTO;
+import pl.softsystem.books.domain.BookRepository;
 import pl.softsystem.books.domain.SignatureDTO;
 import pl.softsystem.books.domain.SignatureService;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping(ApiUrl.Book.BASE)
 public class SignatureController {
 
+    private final BookRepository bookRepository;
     private final SignatureService signatureService;
 
     @GetMapping(ApiUrl.Book.FOR_ADMIN)

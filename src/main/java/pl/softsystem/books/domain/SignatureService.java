@@ -20,9 +20,10 @@ public class SignatureService {
 
         for (int i = 0; i < signatures.size(); i++) {
             SignatureDTO signatureDTO = new SignatureDTO();
-                String titleBySignatureIf = getTitleBySignatureId(books, (long) i + 1);
+                String titleBySignatureIf = getTitleBySignatureId(books, signatures.get(i).getId());
                 signatureDTO.setId(signatures.get(i).getId());
                 signatureDTO.setTitle(titleBySignatureIf);
+                signatureDTO.setBookId(signatures.get(i).getBookId());
                 signatureDTO.setBookSignature(signatures.get(i).getBookSignature());
                 signatureDTO.setUsername(getUsernameForLatestStatus(signatures.get(i)));
                 signatureDTO.setStatus(getLatestStatusForSignature(signatures.get(i)));

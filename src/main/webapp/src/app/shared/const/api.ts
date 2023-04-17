@@ -15,6 +15,7 @@ const apiBase = {
     editBook: '/edit-book',
     // getBook: '/${bookId}',
     deleteBook: '/${bookId}',
+    borrowedAdminSignatures: '/borrowed-signatures-for-admin',
   },
 };
 

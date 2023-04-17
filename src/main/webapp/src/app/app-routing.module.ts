@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/auth/auth.guard';
 import { AboutComponent } from './page/about/about.component';
-import { AdminBorrowedListComponent } from './page/admin-borrowed-list/admin-borrowed-list.component';
 import { AddBookModalComponent } from './page/admin-panel/add-book-modal/add-book-modal.component';
 import { AdminPanelComponent } from './page/admin-panel/admin-panel.component';
 import { EditBookComponent } from './page/admin-panel/edit-book/edit-book.component';
@@ -37,10 +36,10 @@ const routes: Routes = [
     path: 'edit-book/:bookId',
     component: EditBookComponent,
   },
-  {
-    path: 'admin-borrowed-panel',
-    component: AdminBorrowedListComponent,
-  },
+  // {
+  //   path: 'admin-borrowed-panel',
+  //   component: AdminBorrowedListComponent,
+  // },
   {
     path: 'about',
     canActivate: [AuthGuard],
