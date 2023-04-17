@@ -11,6 +11,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class BookDTO {
 
+    private Long id;
     private Long bookId;
     private String title;
     private Date borrowedDate;

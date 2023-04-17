@@ -25,7 +25,6 @@ public class BookService {
         books = sortAuthorsByLastName(books);
         return books;
     }
-
     public List<Book> findBooksByTitleAndGenreAndAuthor(String title, String genre, String authorLastName) {
         List<Book> books = bookRepository
                 .findByTitleContainingIgnoreCaseOrGenreContainingIgnoreCaseOrAuthorsLastNameContainingIgnoreCase(title, genre, authorLastName);
@@ -247,6 +246,7 @@ public class BookService {
         return now.after(other);
     }
 
+
     public void addBook(BookDTO bookDTO) {
 
         System.out.println(bookDTO);
@@ -257,12 +257,13 @@ public class BookService {
         Set<Author> authors = new HashSet<>();
         for (AuthorDTO authorDTO : bookDTO.getAuthorDTO()) {
             Author author = new Author();
+//            author.setId(authorDTO.getId());
             author.setFirstName(authorDTO.getFirstName());
             author.setLastName(authorDTO.getLastName());
             author.setGender(authorDTO.getGender());
             author.setBirthDate(authorDTO.getBirthDate());
             authors.add(author);
-            authorRepository.save(author);
+//            authorRepository.save(author);
         }
         book.setAuthors(authors);
 
@@ -355,6 +356,10 @@ public class BookService {
         return null; // zwracamy null jeśli nie udało się znaleźć sygnatury o określonym tytule
     }
 
+
+    public Book findById(Long bookId) {
+        return bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
+    }
 
 }
 

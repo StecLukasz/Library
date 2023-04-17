@@ -3,7 +3,7 @@
     <div class="col-md-6 offset-md-3">
       <div class="card">
         <div class="card-body">
-          <h3 class="form-heading">Add new book</h3>
+          <h3 class="form-heading">Edit book cart</h3>
           <br />
           <form class="book-form" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -107,9 +107,6 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <button type="button" class="btn btn-primary" (click)="addAuthor()">Add Author</button>
-              </div>
             </fieldset>
             <div class="form-group" *ngFor="let signature of bookDTO.adminSignatureDTO; let i = index">
               <label for="bookSignature{{ i }}">Book Signature:</label>
@@ -123,11 +120,9 @@
                 required
               />
             </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-primary" (click)="addSignature()">Add Signature</button>
-            </div>
+
             <div>
-              <button class="btn btn-success nav-link" type="submit">Add Book</button>
+              <button class="btn btn-success nav-link" type="submit">Update Book</button>
               <button class="btn btn-danger" type="button" (click)="goToAdminPanel()">Close</button>
             </div>
           </form>

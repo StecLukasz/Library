@@ -7,3 +7,13 @@ spring:
 
 oauth:
   baseUrl: https://intranet3.softsystem.pl/oauth
+
+  notifications:
+    prodEnabled: false
+    clientPassword: Kb6q6ccbpc3EsGkmsUi6zuqkV2xyPcWb2hyQHLWjiSqea
+    url: https://intranet3.softsystem.pl/mails-console
+    devRecipients: jchyla@softsystem.pl, lstec@softsystem.pl
+    id:
+      testNotification: 204
+      bookRequestDenied: 205
+      bookReady: 206

@@ -66,7 +66,14 @@
       {{ DTO.status }}
     </td>
     <td class="p-2">
-      <button (click)="editBook(DTO)">Edit</button>
+      <button
+        type="submit"
+        class="btn btn-primary nav-link"
+        [routerLink]="['/edit-book/', bookId]"
+        routerLinkActive="active"
+      >
+        Edit
+      </button>
     </td>
     <td class="p-2">
       <button (click)="deleteBook(DTO)">Delete</button>

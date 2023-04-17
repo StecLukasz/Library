@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -22,8 +22,9 @@ export class AdminPanelComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction is ascending
   currentUser: string = '';
   search: string = '';
+  bookId: string = '';
 
-  constructor(private api: ApiService, private authService: AuthService) {}
+  constructor(private api: ApiService, private authService: AuthService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
     // stream obserwujacy aktualnie zalogowanego użytkownika
@@ -42,6 +43,7 @@ export class AdminPanelComponent implements OnInit {
 
   private async getListBookForAdmin(): Promise<void> {
     this.adminPanelDTOs = await firstValueFrom(this.api.getSignaturesForAdminPanel());
+
     // this.sortByStatus(); // sort by status after fetching the data
   }
 
@@ -93,22 +95,15 @@ export class AdminPanelComponent implements OnInit {
     this.adminPanelDTOs = await firstValueFrom(this.api.getBooksSearchForAdmin(text));
   }
 
-  async editBook(book: AdminSignatureDTO): Promise<void> {
-    // TODO: implementacja metody edytującej książkę
-  }
+  // editBook(bookId: number) {
+  //   this.router.navigate(['/edit-book', bookId]);
+  // }
+
+  // async editBook(book: AdminSignatureDTO): Promise<void> {
+  // TODO: implementacja metody edytującej książkę
+  // }
 
   async deleteBook(book: AdminSignatureDTO): Promise<void> {
     // TODO: implementacja metody usuwającej książkę
   }
-
-  // addBook() {
-  //   this.api.addBookAdmin(this.book).subscribe(
-  //     (book) => {
-  //       console.log('Książka dodana', book);
-  //     },
-  //     (error) => {
-  //       console.log('Błąd podczas dodawania książki', error);
-  //     }
-  //   );
-  // }
 }

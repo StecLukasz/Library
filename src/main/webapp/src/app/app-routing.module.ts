@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/auth/auth.guard';
 import { AboutComponent } from './page/about/about.component';
+import { AdminBorrowedListComponent } from './page/admin-borrowed-list/admin-borrowed-list.component';
 import { AddBookModalComponent } from './page/admin-panel/add-book-modal/add-book-modal.component';
 import { AdminPanelComponent } from './page/admin-panel/admin-panel.component';
+import { EditBookComponent } from './page/admin-panel/edit-book/edit-book.component';
 import { BorrowedListComponent } from './page/borrowed-list/borrowed-list.component';
 import { ListComponent } from './page/list/list.component';
 import { LoginComponent } from './page/login/login.component';
@@ -30,6 +32,14 @@ const routes: Routes = [
   {
     path: 'add-book',
     component: AddBookModalComponent,
+  },
+  {
+    path: 'edit-book/:bookId',
+    component: EditBookComponent,
+  },
+  {
+    path: 'admin-borrowed-panel',
+    component: AdminBorrowedListComponent,
   },
   {
     path: 'about',

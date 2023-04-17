@@ -67,4 +67,13 @@ export class ApiService {
   addBookAdmin(bookDTO: BookDTO): Observable<BookDTO> {
     return this.http.post<BookDTO>(api.books.addBook, bookDTO);
   }
+
+  editBookAdmin(bookId: number, bookDTO: BookDTO): Observable<Object> {
+    console.log(bookId);
+    return this.http.patch<Object>(api.books.editBook + `/${bookId}`, bookDTO);
+  }
+
+  getBookForAdmin(bookId: number): Observable<BookDTO> {
+    return this.http.get<BookDTO>(api.books.url + `/${bookId}`);
+  }
 }

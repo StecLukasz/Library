@@ -10,7 +10,11 @@ const apiBase = {
     reservedUserBooks: '/reserved-books-for-user',
     borrowedDate: '/borrowed-date',
     adminPanelList: '/admin-panel',
+    adminBorrowedPanelList: '/admin-borrowed-panel',
     addBook: '/add-book',
+    editBook: '/edit-book',
+    // getBook: '/${bookId}',
+    deleteBook: '/${bookId}',
   },
 };
 

@@ -40,6 +40,7 @@ export class AddBookModalComponent {
   onSubmit() {
     console.log(this.bookDTO);
     this.addBook();
+    this.goToAdminPanel();
   }
 
   addAuthor(): void {
