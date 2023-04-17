@@ -15,7 +15,7 @@ import java.util.*;
 public class BookController {
 
     private final BookService bookService;
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
 
     @GetMapping()
@@ -23,10 +23,8 @@ public class BookController {
         return bookService.getAll();
     }
 
-
     @PostMapping(ApiUrl.Book.ADD_BOOK)
     public void addBookAdmin(@RequestBody BookDTO bookDTO) {
-        System.out.println(bookDTO);
         System.out.println(bookDTO);
         bookService.addBook(bookDTO);
     }
@@ -36,6 +34,22 @@ public class BookController {
         System.out.println(bookDTO);
 
         bookService.editBook(bookId, bookDTO);
+    }
+
+    @GetMapping(ApiUrl.Book.GET_BOOK_BY_ID)
+    public ResponseEntity<Book> getBookForAdmin(@PathVariable Long bookId) {
+        Book book = bookService.findById(bookId);
+        return ResponseEntity.ok(book);
+    }
+
+    @DeleteMapping(ApiUrl.Book.DELETE_BOOK)
+    public ResponseEntity<Map<String, Boolean>> deleteBook(@PathVariable Long bookId) {
+
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        bookRepository.delete(book);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
     }
 
 
