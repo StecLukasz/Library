@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { SignatureDTO } from '../../shared/interface/signatureDTO';
 
+@UntilDestroy()
 @Component({
   selector: 'app-admin-borrowed-list',
   standalone: true,
@@ -14,9 +15,9 @@ import { SignatureDTO } from '../../shared/interface/signatureDTO';
   styleUrls: ['./admin-borrowed-list.component.scss'],
 })
 export class AdminBorrowedListComponent implements OnInit {
-  username: string = '';
-  sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction is ascending
   adminPanelDTOs: SignatureDTO[] = [];
+  sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction is ascending
+  username: string = '';
   isButtonDisabled = false;
 
   constructor(private api: ApiService, private authService: AuthService) {}
@@ -43,13 +44,13 @@ export class AdminBorrowedListComponent implements OnInit {
   }
 
   postBookFromBorrowedToAvailable(DTO: SignatureDTO) {
-    if (this.isButtonDisabled === false) {
-      this.isButtonDisabled = true;
-      this.api.returnOfTheBook(DTO.username, DTO.id).subscribe(
-        (data) => {},
-        (error) => console.log(error)
-      );
-    }
+    this.api.returnOfTheBook(DTO.username, DTO.id).subscribe(
+      (data) => {},
+      (error) => console.log(error)
+    );
+    setTimeout(() => {
+      this.getBorrowedBooksForAdmin();
+    }, 100);
   }
 
   toggleSortDirectionByUsername(): void {

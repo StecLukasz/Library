@@ -20,7 +20,7 @@ public class ApiUrl {
         public final String CANCEL_SIGNATURE_RESERVATION = "/cancelSignatureReservation";
         public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
         public final String BORROW_SIGNATURE_RESERVATION = "/borrowSignatureReservation";
-        public final String BORROW_SIGNATURE_AVAILABLE = "/borrowSignatureAvailable";
+        public final String BORROW_SIGNATURE_AVAILABLE = "/return-book-with-status-available";
         public final String SEARCH = "/search";
 
         public final String ADD_BOOK = "/add-book";
