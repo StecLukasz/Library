@@ -20,11 +20,13 @@ public class ApiUrl {
         public final String CANCEL_SIGNATURE_RESERVATION = "/cancelSignatureReservation";
         public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
         public final String BORROW_SIGNATURE_RESERVATION = "/borrowSignatureReservation";
+        public final String BORROW_SIGNATURE_AVAILABLE = "/borrowSignatureAvailable";
         public final String SEARCH = "/search";
 
         public final String ADD_BOOK = "/add-book";
         public final String EDIT_BOOK = "/edit-book/{bookId}";
         public final String GET_BOOK_BY_ID = "/{bookId}";
         public final String DELETE_BOOK = "/{bookId}";
+        public final String BORROWED_BOOKS_FOR_ADMIN = "/admin-borrowed-panel";
     }
 }

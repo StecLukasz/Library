@@ -1,1 +1,45 @@
-<p>admin-borrowed-list works!</p>
+<form></form>
+
+<table class="w-full">
+  <tr class="border-b-2 border-gray-400">
+    <!--    <th class="font-medium p-2 text-left">Id</th>-->
+    <th class="font-medium p-2 text-left">Title</th>
+    <th class="font-medium p-2 text-left">Book Signature</th>
+    <th
+      class="font-medium p-2 text-left"
+      class="font-medium p-2 text-left"
+      (click)="toggleSortDirectionByUsername()"
+      [style.cursor]="sortDirection ? 'pointer' : 'auto'"
+      (mouseleave)="sortDirection ? (sortDirection = sortDirection) : ''"
+    >
+      Username
+      <span *ngIf="sortDirection === 'asc'">&#x25B2;</span>
+      <span *ngIf="sortDirection === 'desc'">&#x25BC;</span>
+    </th>
+    <th class="font-medium p-2 text-left">Status</th>
+    <th class="font-medium p-2 text-left">Borrowed Date</th>
+    <th class="font-medium p-2 text-left">Back to Available</th>
+    <th class="font-medium p-2 text-left">Send an E-mail remembering</th>
+  </tr>
+  <tr class="border-b hover:bg-gray-50" *ngFor="let book of adminPanelDTOs">
+    <td class="p-2">{{ book.title }}</td>
+    <td class="p-2">{{ book.bookSignature }}</td>
+    <td class="p-2">{{ book.username }}</td>
+    <td
+      class="p-2"
+      [style.color]="book.status === 'borrowed' ? 'red' : book.status === 'available' ? 'green' : 'inherit'"
+    >
+      {{ book.status }}
+    </td>
+    <td class="p-2">{{ book.statusDate | date : 'dd-MM-yyyy' }}</td>
+    <ng-template #available>
+      <td class="p-2"></td>
+    </ng-template>
+    <td class="p-2" *ngIf="book.status !== 'borrowed'; else available">
+      <button (click)="postBookFromBorrowedToAvailable(book)" [disabled]="isButtonDisabled">
+        <span class="material-icons">add_box</span>
+      </button>
+    </td>
+    <td class="p-2">elelelele</td>
+  </tr>
+</table>

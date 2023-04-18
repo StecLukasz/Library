@@ -4,5 +4,6 @@ export interface SignatureDTO {
   title: string;
   bookSignature: string;
   username: string;
+  statusDate: Date;
   status: string;
 }

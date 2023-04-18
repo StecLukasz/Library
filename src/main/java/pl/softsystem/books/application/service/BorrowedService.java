@@ -15,7 +15,16 @@ public class BorrowedService {
     public void cancelReservedSignatureByUser(String login, int id) {
         Borrowed borrowed = new Borrowed();
         borrowed.setLogin(login);
-        borrowed.setSignatureId((long)id);
+        borrowed.setSignatureId((long) id);
+        borrowed.setStatus("available");
+        System.out.println(borrowed);
+        borrowedRepository.save(borrowed);
+    }
+
+    public void changeStatusToAvailable(String login, int id) {
+        Borrowed borrowed = new Borrowed();
+        borrowed.setLogin(login);
+        borrowed.setSignatureId((long) id);
         borrowed.setStatus("available");
         System.out.println(borrowed);
         borrowedRepository.save(borrowed);
@@ -24,7 +33,7 @@ public class BorrowedService {
     public void readyReservedSignatureByUser(String login, int id) {
         Borrowed borrowed = new Borrowed();
         borrowed.setLogin(login);
-        borrowed.setSignatureId((long)id);
+        borrowed.setSignatureId((long) id);
         borrowed.setStatus("ready");
         System.out.println(borrowed);
         borrowedRepository.save(borrowed);
@@ -33,9 +42,10 @@ public class BorrowedService {
     public void borrowReservedSignatureByUser(String login, int id) {
         Borrowed borrowed = new Borrowed();
         borrowed.setLogin(login);
-        borrowed.setSignatureId((long)id);
+        borrowed.setSignatureId((long) id);
         borrowed.setStatus("borrowed");
         System.out.println(borrowed);
         borrowedRepository.save(borrowed);
     }
+
 }

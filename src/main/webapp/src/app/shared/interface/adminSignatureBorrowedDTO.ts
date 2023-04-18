@@ -4,4 +4,5 @@ export interface AdminSignatureBorrowedDTO {
   bookSignature: string;
   username: string;
   status: string;
+  borrowedDate: Date;
 }

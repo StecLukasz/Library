@@ -13,9 +13,9 @@ const apiBase = {
     adminBorrowedPanelList: '/admin-borrowed-panel',
     addBook: '/add-book',
     editBook: '/edit-book',
-    // getBook: '/${bookId}',
     deleteBook: '/${bookId}',
-    borrowedAdminSignatures: '/borrowed-signatures-for-admin',
+    // borrowedAdminSignatures: '/borrowed-signatures-for-admin',
+    returnBookWithStatusAvailable: '/return-book-with-status-available',
   },
 };
 

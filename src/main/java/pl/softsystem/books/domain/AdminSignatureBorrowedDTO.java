@@ -2,7 +2,6 @@ package pl.softsystem.books.domain;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -10,13 +9,14 @@ import java.util.Date;
 @Data
 @Getter
 @Setter
-@RequiredArgsConstructor
-public class SignatureDTO {
+public class AdminSignatureBorrowedDTO {
+
     private Long id;
-    private Long bookId;
     private String title;
     private String bookSignature;
     private String username;
-    private Date statusDate;
     private String status;
+    private Date borrowedDate;
+
+
 }

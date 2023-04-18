@@ -108,6 +108,18 @@ public class BookService {
         return latestBorrowed.get().getStatus().equals("available");
     }
 
+//    public List<SignatureDTO>getAllBorrowedBooksForAdmin(){
+//        List<SignatureDTO> borrowedBooks = new ArrayList<>();
+//
+//        for (Book book: books){
+//            SignatureDTO signatureDTO = new SignatureDTO();
+//            signatureDTO.setId(book.getId());
+//            signatureDTO.setTitle(book.getTitle());
+//            ;
+//        }
+//    }
+
+
 
     public List<Book> getBooksBorrowedByUser(String login) {
         List<Book> allBooks = bookRepository.findAllByOrderByTitle();
@@ -434,5 +446,6 @@ public class BookService {
 
         return adminBookDTO;
     }
+
 }
 

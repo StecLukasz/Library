@@ -23,4 +23,9 @@ public class SignatureController {
     public List<SignatureDTO> getSignaturesForAdminPanel() {
         return signatureService.getSignaturesForAdminList();
     }
+
+    @GetMapping(ApiUrl.Book.BORROWED_BOOKS_FOR_ADMIN)
+    public List<SignatureDTO> getSignaturesBorrowedForAdmin() {
+        return signatureService.getSignaturesBorrowedForAdmin();
+    }
 }

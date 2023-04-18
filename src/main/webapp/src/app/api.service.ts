@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { api } from './shared/const/api';
-import { AdminSignatureBorrowedDTO } from './shared/interface/adminSignatureBorrowedDTO';
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/Book';
 import { BookDTO } from './shared/interface/bookDTO';
@@ -79,7 +78,11 @@ export class ApiService {
     return this.http.get<BookDTO>(api.books.url + `/${bookId}`);
   }
 
-  getSignaturesBorrowedForAdmin(): Observable<AdminSignatureBorrowedDTO[]> {
-    return this.http.get<AdminSignatureBorrowedDTO[]>(api.books.borrowedAdminSignatures);
+  getSignaturesBorrowedForAdmin(): Observable<SignatureDTO[]> {
+    return this.http.get<SignatureDTO[]>(api.books.adminBorrowedPanelList);
+  }
+  returnOfTheBook(login: string, id: number): Observable<Object> {
+    const data = { login, id };
+    return this.http.post(api.books.returnBookWithStatusAvailable, data);
   }
 }

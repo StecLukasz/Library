@@ -25,6 +25,14 @@ public class BorrowedController {
         borrowedService.cancelReservedSignatureByUser(login, id);
         return ResponseEntity.ok(login + " " + id);
     }
+    @PostMapping(ApiUrl.Book.BORROW_SIGNATURE_AVAILABLE)
+    public ResponseEntity<String> returnOfTheBook(@RequestBody Map<String, Object> data) {
+        System.out.println(data);
+        String login = (String) data.get("login");
+        int id = (int) data.get("id");
+        borrowedService.changeStatusToAvailable(login, id);
+        return ResponseEntity.ok(login+ " " + id);
+    }
 
     @PostMapping(ApiUrl.Book.READY_SIGNATURE_RESERVATION)
     public ResponseEntity<String> readyReservedBookByUser(@RequestBody Map<String, Object> data) {
