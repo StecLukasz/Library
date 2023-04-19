@@ -1,12 +1,14 @@
 package pl.softsystem.books.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
+import pl.softsystem.books.application.notification.BookSender;
 import pl.softsystem.books.domain.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,6 +21,8 @@ public class BookService {
     private final SignatureRepository signatureRepository;
     private final BorrowedRepository borrowedRepository;
     private final SignatureService signatureService;
+    private BookSender bookSender;
+    private final UserService userService;
 
     public List<Book> getAll() {
         List<Book> books = bookRepository.findAllByOrderByTitle();
@@ -59,6 +63,18 @@ public class BookService {
         return borrowedBooks;
     }
 
+    public void sendReminderTwoWeeksBeforeDueDate(String login) {
+        List<BookDTO> borrowedBooks = getBooksBorrowedByUserDto(login);
+        for (BookDTO book : borrowedBooks) {
+            Date dueDate = book.getReturnDate();
+            LocalDate now = LocalDate.now();
+            long daysUntilDue = ChronoUnit.DAYS.between(now, dueDate.toInstant());
+            if (daysUntilDue == 14) {
+                // send reminder to user
+                bookSender.sendRemindingNotification(208L,login,"Your time of borrowing book is already ending");
+            }
+        }
+    }
 
 
 
@@ -88,6 +104,8 @@ public class BookService {
         return cal.getTime();
     }
 
+
+
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
             int count = 0;
@@ -108,18 +126,33 @@ public class BookService {
         return latestBorrowed.get().getStatus().equals("available");
     }
 
-//    public List<SignatureDTO>getAllBorrowedBooksForAdmin(){
-//        List<SignatureDTO> borrowedBooks = new ArrayList<>();
-//
-//        for (Book book: books){
-//            SignatureDTO signatureDTO = new SignatureDTO();
-//            signatureDTO.setId(book.getId());
-//            signatureDTO.setTitle(book.getTitle());
-//            ;
+//    public void sendReminderTwoWeeksBeforeDueDate() {
+//        pobrac z bazy liste sygnatur które sa borrowed i do jego loginu
+//        wysłał maila zapisujac je do listy a potem do sheludera
+
+
+//        List<String> usersWithBooksToReturn = new ArrayList<>();
+//        List<User> allUsers = userService.getAllUsers();
+//        for (User user : allUsers) {
+//            List<Book> borrowedBooks = getBooksBorrowedByUser(user.getUsername());
+//            Date currentDate = new Date();
+//            for (Book book : borrowedBooks) {
+//                Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, user.getUsername());
+//                if (latestBorrowed.isPresent()) {
+//                    Date dueDate = addThreeMonthsToDate(latestBorrowed.get().getStatusDate());
+//                    Date reminderDate = new Date(dueDate.getTime() - (2 * 7 * 24 * 60 * 60 * 1000L)); // odejmujemy 2 tygodnie w milisekundach
+//                    if (currentDate.after(reminderDate) && currentDate.before(dueDate)) {
+//                        usersWithBooksToReturn.add(user.getUsername());
+//                        break; // przerwij pętlę po znalezieniu pierwszej książki do oddania
+//                    }
+//                }
+//            }
+//        }
+//        // Wyślij przypomnienia tylko do tych użytkowników, którzy mają książki do oddania
+//        for (String login : usersWithBooksToReturn) {
+//            bookSender.sendRemindingNotification(208L, login, "Twój czas na oddanie książki już się kończy");
 //        }
 //    }
-
-
 
     public List<Book> getBooksBorrowedByUser(String login) {
         List<Book> allBooks = bookRepository.findAllByOrderByTitle();
@@ -262,7 +295,6 @@ public class BookService {
         other.add(Calendar.WEEK_OF_YEAR, 1);
         return now.after(other);
     }
-
 
     public void addBook(BookDTO bookDTO) {
 

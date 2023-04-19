@@ -19,6 +19,8 @@ public interface BorrowedRepository extends JpaRepository<Borrowed, Long> {
     List<Borrowed> findByLogin(String login);
 
     List<Borrowed> findAllByStatus(String borrowed);
+
+    List<Borrowed> findByStatus(String borrowed);
 }
 
 

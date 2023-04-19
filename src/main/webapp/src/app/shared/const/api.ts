@@ -16,6 +16,7 @@ const apiBase = {
     deleteBook: '/${bookId}',
     // borrowedAdminSignatures: '/borrowed-signatures-for-admin',
     returnBookWithStatusAvailable: '/return-book-with-status-available',
+    reminderOfTheBookFromAdmin: '/return-book-with-status-available-remind',
   },
 };
 

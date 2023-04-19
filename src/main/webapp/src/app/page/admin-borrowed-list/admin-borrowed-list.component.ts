@@ -53,6 +53,13 @@ export class AdminBorrowedListComponent implements OnInit {
     }, 100);
   }
 
+  sendMailWithReminder(DTO: SignatureDTO) {
+    this.api.reminderOfTheBook(DTO.username, DTO.id).subscribe(
+      () => {},
+      (error) => console.log(error)
+    );
+  }
+
   toggleSortDirectionByUsername(): void {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     this.sortByUser();

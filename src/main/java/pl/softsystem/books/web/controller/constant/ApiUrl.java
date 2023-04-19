@@ -21,6 +21,7 @@ public class ApiUrl {
         public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
         public final String BORROW_SIGNATURE_RESERVATION = "/borrowSignatureReservation";
         public final String BORROW_SIGNATURE_AVAILABLE = "/return-book-with-status-available";
+        public static final String BORROW_SIGNATURE_AVAILABLE_REMINDER = "/return-book-with-status-available-remind";
         public final String SEARCH = "/search";
 
         public final String ADD_BOOK = "/add-book";
@@ -28,5 +29,11 @@ public class ApiUrl {
         public final String GET_BOOK_BY_ID = "/{bookId}";
         public final String DELETE_BOOK = "/{bookId}";
         public final String BORROWED_BOOKS_FOR_ADMIN = "/admin-borrowed-panel";
+    }
+
+    @UtilityClass
+    public class ManualTrigger {
+        public final String BASE = ApiUrl.BASE + "/manual-trigger";
+        public final String SEND_TEST_NOTIFICATION = "/send-test-notification";
     }
 }

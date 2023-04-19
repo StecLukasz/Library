@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.softsystem.books.domain.User;
 import pl.softsystem.books.domain.UserRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -16,4 +18,7 @@ public class UserService {
     }
 
 
+//    public List<User> getAllUsers() {
+//        return repository.getAllUsers();
+//    }
 }

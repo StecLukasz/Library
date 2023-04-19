@@ -81,8 +81,14 @@ export class ApiService {
   getSignaturesBorrowedForAdmin(): Observable<SignatureDTO[]> {
     return this.http.get<SignatureDTO[]>(api.books.adminBorrowedPanelList);
   }
+
   returnOfTheBook(login: string, id: number): Observable<Object> {
     const data = { login, id };
     return this.http.post(api.books.returnBookWithStatusAvailable, data);
+  }
+
+  reminderOfTheBook(login: string, id: number): Observable<Object> {
+    const data = { login, id };
+    return this.http.post(api.books.reminderOfTheBookFromAdmin, data);
   }
 }
