@@ -22,7 +22,7 @@ public class Signature {
     @Column(name = "book_signature")
     private String bookSignature;
 
-    @OneToMany(targetEntity = Borrowed.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Borrowed.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "signature_id", referencedColumnName = "id")
     private List<Borrowed> borrowedBookList;
 

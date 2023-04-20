@@ -6,8 +6,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
-import { AdminSignatureDTO } from '../../shared/interface/adminSignatureDTO';
 import { Book } from '../../shared/interface/book';
+import { AdminSignatureDTO } from '../../shared/interface/adminSignatureDTO';
 import { SignatureDTO } from '../../shared/interface/signatureDTO';
 
 @UntilDestroy()
@@ -25,6 +25,7 @@ export class AdminPanelComponent implements OnInit {
   currentUser: string = '';
   search: string = '';
   bookId: string = '';
+  signatureId: string = '';
 
   constructor(private api: ApiService, private authService: AuthService, private router: Router) {}
 
@@ -91,21 +92,15 @@ export class AdminPanelComponent implements OnInit {
 
   onSearch() {
     this.getBooksSearch(this.search);
+    console.log(this.search);
   }
 
   private async getBooksSearch(text: string): Promise<void> {
     this.adminPanelDTOs = await firstValueFrom(this.api.getBooksSearchForAdmin(text));
   }
 
-  // editBook(bookId: number) {
-  //   this.router.navigate(['/edit-book', bookId]);
-  // }
-
-  // async editBook(book: AdminSignatureDTO): Promise<void> {
-  // TODO: implementacja metody edytującej książkę
-  // }
-
-  async deleteBook(book: AdminSignatureDTO): Promise<void> {
-    // TODO: implementacja metody usuwającej książkę
+  public async deleteOneSignatureAsAdmin(signatureId: number): Promise<void> {
+    await firstValueFrom(this.api.deleteOneSignature(signatureId));
+    this.getListBookForAdmin();
   }
 }

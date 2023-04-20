@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
-import { Book } from '../../shared/interface/book';
-import { ReservedSignaturesForUserDTO } from '../../shared/interface/reservedSignaturesForUserDTO';
+import { User } from '../../core/auth/model/user';
+import { Book } from '../../shared/interface/Book';
 
 @UntilDestroy()
 @Component({

@@ -107,7 +107,7 @@ export class ApiService {
   }
 
   getBooksSearchForAdmin(text: string): Observable<SignatureDTO[]> {
-    return this.http.get<SignatureDTO[]>(api.books.url + `/search?title=${text}`);
+    return this.http.get<SignatureDTO[]>(api.books.searchForAdmin + `title=${text}&bookSignature=${text}`);
   }
 
   addBookAdmin(bookDTO: BookDTO): Observable<BookDTO> {
@@ -117,6 +117,10 @@ export class ApiService {
   editBookAdmin(bookId: number, bookDTO: BookDTO): Observable<Object> {
     console.log(bookId);
     return this.http.patch<Object>(api.books.editBook + `/${bookId}`, bookDTO);
+  }
+
+  deleteOneSignature(signatureId: number): Observable<void> {
+    return this.http.delete<void>(api.books.deleteSignature + `/${signatureId}`);
   }
 
   getBookForAdmin(bookId: number): Observable<BookDTO> {

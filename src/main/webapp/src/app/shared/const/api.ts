@@ -25,6 +25,8 @@ const apiBase = {
     // borrowedAdminSignatures: '/borrowed-signatures-for-admin',
     returnBookWithStatusAvailable: '/return-book-with-status-available',
     reminderOfTheBookFromAdmin: '/return-book-with-status-available-remind',
+    searchForAdmin: '/search-for-admin?',
+    deleteSignature: '/delete-signature',
   },
 };
 

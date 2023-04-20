@@ -8,9 +8,11 @@ import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.ReservedSignaturesForUserDTO;
 import pl.softsystem.books.domain.ResponseGenreDTO;
 import pl.softsystem.books.domain.SearchDTO;
+import pl.softsystem.books.application.service.SignatureService;
 import pl.softsystem.books.domain.*;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,9 @@ public class BookController {
 
     private final BookService bookService;
     private final BookRepository bookRepository;
+    private final SignatureService signatureService;
+    private final BorrowedRepository borrowedRepository;
+    private final SignatureRepository signatureRepository;
 
 
     @GetMapping()
@@ -51,25 +56,37 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
-    @DeleteMapping(ApiUrl.Book.DELETE_BOOK)
-    public ResponseEntity<Map<String, Boolean>> deleteBook(@PathVariable Long bookId) {
-
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-        bookRepository.delete(book);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return ResponseEntity.ok(response);
+    @DeleteMapping(ApiUrl.Book.DELETE_SIGNATURE)
+    public void deleteOneSignature(@PathVariable Long signatureId) {
+        System.out.println(signatureId);
+        Signature signature = signatureRepository.findSignatureById(signatureId);
+        Long borrowedIdToDelete = signature.getBorrowedBookList().get(0).getId();;
+        borrowedRepository.deleteById(borrowedIdToDelete);
+        signatureRepository.deleteById(signatureId);
     }
+
+
+//    @DeleteMapping(ApiUrl.Book.DELETE_BOOK)
+//    public ResponseEntity<Map<String, Boolean>> deleteBook(@PathVariable Long bookId) {
+//
+//        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+//        bookRepository.delete(book);
+//        Map<String, Boolean> response = new HashMap<>();
+//        response.put("deleted", Boolean.TRUE);
+//        return ResponseEntity.ok(response);
+//    }
 
 
     @GetMapping(ApiUrl.Book.FOR_USER)
-    public List<Book> getBooksForUser(String login) {
+    public List<Book> getBooksBorrowedByUser(@RequestParam String login) {
         return bookService.getBooksBorrowedByUser(login);
     }
 
-    @GetMapping(ApiUrl.Book.SEARCH)
-    public List<SearchDTO> findBooks(String title, String genre, String authorLastName, String authorFirstName, String login) {
-        return bookService.findBooksByTitleAndGenreAndAuthorForUser(title, genre, authorLastName, authorFirstName, login);
+
+    @GetMapping(ApiUrl.Book.BORROWED_DATE)
+    public List<BookDTO> getBooksBorrowedByUserOnlyForTable(@RequestParam String login) {
+        List<BookDTO> borrowedBooks = bookService.getBooksBorrowedByUserDto(login);
+        return borrowedBooks;
     }
 
     @GetMapping(ApiUrl.Book.SEARCH_WITH_GENRE_LIST)

@@ -75,8 +75,16 @@ export class ListComponent implements OnInit {
 
   // private async getBooksForUser(user: User): Promise<void> {
   //   this.books = await firstValueFrom(this.api.getBooksForUser(user.username));
+  //
   //   console.log(this.books);
   // }
+  // private async getBooksForUser(user: User): Promise<void> {
+  //   this.books = await firstValueFrom(this.api.getBooksForUser(user.username));
+  //   console.log(this.books);
+  // }
+  postReservedBookByUser(searchBook: SearchDTO) {
+    this.postReservation(searchBook);
+  }
 
   postReservation(searchBook: SearchDTO) {
     if (this.isButtonDisabled === false) {
@@ -109,5 +117,6 @@ export class ListComponent implements OnInit {
     this.genreDTOs = await firstValueFrom(this.api.getGenreDTOs());
   }
 
-  postReservedBookByUser(book: SearchDTO) {}
+
+
 }

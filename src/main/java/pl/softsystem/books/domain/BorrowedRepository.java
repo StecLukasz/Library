@@ -22,6 +22,10 @@ public interface BorrowedRepository extends JpaRepository<Borrowed, Long> {
     List<Borrowed> findAllByStatus(String borrowed);
 
     List<Borrowed> findByStatus(String borrowed);
+
+    void deleteBySignatureId(Long signatureId);
+
+    Borrowed findBySignatureId(Long signatureId);
 }
 
 
