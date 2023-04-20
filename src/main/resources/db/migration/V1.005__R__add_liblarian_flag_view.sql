@@ -1,7 +1,7 @@
 GRANT SELECT ON newhr.pos_employee TO books;
 GRANT SELECT ON newhr.pos_group TO books;
 
-DROP VIEW newhr_employee_view;
+DROP VIEW IF EXISTS newhr_employee_view;
 CREATE VIEW newhr_employee_view
             (id, username, first_name, first_name_pl, last_name, last_name_pl, email, department, employment_form, manager_id, role) AS
 SELECT e.id,
