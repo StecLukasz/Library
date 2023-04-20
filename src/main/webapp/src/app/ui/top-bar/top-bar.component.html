@@ -11,8 +11,21 @@
         <a *ngIf="user?.username !== null" class="nav-item" routerLink="reserved" routerLinkActive="active">Reserved</a>
       </li>
       <li>
+        <a *ngIf="user?.username !== null" class="nav-item" routerLink="borrowed-date" routerLinkActive="active"
+          >Borrowed</a
+        >
+      </li>
+      <li>
+        <a *ngIf="user?.role === 4" class="nav-item" routerLink="admin-panel" routerLinkActive="active">Admin List</a>
+      </li>
+      <li>
         <a *ngIf="user?.role === 4" class="nav-item" routerLink="admin-reserved" routerLinkActive="active"
           >Admin Reserved</a
+        >
+      </li>
+      <li>
+        <a *ngIf="user?.role === 4" class="nav-item" routerLink="admin-borrowed-panel" routerLinkActive="active"
+          >Admin Borrowed</a
         >
       </li>
       <li><a class="nav-item" routerLink="about" routerLinkActive="active">About</a></li>
