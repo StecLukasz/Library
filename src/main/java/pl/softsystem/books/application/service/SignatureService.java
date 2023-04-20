@@ -12,27 +12,9 @@ import java.util.List;
 public class SignatureService {
 
     private final SignatureRepository signatureRepository;
-    private final BorrowedRepository borrowedRepository;
     private final BookRepository bookRepository;
 
-    public List<SignatureDTO> getTitleAndSignatureForAdmin() {
-        List<Signature> signatures = signatureRepository.findAll();
-        List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();
-        List<Book> books = bookRepository.findAllByOrderByTitle();
 
-        for (Signature signature : signatures) {
-                SignatureDTO signatureDTO = new SignatureDTO();
-                String titleBySignatureIf = getTitleBySignatureId(books, signature.getId());
-                signatureDTO.setId(signature.getId());
-                signatureDTO.setTitle(titleBySignatureIf);
-                signatureDTO.setBookId(signature.getBookId());
-                signatureDTO.setBookSignature(signature.getBookSignature());
-                signatureDTO.setUsername(getUsernameForLatestStatus(signature));
-                signatureDTO.setStatus(getLatestStatusForSignature(signature));
-                adminSignatureDTOS.add(signatureDTO);
-        }
-        return adminSignatureDTOS;
-    }
     public List<SignatureDTO> getSignaturesBorrowedForAdmin() {
         List<Signature> signatures = signatureRepository.findAll();
         List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();

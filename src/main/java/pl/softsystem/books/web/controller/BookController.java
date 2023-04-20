@@ -8,17 +8,13 @@ import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.ReservedSignaturesForUserDTO;
 import pl.softsystem.books.domain.ResponseGenreDTO;
 import pl.softsystem.books.domain.SearchDTO;
-import pl.softsystem.books.application.service.SignatureService;
 import pl.softsystem.books.domain.*;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +22,6 @@ import java.util.*;
 public class BookController {
 
     private final BookService bookService;
-    private final BookRepository bookRepository;
-    private final SignatureService signatureService;
     private final BorrowedRepository borrowedRepository;
     private final SignatureRepository signatureRepository;
 
@@ -64,18 +58,6 @@ public class BookController {
         borrowedRepository.deleteById(borrowedIdToDelete);
         signatureRepository.deleteById(signatureId);
     }
-
-
-//    @DeleteMapping(ApiUrl.Book.DELETE_BOOK)
-//    public ResponseEntity<Map<String, Boolean>> deleteBook(@PathVariable Long bookId) {
-//
-//        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-//        bookRepository.delete(book);
-//        Map<String, Boolean> response = new HashMap<>();
-//        response.put("deleted", Boolean.TRUE);
-//        return ResponseEntity.ok(response);
-//    }
-
 
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {
@@ -132,4 +114,8 @@ public class BookController {
         return bookService.getGenreDTOList();
     }
 
+    @GetMapping(ApiUrl.Book.SEARCH_FOR_ADMIN)
+    public List<SignatureDTO> getBooksSearchForAdmin(String title, String bookSignature){
+        return bookService.getBookTitleAndSignatureForAdmin(title,bookSignature);
+    }
 }
