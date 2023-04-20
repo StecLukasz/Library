@@ -24,7 +24,7 @@ export class AdminPanelComponent implements OnInit {
   currentUser: string = '';
   search: string = '';
   bookId: string = '';
-  id: number = 0;
+  signatureId: string = '';
 
   constructor(private api: ApiService, private authService: AuthService, private router: Router) {}
 
@@ -98,7 +98,8 @@ export class AdminPanelComponent implements OnInit {
     this.adminPanelDTOs = await firstValueFrom(this.api.getBooksSearchForAdmin(text));
   }
 
-  // private async deleteOneSignatureAsAdmin(id: number): Promise<void> {
-  //   this.adminPanelDTOs = await firstValueFrom(this.api.deleteOneSignature(this.id));
-  // }
+  public async deleteOneSignatureAsAdmin(signatureId: number): Promise<void> {
+    await firstValueFrom(this.api.deleteOneSignature(signatureId));
+    this.getListBookForAdmin();
+  }
 }

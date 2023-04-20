@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/notifications_stash/mails.txt

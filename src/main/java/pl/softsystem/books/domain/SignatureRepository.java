@@ -14,4 +14,5 @@ public interface SignatureRepository extends JpaRepository<Signature, Long> {
     Optional<Signature> findByBookIdAndBookSignature(Long bookId, String bookSignature);
 
 
+    Signature findSignatureById(Long signatureId);
 }

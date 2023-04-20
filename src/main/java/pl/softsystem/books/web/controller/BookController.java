@@ -47,15 +47,13 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
-    @PostMapping(ApiUrl.Book.DELETE_SIGNATURE)
+    @DeleteMapping(ApiUrl.Book.DELETE_SIGNATURE)
     public void deleteOneSignature(@PathVariable Long signatureId) {
-        Signature signature = signatureRepository.getById(signatureId);
-        Book book = bookRepository.findBySignaturesContaining(signature);
-
-        book.getSignatures().remove(signature);
-        bookRepository.save(book);
-
-        signatureRepository.delete(signature);
+        System.out.println(signatureId);
+        Signature signature = signatureRepository.findSignatureById(signatureId);
+        Long borrowedIdToDelete = signature.getBorrowedBookList().get(0).getId();;
+        borrowedRepository.deleteById(borrowedIdToDelete);
+        signatureRepository.deleteById(signatureId);
     }
 
 

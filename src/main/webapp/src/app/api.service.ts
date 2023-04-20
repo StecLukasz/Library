@@ -74,7 +74,7 @@ export class ApiService {
     return this.http.patch<Object>(api.books.editBook + `/${bookId}`, bookDTO);
   }
 
-  deleteOneSignature(bookId: number): Observable<void> {
+  deleteOneSignature(signatureId: number): Observable<void> {
     return this.http.delete<void>(api.books.deleteSignature);
   }
 
