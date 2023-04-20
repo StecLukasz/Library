@@ -26,9 +26,6 @@ public class ApiUrl {
         public final String GENRE_LIST = "/genre-list";
 
         public final String FOR_ADMIN = "/admin-panel";
-//        public final String CANCEL_RESERVED = "/cancelReserved";
-//        public final String CANCEL_SIGNATURE_RESERVATION = "/cancelSignatureReservation";
-//        public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
         public final String BORROW_SIGNATURE_RESERVATION = "/borrowSignatureReservation";
         public final String BORROW_SIGNATURE_AVAILABLE = "/return-book-with-status-available";
         public static final String BORROW_SIGNATURE_AVAILABLE_REMINDER = "/return-book-with-status-available-remind";

@@ -47,4 +47,22 @@ public class BorrowedController {
         borrowedService.changeSignatureStatusTo("borrowed", login, id);
         return ResponseEntity.ok(login + " " + id);
     }
+
+    @PostMapping(ApiUrl.Book.BORROW_SIGNATURE_AVAILABLE)
+    public ResponseEntity<String> returnOfTheBook(@RequestBody Map<String, Object> data) {
+        System.out.println(data);
+        String login = (String) data.get("login");
+        int id = (int) data.get("id");
+        borrowedService.changeSignatureStatusTo("available", login, id);
+        return ResponseEntity.ok(login + " " + id);
+    }
+
+    @PostMapping(ApiUrl.Book.BORROW_SIGNATURE_AVAILABLE_REMINDER)
+    public ResponseEntity<String> reminderOfTheBook(@RequestBody Map<String, Object> data) {
+        System.out.println(data);
+        String login = (String) data.get("login");
+        int id = (int) data.get("id");
+        bookSender.sendRemindingFromAdminNotification(209L, login, "Your time of borrowing book is already ending");
+        return ResponseEntity.ok(login + " " + id);
+    }
 }
