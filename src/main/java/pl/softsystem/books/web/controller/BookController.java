@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.softsystem.books.application.service.BookService;
+import pl.softsystem.books.application.service.SignatureService;
 import pl.softsystem.books.domain.*;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @RestController
@@ -16,6 +18,9 @@ public class BookController {
 
     private final BookService bookService;
     private final BookRepository bookRepository;
+    private final SignatureService signatureService;
+    private final BorrowedRepository borrowedRepository;
+    private final SignatureRepository signatureRepository;
 
 
     @GetMapping()
@@ -42,14 +47,30 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
-    @DeleteMapping(ApiUrl.Book.DELETE_BOOK)
-    public ResponseEntity<Map<String, Boolean>> deleteBook(@PathVariable Long bookId) {
+    @PostMapping(ApiUrl.Book.DELETE_SIGNATURE)
+    public void deleteOneSignature(@PathVariable Long signatureId) {
+        Signature signature = signatureRepository.getById(signatureId);
+        Book book = bookRepository.findBySignaturesContaining(signature);
 
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-        bookRepository.delete(book);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return ResponseEntity.ok(response);
+        book.getSignatures().remove(signature);
+        bookRepository.save(book);
+
+        signatureRepository.delete(signature);
+    }
+
+
+    @DeleteMapping(ApiUrl.Book.DELETE_BOOK)
+    public void deleteBook(@PathVariable Long id) {
+        Book book = bookRepository.getById(id);
+        bookRepository.deleteById(book.getId());
+
+        for(Signature signature: book.getSignatures()){
+            for (Borrowed borrowed: signature.getBorrowedBookList()){
+                borrowedRepository.delete(borrowed);
+            }
+            signatureRepository.delete(signature);
+        }
+        bookRepository.deleteById(id);
     }
 
 
@@ -57,6 +78,7 @@ public class BookController {
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {
         return bookService.getBooksBorrowedByUser(login);
     }
+
 
     @GetMapping(ApiUrl.Book.BORROWED_DATE)
     public List<BookDTO> getBooksBorrowedByUserOnlyForTable(@RequestParam String login) {

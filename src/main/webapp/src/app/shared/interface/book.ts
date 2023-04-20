@@ -1,5 +1,5 @@
-import { Author } from './Author';
-import { Signature } from './Signature';
+import { Author } from './author';
+import { Signature } from './signature';
 
 export interface Book {
   id?: number;

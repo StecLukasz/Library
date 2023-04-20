@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.button {
+.add-book-button {
   position: relative;
   width: 150px;
   height: 40px;
@@ -13,18 +13,18 @@
   background-color: #3aa856;
 }
 
-.button, .button__icon, .button__text {
+.add-book-button, .button__icon, .button__text {
   transition: all 0.3s;
 }
 
-.button .button__text {
+.add-book-button .button__text {
   transform: translateX(30px);
   color: #fff;
   font-weight: 600;
   word-wrap: break-word;
 }
 
-.button .button__icon {
+.add-book-button .button__icon {
   position: absolute;
   transform: translateX(109px);
   height: 100%;
@@ -35,29 +35,29 @@
   justify-content: center;
 }
 
-.button .svg {
+.add-book-button .svg {
   width: 30px;
   stroke: #fff;
 }
 
-.button:hover {
+.add-book-button:hover {
   background: #34974d;
 }
 
-.button:hover .button__text {
+.add-book-button:hover .button__text {
   color: transparent;
 }
 
-.button:hover .button__icon {
+.add-book-button:hover .button__icon {
   width: 148px;
   transform: translateX(0);
 }
 
-.button:active .button__icon {
+.add-book-button:active .button__icon {
   background-color: #2e8644;
 }
 
-.button:active {
+.add-book-button:active {
   border: 1px solid #2e8644;
 }
 

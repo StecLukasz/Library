@@ -71,11 +71,10 @@ public class BookService {
             long daysUntilDue = ChronoUnit.DAYS.between(now, dueDate.toInstant());
             if (daysUntilDue == 14) {
                 // send reminder to user
-                bookSender.sendRemindingNotification(208L,login,"Your time of borrowing book is already ending");
+                bookSender.sendRemindingNotification(208L, login, "Your time of borrowing book is already ending");
             }
         }
     }
-
 
 
     public List<BookDTO> getBooksBorrowedByUserDto(String login) {
@@ -103,7 +102,6 @@ public class BookService {
         cal.add(Calendar.MONTH, 3);
         return cal.getTime();
     }
-
 
 
     public List<Book> countAvailableBooks(List<Book> books) {
@@ -410,6 +408,7 @@ public class BookService {
     public Book findById(Long bookId) {
         return bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
     }
+
     public BookDTO getBookDTOById(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));

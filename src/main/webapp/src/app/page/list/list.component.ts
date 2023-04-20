@@ -5,7 +5,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
-import { Book } from '../../shared/interface/Book';
+import { Book } from '../../shared/interface/book';
 
 @UntilDestroy()
 @Component({
