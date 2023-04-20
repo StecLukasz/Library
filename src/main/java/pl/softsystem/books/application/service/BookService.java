@@ -598,16 +598,18 @@ public class BookService {
         List<Signature> signatures = signatureRepository.findAll();
         List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();
 
-        for (Signature signature : signatures) {
-            SignatureDTO signatureDTO = new SignatureDTO();
-            String titleBySignatureIf = getTitleBySignatureId(books, signature.getId());
-            signatureDTO.setId(signature.getId());
-            signatureDTO.setTitle(titleBySignatureIf);
-            signatureDTO.setBookId(signature.getBookId());
-            signatureDTO.setBookSignature(signature.getBookSignature());
-            signatureDTO.setUsername(getUsernameForLatestStatus(signature));
-            signatureDTO.setStatus(getLatestStatusForSignature(signature));
-            adminSignatureDTOS.add(signatureDTO);
+        for (Book book : books) {
+            for (Signature signature : book.getSignatures()) {
+                SignatureDTO signatureDTO = new SignatureDTO();
+                String titleBySignatureIf = getTitleBySignatureId(books, signature.getId());
+                signatureDTO.setId(signature.getId());
+                signatureDTO.setTitle(titleBySignatureIf);
+                signatureDTO.setBookId(signature.getBookId());
+                signatureDTO.setBookSignature(signature.getBookSignature());
+                signatureDTO.setUsername(getUsernameForLatestStatus(signature));
+                signatureDTO.setStatus(getLatestStatusForSignature(signature));
+                adminSignatureDTOS.add(signatureDTO);
+            }
         }
         return adminSignatureDTOS;
     }
