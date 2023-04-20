@@ -75,7 +75,7 @@ export class ApiService {
   }
 
   deleteOneSignature(signatureId: number): Observable<void> {
-    return this.http.delete<void>(api.books.deleteSignature);
+    return this.http.delete<void>(api.books.deleteSignature + `/${signatureId}`);
   }
 
   getBookForAdmin(bookId: number): Observable<BookDTO> {

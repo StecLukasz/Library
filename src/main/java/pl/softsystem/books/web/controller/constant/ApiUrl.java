@@ -27,7 +27,7 @@ public class ApiUrl {
         public final String ADD_BOOK = "/add-book";
         public final String EDIT_BOOK = "/edit-book/{bookId}";
         public final String GET_BOOK_BY_ID = "/{bookId}";
-        public final String DELETE_SIGNATURE = "/{signatureId}/delete-signature";
+        public final String DELETE_SIGNATURE = "/delete-signature/{signatureId}";
         public final String BORROWED_BOOKS_FOR_ADMIN = "/admin-borrowed-panel";
         public static final String SEARCH_FOR_ADMIN = "/search-for-admin";
         public static final String DELETE_BOOK = "/{id}/delete-book";

@@ -18,7 +18,7 @@ const apiBase = {
     returnBookWithStatusAvailable: '/return-book-with-status-available',
     reminderOfTheBookFromAdmin: '/return-book-with-status-available-remind',
     searchForAdmin: '/search-for-admin?',
-    deleteSignature: '/${signatureId}/delete-signature',
+    deleteSignature: '/delete-signature',
   },
 };
 
