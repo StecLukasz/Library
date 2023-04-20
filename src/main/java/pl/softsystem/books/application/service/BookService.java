@@ -595,7 +595,6 @@ public class BookService {
     //TODO
     public Set<SignatureDTO> getBookTitleAndSignatureForAdmin(String title, String bookSignature) {
         Set<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrSignaturesBookSignatureContainingIgnoreCase(title, bookSignature);
-        List<Signature> signatures = signatureRepository.findAll();
         Set<SignatureDTO> adminSignatureDTOS = new HashSet<>();
 
         for (Book book : books) {
