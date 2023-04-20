@@ -85,7 +85,6 @@ export class ListComponent implements OnInit {
   postReservedBookByUser(searchBook: SearchDTO) {
     this.postReservation(searchBook);
   }
-
   postReservation(searchBook: SearchDTO) {
     if (this.isButtonDisabled === false) {
       this.isButtonDisabled = true;
