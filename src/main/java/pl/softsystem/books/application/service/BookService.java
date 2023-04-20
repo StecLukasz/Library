@@ -593,10 +593,10 @@ public class BookService {
     }
 
     //TODO
-    public List<SignatureDTO> getBookTitleAndSignatureForAdmin(String title, String bookSignature) {
-        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
+    public Set<SignatureDTO> getBookTitleAndSignatureForAdmin(String title, String bookSignature) {
+        Set<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrSignaturesBookSignatureContainingIgnoreCase(title, bookSignature);
         List<Signature> signatures = signatureRepository.findAll();
-        List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();
+        Set<SignatureDTO> adminSignatureDTOS = new HashSet<>();
 
         for (Book book : books) {
             for (Signature signature : book.getSignatures()) {
@@ -613,7 +613,7 @@ public class BookService {
         }
         return adminSignatureDTOS;
     }
-    public String getTitleBySignatureId(List<Book> books, Long signatureId) {
+    public String getTitleBySignatureId(Set<Book> books, Long signatureId) {
         for (Book book : books) {
             for (Signature signature : book.getSignatures()) {
                 if (signature.getId().equals(signatureId)) {

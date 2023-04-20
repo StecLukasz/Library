@@ -54,7 +54,7 @@ public class BookController {
     public void deleteOneSignature(@PathVariable Long signatureId) {
         System.out.println(signatureId);
         Signature signature = signatureRepository.findSignatureById(signatureId);
-        Long borrowedIdToDelete = signature.getBorrowedBookList().get(0).getId();;
+        Long borrowedIdToDelete = signature.getBorrowedBookList().get(0).getId();
         borrowedRepository.deleteById(borrowedIdToDelete);
         signatureRepository.deleteById(signatureId);
     }
@@ -104,18 +104,18 @@ public class BookController {
     }
 
     @GetMapping(ApiUrl.Schedule.RUN_SCHEDULER_AVAILABLE_AFTER_ONE_WEEK)
-    public String runSchedulerChangeStatusToAvailableAfterOneWeek(){
+    public String runSchedulerChangeStatusToAvailableAfterOneWeek() {
         bookService.changeStatusToAvailableAfterOneWeek();
         return "changeStatusToAvailableAfterOneWeek started: " + LocalDateTime.now();
     }
 
     @GetMapping(ApiUrl.Book.GENRE_LIST)
-    public Set<ResponseGenreDTO> getGenreDTOList(){
+    public Set<ResponseGenreDTO> getGenreDTOList() {
         return bookService.getGenreDTOList();
     }
 
     @GetMapping(ApiUrl.Book.SEARCH_FOR_ADMIN)
-    public List<SignatureDTO> getBooksSearchForAdmin(String title, String bookSignature){
-        return bookService.getBookTitleAndSignatureForAdmin(title,bookSignature);
+    public Set<SignatureDTO> getBooksSearchForAdmin(String title, String bookSignature) {
+        return bookService.getBookTitleAndSignatureForAdmin(title, bookSignature);
     }
 }
