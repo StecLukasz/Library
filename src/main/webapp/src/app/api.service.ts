@@ -5,9 +5,11 @@ import { api } from './shared/const/api';
 import { AdminSignatureReservedDTO } from './shared/interface/adminSignatureReservedDTO';
 import { AppInfo } from './shared/interface/app-info';
 import { Book } from './shared/interface/book';
+import { BookDTO } from './shared/interface/bookDTO';
 import { ReservedSignaturesForUserDTO } from './shared/interface/reservedSignaturesForUserDTO';
-import { ResponseGenreDTO } from './shared/interface/ResponseGenreDTO';
+import { ResponseGenreDTO } from './shared/interface/responseGenreDTO';
 import { SearchDTO } from './shared/interface/searchDTO';
+import { SignatureDTO } from './shared/interface/signatureDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +39,15 @@ export class ApiService {
     const params = {
       login,
     };
-
     return this.http.get<Book[]>(api.books.userBooks, { params });
+  }
+
+  getBorrowedBooksForUser(login: string): Observable<Book[]> {
+    return this.http.get<Book[]>(api.books.userBooks + `?login=${login}`);
+  }
+
+  getBorrowedDate(login: string): Observable<BookDTO[]> {
+    return this.http.get<BookDTO[]>(api.books.borrowedDate + `/?login=${login}`);
   }
 
   getReservedBooksForUser(login: string): Observable<ReservedSignaturesForUserDTO[]> {
@@ -91,5 +100,40 @@ export class ApiService {
   //TODO remove after tests
   scheduler(): Observable<Object> {
     return this.http.get(api.books.url + `/scheduler`);
+  }
+
+  getSignaturesForAdminPanel(): Observable<SignatureDTO[]> {
+    return this.http.get<SignatureDTO[]>(api.books.adminPanelList);
+  }
+
+  getBooksSearchForAdmin(text: string): Observable<SignatureDTO[]> {
+    return this.http.get<SignatureDTO[]>(api.books.url + `/search?title=${text}`);
+  }
+
+  addBookAdmin(bookDTO: BookDTO): Observable<BookDTO> {
+    return this.http.post<BookDTO>(api.books.addBook, bookDTO);
+  }
+
+  editBookAdmin(bookId: number, bookDTO: BookDTO): Observable<Object> {
+    console.log(bookId);
+    return this.http.patch<Object>(api.books.editBook + `/${bookId}`, bookDTO);
+  }
+
+  getBookForAdmin(bookId: number): Observable<BookDTO> {
+    return this.http.get<BookDTO>(api.books.url + `/${bookId}`);
+  }
+
+  getSignaturesBorrowedForAdmin(): Observable<SignatureDTO[]> {
+    return this.http.get<SignatureDTO[]>(api.books.adminBorrowedPanelList);
+  }
+
+  returnOfTheBook(login: string, id: number): Observable<Object> {
+    const data = { login, id };
+    return this.http.post(api.books.returnBookWithStatusAvailable, data);
+  }
+
+  reminderOfTheBook(login: string, id: number): Observable<Object> {
+    const data = { login, id };
+    return this.http.post(api.books.reminderOfTheBookFromAdmin, data);
   }
 }

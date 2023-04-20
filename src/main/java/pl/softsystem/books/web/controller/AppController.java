@@ -17,9 +17,6 @@ public class AppController {
 
     @GetMapping()
     public AppInfo getAppInfo() {
-        AppLogger.INFO.info("Test info");
-        AppLogger.MAIL.info("Send mail log");
-        AppLogger.MAIL.error("Send mail error");
         return new AppInfo(appConfigReader);
     }
 }

@@ -8,6 +8,7 @@ import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.ReservedSignaturesForUserDTO;
 import pl.softsystem.books.domain.ResponseGenreDTO;
 import pl.softsystem.books.domain.SearchDTO;
+import pl.softsystem.books.domain.*;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,11 +24,43 @@ import java.util.Set;
 public class BookController {
 
     private final BookService bookService;
+    private final BookRepository bookRepository;
+
 
     @GetMapping()
     public List<Book> getBooks() {
         return bookService.getAll();
     }
+
+    @PostMapping(ApiUrl.Book.ADD_BOOK)
+    public void addBookAdmin(@RequestBody BookDTO bookDTO) {
+        System.out.println(bookDTO);
+        bookService.addBook(bookDTO);
+    }
+
+    @PatchMapping(ApiUrl.Book.EDIT_BOOK)
+    public void editBookAdmin(@PathVariable Long bookId, @RequestBody BookDTO bookDTO) {
+        System.out.println(bookDTO);
+
+        bookService.editBook(bookId, bookDTO);
+    }
+
+    @GetMapping(ApiUrl.Book.GET_BOOK_BY_ID)
+    public ResponseEntity<BookDTO> getBookForAdmin(@PathVariable Long bookId) {
+        BookDTO book = bookService.getBookDTOById(bookId);
+        return ResponseEntity.ok(book);
+    }
+
+    @DeleteMapping(ApiUrl.Book.DELETE_BOOK)
+    public ResponseEntity<Map<String, Boolean>> deleteBook(@PathVariable Long bookId) {
+
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        bookRepository.delete(book);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksForUser(String login) {

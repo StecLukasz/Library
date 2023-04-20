@@ -1,0 +1,133 @@
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="form-heading">Edit book cart</h3>
+          <br />
+          <form class="book-form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="Title..."
+                [(ngModel)]="bookDTO.title"
+                name="title"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="pages">Pages:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="pages"
+                placeholder="Number of pages..."
+                [(ngModel)]="bookDTO.pages"
+                name="pages"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="genre">Genre:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="genre"
+                placeholder="Genre..."
+                [(ngModel)]="bookDTO.genre"
+                name="genre"
+                required
+              />
+            </div>
+            <fieldset>
+              <div class="form-group">
+                <label>Author:</label>
+                <div *ngFor="let author of bookDTO.authorDTO; let i = index">
+                  <div class="author-info">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="firstName{{ i }}">First Name:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="firstName{{ i }}"
+                            [(ngModel)]="author.firstName"
+                            name="firstName{{ i }}"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="lastName{{ i }}">Last Name:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="lastName{{ i }}"
+                            [(ngModel)]="author.lastName"
+                            name="lastName{{ i }}"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="birthDate{{ i }}">Birth Date:</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="birthDate{{ i }}"
+                            [(ngModel)]="author.birthDate"
+                            name="birthDate{{ i }}"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="gender{{ i }}">Gender:</label>
+                          <select
+                            class="form-control"
+                            id="gender{{ i }}"
+                            [(ngModel)]="author.gender"
+                            name="gender{{ i }}"
+                            required
+                          >
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group" *ngFor="let signature of bookDTO.adminSignatureDTO; let i = index">
+              <label for="bookSignature{{ i }}">Book Signature:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="bookSignature{{ i }}"
+                placeholder="Book signature..."
+                [(ngModel)]="signature.bookSignature"
+                name="bookSignature{{ i }}"
+                required
+              />
+            </div>
+
+            <div>
+              <button class="btn btn-success nav-link" type="submit">Update Book</button>
+              <button class="btn btn-danger" type="button" (click)="goToAdminPanel()">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

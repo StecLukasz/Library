@@ -17,3 +17,5 @@ notifications:
     testNotification: 204
     bookRequestDenied: 205
     bookReady: 206
+    remindBorrowedNotification: 208
+    remindBorrowedBookFromAdminNotification: 209

@@ -7,7 +7,7 @@ import { ApiService } from '../../api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { User } from '../../core/auth/model/user';
 import { Book } from '../../shared/interface/book';
-import { ResponseGenreDTO } from '../../shared/interface/ResponseGenreDTO';
+import { ResponseGenreDTO } from '../../shared/interface/responseGenreDTO';
 import { SearchDTO } from '../../shared/interface/searchDTO';
 
 @UntilDestroy()
@@ -73,9 +73,10 @@ export class ListComponent implements OnInit {
     this.books = await firstValueFrom(this.api.getBooks());
   }
 
-  postReservedBookByUser(searchBook: SearchDTO) {
-    this.postReservation(searchBook);
-  }
+  // private async getBooksForUser(user: User): Promise<void> {
+  //   this.books = await firstValueFrom(this.api.getBooksForUser(user.username));
+  //   console.log(this.books);
+  // }
 
   postReservation(searchBook: SearchDTO) {
     if (this.isButtonDisabled === false) {
@@ -107,4 +108,6 @@ export class ListComponent implements OnInit {
   private async getGenreDTOs(): Promise<void> {
     this.genreDTOs = await firstValueFrom(this.api.getGenreDTOs());
   }
+
+  postReservedBookByUser(book: SearchDTO) {}
 }

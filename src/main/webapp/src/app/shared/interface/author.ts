@@ -3,5 +3,5 @@ export interface Author {
   firstName: string;
   lastName: string;
   gender: string;
-  birthDate: string;
+  birthDate: Date;
 }

@@ -6,7 +6,7 @@ const apiBase = {
   },
   books: {
     url: '/books',
-    userBooks: '/books-for-user',
+    userBooks: '/borrowed-books',
     reservedUserBooks: '/reserved-books-for-user',
     reservedAdminSignatures: '/reserved-signatures-for-admin',
     reserve: '/reserve',
@@ -16,6 +16,15 @@ const apiBase = {
     borrow_signature: '/borrow-signature',
     searchWithGenreList: '/search-with-genre-list?',
     GenreList: '/genre-list',
+    borrowedDate: '/borrowed-date',
+    adminPanelList: '/admin-panel',
+    adminBorrowedPanelList: '/admin-borrowed-panel',
+    addBook: '/add-book',
+    editBook: '/edit-book',
+    deleteBook: '/${bookId}',
+    // borrowedAdminSignatures: '/borrowed-signatures-for-admin',
+    returnBookWithStatusAvailable: '/return-book-with-status-available',
+    reminderOfTheBookFromAdmin: '/return-book-with-status-available-remind',
   },
 };
 

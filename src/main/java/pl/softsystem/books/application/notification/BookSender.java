@@ -54,6 +54,31 @@ public class BookSender {
         AppLogger.MAIL.info("Test notification send successfully for {}", recipient);
     }
 
+    public void sendRemindingNotification(Long l, String recipient, String message) {
+        Long templateId = notificationConfigReader.getId().getTestNotification();
+
+        if (templateId == null) {
+            AppLogger.MAIL.warn("No notification template id assigned for notification, Notification wasn't send");
+            return;
+        }
+
+        String appUrl = appConfigReader.getUrl();
+        notifyService.send(l, new TestNotificationData(appUrl, recipient, message));
+        AppLogger.MAIL.info("Test notification send successfully for {}", recipient);
+    }
+    public void sendRemindingFromAdminNotification(Long l, String recipient, String message) {
+        Long templateId = notificationConfigReader.getId().getTestNotification();
+
+        if (templateId == null) {
+            AppLogger.MAIL.warn("No notification template id assigned for notification, Notification wasn't send");
+            return;
+        }
+
+        String appUrl = appConfigReader.getUrl();
+        notifyService.send(l, new TestNotificationData(appUrl, recipient, message));
+        AppLogger.MAIL.info("Test notification send successfully for {}", recipient);
+    }
+
     @Getter
     @AllArgsConstructor
     static class TestNotificationData {

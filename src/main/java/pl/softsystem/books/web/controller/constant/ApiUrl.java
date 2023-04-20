@@ -11,7 +11,8 @@ public class ApiUrl {
     @UtilityClass
     public class Book {
         public final String BASE = ApiUrl.BASE + "/books";
-        public final String FOR_USER = "/books-for-user";
+        public final String FOR_USER = "/borrowed-books";
+        public final String BORROWED_DATE = "/borrowed-date";
         public final String RESERVED_FOR_USER = "/reserved-books-for-user";
         public final String RESERVED_FOR_ADMIN = "/reserved-signatures-for-admin";
         public final String IS_BOOK_RESERVED_BY_USER = "/is-book-reserved-by-user";
@@ -23,6 +24,22 @@ public class ApiUrl {
         public final String SEARCH = "/search";
         public final String SEARCH_WITH_GENRE_LIST = "/search-with-genre-list";
         public final String GENRE_LIST = "/genre-list";
+
+        public final String FOR_ADMIN = "/admin-panel";
+//        public final String CANCEL_RESERVED = "/cancelReserved";
+//        public final String CANCEL_SIGNATURE_RESERVATION = "/cancelSignatureReservation";
+//        public final String READY_SIGNATURE_RESERVATION = "/readySignatureReservation";
+        public final String BORROW_SIGNATURE_RESERVATION = "/borrowSignatureReservation";
+        public final String BORROW_SIGNATURE_AVAILABLE = "/return-book-with-status-available";
+        public static final String BORROW_SIGNATURE_AVAILABLE_REMINDER = "/return-book-with-status-available-remind";
+//        public final String SEARCH = "/search";
+
+        public final String ADD = "/add";
+        public final String ADD_BOOK = "/add-book";
+        public final String EDIT_BOOK = "/edit-book/{bookId}";
+        public final String GET_BOOK_BY_ID = "/{bookId}";
+        public final String DELETE_BOOK = "/{bookId}";
+        public final String BORROWED_BOOKS_FOR_ADMIN = "/admin-borrowed-panel";
     }
 
     @UtilityClass
@@ -36,4 +53,5 @@ public class ApiUrl {
         public final String SEND_TEST_NOTIFICATION = "/send-test-notification";
         public final String SEND_REQUEST_DENIED_NOTIFICATION = "/send-request-denied-notification";
     }
+
 }

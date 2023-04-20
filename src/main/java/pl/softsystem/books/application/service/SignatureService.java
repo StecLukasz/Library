@@ -12,7 +12,69 @@ import java.util.List;
 public class SignatureService {
 
     private final SignatureRepository signatureRepository;
+    private final BorrowedRepository borrowedRepository;
     private final BookRepository bookRepository;
+
+    public List<SignatureDTO> getSignaturesBorrowedForAdmin() {
+        List<Signature> signatures = signatureRepository.findAll();
+        List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+
+        for (Signature signature : signatures) {
+            List<Borrowed> borrowedBooks = getBorrowedBooksForSignature(signature);
+            if (!borrowedBooks.isEmpty()) {
+                SignatureDTO signatureDTO = new SignatureDTO();
+                String titleBySignatureIf = getTitleBySignatureId(books, signature.getId());
+                signatureDTO.setId(signature.getId());
+                signatureDTO.setTitle(titleBySignatureIf);
+                signatureDTO.setBookId(signature.getBookId());
+                signatureDTO.setBookSignature(signature.getBookSignature());
+                signatureDTO.setUsername(getUsernameForLatestStatus(signature));
+                signatureDTO.setStatus(getLatestStatusForSignature(signature));
+                signatureDTO.setStatusDate(borrowedBooks.get(0).getStatusDate());
+                adminSignatureDTOS.add(signatureDTO);
+            }
+        }
+        return adminSignatureDTOS;
+    }
+
+
+    public List<Borrowed> getBorrowedBooksForSignature(Signature signature) {
+        List<Borrowed> borrowedBooks = new ArrayList<>();
+        List<Borrowed> borrowedList = signature.getBorrowedBookList();
+        if (borrowedList == null || borrowedList.isEmpty()) {
+            return borrowedBooks;
+        }
+        for (Borrowed borrowed : borrowedList) {
+            if ("borrowed".equals(borrowed.getStatus())) {
+                borrowedBooks.add(borrowed);
+            }
+        }
+        return borrowedBooks;
+    }
+
+
+    public List<SignatureDTO> getSignaturesForAdminList() {
+        List<Signature> signatures = signatureRepository.findAll();
+        List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();
+        List<Book> books = bookRepository.findAllByOrderByTitle();
+
+        for (int i = 0; i < signatures.size(); i++) {
+            SignatureDTO signatureDTO = new SignatureDTO();
+            String titleBySignatureIf = getTitleBySignatureId(books, signatures.get(i).getId());
+            signatureDTO.setId(signatures.get(i).getId());
+            signatureDTO.setTitle(titleBySignatureIf);
+            signatureDTO.setBookId(signatures.get(i).getBookId());
+            signatureDTO.setBookSignature(signatures.get(i).getBookSignature());
+            signatureDTO.setUsername(getUsernameForLatestStatus(signatures.get(i)));
+            signatureDTO.setStatus(getLatestStatusForSignature(signatures.get(i)));
+            Borrowed borrowed = new Borrowed();
+            signatureDTO.setStatusDate(borrowed.getStatusDate());
+            adminSignatureDTOS.add(signatureDTO);
+        }
+        return adminSignatureDTOS;
+    }
+
 
 
     public List<ReservedSignaturesForAdminDTO> getReservedSignaturesForAdmin() {
