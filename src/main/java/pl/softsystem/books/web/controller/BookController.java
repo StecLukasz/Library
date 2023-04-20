@@ -8,13 +8,17 @@ import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.ReservedSignaturesForUserDTO;
 import pl.softsystem.books.domain.ResponseGenreDTO;
 import pl.softsystem.books.domain.SearchDTO;
+import pl.softsystem.books.application.service.SignatureService;
 import pl.softsystem.books.domain.*;
 import pl.softsystem.books.web.controller.constant.ApiUrl;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +26,8 @@ import java.util.Set;
 public class BookController {
 
     private final BookService bookService;
+    private final BookRepository bookRepository;
+    private final SignatureService signatureService;
     private final BorrowedRepository borrowedRepository;
     private final SignatureRepository signatureRepository;
 
@@ -104,13 +110,13 @@ public class BookController {
     }
 
     @GetMapping(ApiUrl.Schedule.RUN_SCHEDULER_AVAILABLE_AFTER_ONE_WEEK)
-    public String runSchedulerChangeStatusToAvailableAfterOneWeek() {
+    public String runSchedulerChangeStatusToAvailableAfterOneWeek(){
         bookService.changeStatusToAvailableAfterOneWeek();
         return "changeStatusToAvailableAfterOneWeek started: " + LocalDateTime.now();
     }
 
     @GetMapping(ApiUrl.Book.GENRE_LIST)
-    public Set<ResponseGenreDTO> getGenreDTOList() {
+    public Set<ResponseGenreDTO> getGenreDTOList(){
         return bookService.getGenreDTOList();
     }
 

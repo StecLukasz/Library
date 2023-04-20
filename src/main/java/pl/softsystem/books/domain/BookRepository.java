@@ -19,4 +19,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByTitleContainingIgnoreCaseOrAuthorsLastNameContainingIgnoreCaseOrAuthorsFirstNameContainingIgnoreCase(String title, String authorLastName, String authorFirstName);
 
+
+    Book findBySignaturesContaining(Signature signature);
 }
