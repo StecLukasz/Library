@@ -19,7 +19,6 @@ import java.util.List;
 public class SignatureController {
 
     private final SignatureService signatureService;
-    private final BookRepository bookRepository;
 
     @GetMapping(ApiUrl.Book.RESERVED_FOR_ADMIN)
     public List<ReservedSignaturesForAdminDTO> getReservedSignaturesForAdmin() {
@@ -36,8 +35,4 @@ public class SignatureController {
         return signatureService.getSignaturesBorrowedForAdmin();
     }
 
-    @GetMapping(ApiUrl.Book.SEARCH_FOR_ADMIN)
-    public List<SignatureDTO> getBooksSearchForAdmin(){
-        return signatureService.getTitleAndSignatureForAdmin();
-    }
 }

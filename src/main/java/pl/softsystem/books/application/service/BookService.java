@@ -592,5 +592,58 @@ public class BookService {
         return genreDTOs;
     }
 
+    //TODO
+    public List<SignatureDTO> getBookTitleAndSignatureForAdmin(String title, String bookSignature) {
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
+        List<Signature> signatures = signatureRepository.findAll();
+        List<SignatureDTO> adminSignatureDTOS = new ArrayList<>();
+
+        for (Signature signature : signatures) {
+            SignatureDTO signatureDTO = new SignatureDTO();
+            String titleBySignatureIf = getTitleBySignatureId(books, signature.getId());
+            signatureDTO.setId(signature.getId());
+            signatureDTO.setTitle(titleBySignatureIf);
+            signatureDTO.setBookId(signature.getBookId());
+            signatureDTO.setBookSignature(signature.getBookSignature());
+            signatureDTO.setUsername(getUsernameForLatestStatus(signature));
+            signatureDTO.setStatus(getLatestStatusForSignature(signature));
+            adminSignatureDTOS.add(signatureDTO);
+        }
+        return adminSignatureDTOS;
+    }
+    public String getTitleBySignatureId(List<Book> books, Long signatureId) {
+        for (Book book : books) {
+            for (Signature signature : book.getSignatures()) {
+                if (signature.getId().equals(signatureId)) {
+                    return book.getTitle();
+                }
+            }
+        }
+        return null;
+    }
+
+    public String getUsernameForLatestStatus(Signature signature) {
+        List<Borrowed> borrowedList = signature.getBorrowedBookList();
+        if (borrowedList == null || borrowedList.isEmpty()) return null;
+        Borrowed latestBorrowed = borrowedList.get(0);
+        for (Borrowed borrowed : borrowedList) {
+            if (borrowed.getStatusDate().compareTo(latestBorrowed.getStatusDate()) > 0) {
+                latestBorrowed = borrowed;
+            }
+        }
+        return latestBorrowed.getLogin();
+    }
+
+    public String getLatestStatusForSignature(Signature signature) {
+        List<Borrowed> borrowedList = signature.getBorrowedBookList();
+        if (borrowedList == null || borrowedList.isEmpty()) return null;
+        Borrowed latestBorrowed = borrowedList.get(0);
+        for (Borrowed borrowed : borrowedList) {
+            if (borrowed.getStatusDate().compareTo(latestBorrowed.getStatusDate()) > 0) {
+                latestBorrowed = borrowed;
+            }
+        }
+        return latestBorrowed.getStatus();
+    }
 }
 
