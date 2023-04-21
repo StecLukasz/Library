@@ -38,9 +38,11 @@ export class AddBookModalComponent {
   }
 
   onSubmit() {
-    console.log(this.bookDTO);
-    this.addBook();
-    this.goToAdminPanel();
+    if (this.validateForm()) {
+      console.log(this.bookDTO);
+      this.addBook();
+      this.goToAdminPanel();
+    }
   }
 
   addAuthor(): void {
@@ -56,5 +58,25 @@ export class AddBookModalComponent {
     this.bookDTO.adminSignatureDTO.push({
       bookSignature: '',
     });
+  }
+
+  validateForm(): boolean {
+    if (!this.bookDTO.title || !this.bookDTO.pages || !this.bookDTO.genre) {
+      alert('Please fill in all required fields.');
+      return false;
+    }
+    for (const author of this.bookDTO.authorDTO) {
+      if (!author.firstName || !author.lastName) {
+        alert('Please fill in all required fields for each author.');
+        return false;
+      }
+    }
+    for (const signature of this.bookDTO.adminSignatureDTO) {
+      if (!signature.bookSignature) {
+        alert('Please fill in all required fields for each signature.');
+        return false;
+      }
+    }
+    return true;
   }
 }
