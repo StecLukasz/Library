@@ -26,7 +26,7 @@
     </td>
 
     <td class="p-2" *ngIf="DTO.status !== 'ready'; else ready">
-      <button (click)="postReadyReservedSignatureByUser(DTO)">
+      <button mat-raised-button color="primary" (click)="postReadyReservedSignatureByUser(DTO)">
         <span class="material-icons">add_box</span>
       </button>
     </td>
@@ -35,7 +35,12 @@
     </ng-template>
 
     <td class="p-2" *ngIf="DTO.status !== 'reserved'; else reserved">
-      <button (click)="postBorrowReservedSignatureByUser(DTO)" [disabled]="isButtonDisabled">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="postBorrowReservedSignatureByUser(DTO)"
+        [disabled]="isButtonDisabled"
+      >
         <span class="material-icons">add_box</span>
       </button>
     </td>
@@ -45,7 +50,12 @@
     </ng-template>
 
     <td class="p-2">
-      <button (click)="postCancelReservedSignatureByUser(DTO)" [disabled]="isButtonDisabled">
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="postCancelReservedSignatureByUser(DTO)"
+        [disabled]="isButtonDisabled"
+      >
         <span class="material-icons">disabled_by_default</span>
       </button>
     </td>

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -10,7 +11,7 @@ import { AdminSignatureReservedDTO } from '../../shared/interface/adminSignature
 @Component({
   selector: 'app-admin-reserved',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
   templateUrl: './admin-reserved.component.html',
   styleUrls: ['./admin-reserved.component.scss'],
 })
