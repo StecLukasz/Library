@@ -19,7 +19,7 @@
     <th class="font-medium p-2 text-left">Status</th>
     <th class="font-medium p-2 text-left">Borrowed Date</th>
     <th class="font-medium p-2 text-left">Back to Available</th>
-    <th class="font-medium p-2 text-left">Send an E-mail remembering</th>
+    <th class="font-medium p-2 text-left">Send a reminder</th>
   </tr>
   <ng-container *ngFor="let book of adminPanelDTOs">
     <tr class="border-b hover:bg-gray-50" *ngIf="book.status !== 'available'">
@@ -34,43 +34,33 @@
       </td>
       <td class="p-2">{{ book.statusDate | date : 'dd-MM-yyyy' }}</td>
 
-      <td class="p-2 text-center" *ngIf="book.status !== 'available'; else available">
-        <button type="button" class="button" (click)="postBookFromBorrowedToAvailable(book)">
-          <span class="button__text">Available</span>
-          <span class="button__icon"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke="currentColor"
-              height="24"
-              fill="none"
-              class="svg"
-            >
-              <line y2="19" y1="5" x2="12" x1="12"></line>
-              <line y2="12" y1="12" x2="19" x1="5"></line></svg
-          ></span>
+      <td class="p-2 example-button-row" *ngIf="book.status !== 'available'; else available">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          class="button"
+          (click)="postBookFromBorrowedToAvailable(book)"
+        >
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+          />
+          <span class="material-symbols-outlined">reply</span>
         </button>
       </td>
       <ng-template #available>
         <td class="p-2"></td>
       </ng-template>
 
-      <td class="p-2">
-        <button class="contactButton" (click)="sendMailWithReminder(book)">
-          Send e-mail
-          <div class="iconButton">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                fill="currentColor"
-                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-              ></path>
-            </svg>
-          </div>
+      <td class="p-2 example-button-row">
+        <button mat-raised-button color="warn" class="contactButton" (click)="sendMailWithReminder(book)">
+          <!--          Send e-mail-->
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          />
+          <span class="material-symbols-outlined"> outgoing_mail </span>
         </button>
       </td>
     </tr>

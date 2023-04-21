@@ -1,153 +1,36 @@
-.add-book-button {
-  position: relative;
-  width: 150px;
-  height: 40px;
-  cursor: pointer;
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
   display: flex;
-  align-items: center;
-  border: 1px solid #34974d;
-  background-color: #3aa856;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.add-book-button, .button__icon, .button__text {
-  transition: all 0.3s;
-}
-
-.add-book-button .button__text {
-  transform: translateX(30px);
-  color: #fff;
-  font-weight: 600;
-}
-
-.add-book-button .button__icon {
-  position: absolute;
-  transform: translateX(109px);
-  height: 100%;
-  width: 39px;
-  background-color: #34974d;
+.example-button-container {
   display: flex;
-  align-items: center;
   justify-content: center;
+  width: 120px;
+}
+.mat-raised-button{
+  margin-left: 5px;
 }
 
-.add-book-button .svg {
-  width: 30px;
-  stroke: #fff;
-}
-
-.add-book-button:hover {
-  background: #34974d;
-}
-
-.add-book-button:hover .button__text {
-  color: transparent;
-}
-
-.add-book-button:hover .button__icon {
-  width: 148px;
-  transform: translateX(0);
-}
-
-.add-book-button:active .button__icon {
-  background-color: #2e8644;
-}
-
-.add-book-button:active {
-  border: 1px solid #2e8644;
-}
-.button {
-  position: relative;
-  width: 150px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border: 1px solid #cc0000;
-  background-color: #e50000;
-  overflow: hidden;
-}
-
-.button, .button__icon, .button__text {
-  transition: all 0.3s;
-}
-
-.button .button__text {
-  transform: translateX(35px);
-  color: #fff;
-  font-weight: 600;
-}
-
-.button .button__icon {
-  position: absolute;
-  transform: translateX(109px);
-  height: 100%;
-  width: 39px;
-  background-color: #cc0000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button .svg {
-  width: 20px;
-}
-
-.button:hover {
-  background: #cc0000;
-}
-
-.button:hover .button__text {
-  color: transparent;
-}
-
-.button:hover .button__icon {
-  width: 148px;
-  transform: translateX(0);
-}
-
-.button:active .button__icon {
-  background-color: #b20000;
-}
-
-.button:active {
-  border: 1px solid #b20000;
-}
-
-.edit-button {
-  background-color: #ffc600;
-  /* sets the background color of the button to yellow */
-  color: #000000;
-  /* sets the text color of the button to black */
-  padding: 5px 16px;
-  /* adds some padding to the button */
-  border: none;
-  /* remove the default border */
-  border-radius: 0px;
-  /* rounds the corners of the button */
-  font-size: 18px;
-  /* sets the font size of the button text */
-  font-weight: bold;
-  /* sets the font weight of the button text to bold */
-  cursor: pointer;
-  /* changes the cursor to a pointer when hovering over the button */
-  text-shadow: 2px 2px 3px #ffc600;
-  /* adds a subtle shadow to the button text */
-  box-shadow: 2px 2px 3px #ffc600;
-  /* adds a subtle shadow to the button */
-  transition: all 0.2s ease-in-out;
-  /* adds transition effect when hovering over the button */
-}
-
-.edit-button:hover {
-  background-color: #000000;
-  /* changes the background color of the button to black when hovered */
-  color: #ffc600;
-  /* changes the text color of the button to yellow when hovered */
-  transform: scale(1.1);
-  /* increases the size of the button slightly when hovered */
-}
-
-.edit-button:active {
-  transform: scale(0.97);
-}
 

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
@@ -13,7 +14,7 @@ import { ReservedSignaturesForUserDTO } from '../../shared/interface/reservedSig
 @Component({
   selector: 'app-reserved',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatButtonModule],
   templateUrl: './reserved.component.html',
   styleUrls: ['./reserved.component.scss'],
 })

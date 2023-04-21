@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -14,7 +15,7 @@ import { SearchDTO } from '../../shared/interface/searchDTO';
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatButtonModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
@@ -115,7 +116,4 @@ export class ListComponent implements OnInit {
   private async getGenreDTOs(): Promise<void> {
     this.genreDTOs = await firstValueFrom(this.api.getGenreDTOs());
   }
-
-
-
 }
