@@ -136,7 +136,6 @@ public class BookService {
             LocalDate now = LocalDate.now();
             long daysUntilDue = ChronoUnit.DAYS.between(now, dueDate.toInstant());
             if (daysUntilDue == 14) {
-                // send reminder to user
                 bookSender.sendRemindingNotification(208L, login, "Your time of borrowing book is already ending");
             }
         }
