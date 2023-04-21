@@ -54,8 +54,10 @@
         <td class="p-2">{{ book.availableQuantity }}</td>
         <td class="p-2">{{ book.signatureQuantity }}</td>
 
-        <td class="p-2">
+        <td class="p-2" class="example-button-row">
           <button
+            mat-raised-button
+            color="primary"
             *ngIf="
               book.availableQuantity > 0 &&
               user?.username !== null &&
