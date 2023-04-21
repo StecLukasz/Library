@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { firstValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service';
@@ -10,7 +11,7 @@ import { SignatureDTO } from '../../shared/interface/signatureDTO';
 @Component({
   selector: 'app-admin-borrowed-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
   templateUrl: './admin-borrowed-list.component.html',
   styleUrls: ['./admin-borrowed-list.component.scss'],
 })
