@@ -84,9 +84,10 @@ public class SignatureService {
 
         for (int i = 0; i < signatures.size(); i++) {
             if (getLatestStatusForSignature(signatures.get(i)).equals("reserved") ||
-                    getLatestStatusForSignature(signatures.get(i)).equals("ready")) {
+                    getLatestStatusForSignature(signatures.get(i)).equals("ready"))
+            {
                 ReservedSignaturesForAdminDTO reservedSignaturesForAdminDTO = new ReservedSignaturesForAdminDTO();
-                String titleBySignatureIf = getTitleBySignatureId(books, (long) i + 1);
+                String titleBySignatureIf = getTitleBySignatureId(books, signatures.get(i).getId());
                 reservedSignaturesForAdminDTO.setId(signatures.get(i).getId());
                 reservedSignaturesForAdminDTO.setTitle(titleBySignatureIf);
                 reservedSignaturesForAdminDTO.setBookSignature(signatures.get(i).getBookSignature());
@@ -95,6 +96,8 @@ public class SignatureService {
                 ReservedSignaturesForAdminDTOS.add(reservedSignaturesForAdminDTO);
             }
         }
+        System.out.println(ReservedSignaturesForAdminDTOS);
+        System.out.println(ReservedSignaturesForAdminDTOS);
         return ReservedSignaturesForAdminDTOS;
     }
 
