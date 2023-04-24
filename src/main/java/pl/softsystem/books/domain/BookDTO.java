@@ -21,6 +21,6 @@ public class BookDTO {
     private int pages;
     private String genre;
     private Set<AuthorDTO> authorDTO;
-    private List<AdminSignatureDTO> adminSignatureDTO;
+    private Set<AdminSignatureDTO> adminSignatureDTO;
     private List<BorrowedDTO> borrowedBookDTO;
 }

@@ -514,7 +514,7 @@ public class BookService {
         bookDTO.setPages(book.getPages());
         bookDTO.setGenre(book.getGenre());
 
-        List<AdminSignatureDTO> adminSignatureDTOs = new ArrayList<>();
+        Set<AdminSignatureDTO> adminSignatureDTOs = new HashSet<>();
         for (Signature signature : book.getSignatures()) {
             AdminSignatureDTO adminSignatureDTO = new AdminSignatureDTO();
             adminSignatureDTO.setBookSignature(signature.getBookSignature());
@@ -537,48 +537,48 @@ public class BookService {
         return bookDTO;
     }
 
+//    public List<BookDTO> getSignaturesForAdminList() {
+//        List<BookDTO> adminBookDTO = new ArrayList<>();
+//        List<Book> books = bookRepository.findAllByOrderByTitle();
+//
+//        for (int i = 0; i < books.size(); i++) {
+//            BookDTO bookDTO = new BookDTO();
+//            bookDTO.setBookId(books.get(i).getId());
+//            bookDTO.setTitle(books.get(i).getTitle());
+//            bookDTO.setPages(books.get(i).getPages());
+//            bookDTO.setGenre(books.get(i).getGenre());
+//
+//            List<AdminSignatureDTO> adminSignatureDTOs = new ArrayList<>();
+//            for (Signature signature : books.get(i).getSignatures()) {
+//                AdminSignatureDTO adminSignatureDTO = new AdminSignatureDTO();
+//                adminSignatureDTO.setBookSignature(signature.getBookSignature());
+//
+//                List<AuthorDTO> authorDTOS = new ArrayList<>();
+//                for (Author author : books.get(i).getAuthors()) {
+//                    AuthorDTO authorDTO = new AuthorDTO();
+//                    authorDTO.setFirstName(author.getFirstName());
+//                    authorDTO.setLastName(author.getLastName());
+//                    authorDTO.setGender(author.getGender());
+//                    authorDTO.setBirthDate(author.getBirthDate());
+//                    authorDTOS.add(authorDTO);
+//                }
+//                adminSignatureDTOs.add(adminSignatureDTO);
+//            }
+//            bookDTO.setAdminSignatureDTO(adminSignatureDTOs);
+//
+//            adminBookDTO.add(bookDTO);
+//        }
+//
+//        return adminBookDTO;
+//    }
 
-    public List<BookDTO> getSignaturesForAdminList() {
-        List<BookDTO> adminBookDTO = new ArrayList<>();
-        List<Book> books = bookRepository.findAllByOrderByTitle();
-
-        for (int i = 0; i < books.size(); i++) {
-            BookDTO bookDTO = new BookDTO();
-            bookDTO.setBookId(books.get(i).getId());
-            bookDTO.setTitle(books.get(i).getTitle());
-            bookDTO.setPages(books.get(i).getPages());
-            bookDTO.setGenre(books.get(i).getGenre());
-
-            List<AdminSignatureDTO> adminSignatureDTOs = new ArrayList<>();
-            for (Signature signature : books.get(i).getSignatures()) {
-                AdminSignatureDTO adminSignatureDTO = new AdminSignatureDTO();
-                adminSignatureDTO.setBookSignature(signature.getBookSignature());
-
-                List<AuthorDTO> authorDTOS = new ArrayList<>();
-                for (Author author : books.get(i).getAuthors()) {
-                    AuthorDTO authorDTO = new AuthorDTO();
-                    authorDTO.setFirstName(author.getFirstName());
-                    authorDTO.setLastName(author.getLastName());
-                    authorDTO.setGender(author.getGender());
-                    authorDTO.setBirthDate(author.getBirthDate());
-                    authorDTOS.add(authorDTO);
-                }
-                adminSignatureDTOs.add(adminSignatureDTO);
-            }
-            bookDTO.setAdminSignatureDTO(adminSignatureDTOs);
-
-            adminBookDTO.add(bookDTO);
-        }
-
-        return adminBookDTO;
-    }
-    public boolean inOneMinute(Date date) {
-        Calendar now = Calendar.getInstance();
-        Calendar other = Calendar.getInstance();
-        other.setTime(date);
-        other.add(Calendar.MINUTE, 1);
-        return now.after(other);
-    }
+//    public boolean inOneMinute(Date date) {
+//        Calendar now = Calendar.getInstance();
+//        Calendar other = Calendar.getInstance();
+//        other.setTime(date);
+//        other.add(Calendar.MINUTE, 1);
+//        return now.after(other);
+//    }
 
     public Set<ResponseGenreDTO> getGenreDTOList(){
         List<Book> books = bookRepository.findAllByOrderByTitle();
@@ -591,7 +591,6 @@ public class BookService {
         return genreDTOs;
     }
 
-    //TODO
     public Set<SignatureDTO> getBookTitleAndSignatureForAdmin(String title, String bookSignature) {
         Set<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrSignaturesBookSignatureContainingIgnoreCase(title, bookSignature);
         Set<SignatureDTO> adminSignatureDTOS = new HashSet<>();
