@@ -422,12 +422,10 @@ public class BookService {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookId));
 
         bookDTO.setBookId(bookId);
-        /** Edytuj atrybuty książki */
         book.setTitle(bookDTO.getTitle());
         book.setPages(bookDTO.getPages());
         book.setGenre(bookDTO.getGenre());
 
-        /** Edytuj autorów */
         Set<AuthorDTO> authorDTOs = bookDTO.getAuthorDTO();
         saveOrUpdateAuthors(authorDTOs);
         // pobierz aktualne encje Author z bazy danych na podstawie informacji z DTO
@@ -441,20 +439,37 @@ public class BookService {
         }
         book.setAuthors(updatedAuthors);
 
-        /** Edytuj sygnatury */
-        List<Signature> signatures = book.getSignatures();
-        Long idSignarute = getSignatureIdByTitle(bookRepository.findAllByOrderByTitle(), bookDTO.getTitle());
-
-        for (AdminSignatureDTO adminSignatureDTO : bookDTO.getAdminSignatureDTO()) {
-            adminSignatureDTO.setId(idSignarute);
-
-            for (Signature signature : signatures) {
-                if (signature.getId() == idSignarute) {
-                    signature.setBookSignature(adminSignatureDTO.getBookSignature());
-                }
-            }
-        }
+        signatureEdit(bookId, bookDTO, book);
         bookRepository.save(book);
+    }
+
+    private void signatureEdit(Long bookId, BookDTO bookDTO, Book book) {
+        Set<AdminSignatureDTO> adminSignatureDTOSet = bookDTO.getAdminSignatureDTO();
+        List<AdminSignatureDTO> adminSignatureDTOList = new ArrayList<AdminSignatureDTO>();
+
+        for (AdminSignatureDTO sig : adminSignatureDTOSet) {
+            adminSignatureDTOList.add(sig);
+        }
+
+        List<Signature> signatures = book.getSignatures();
+        List<Signature> distinctSignatures = signatures.stream()
+                .distinct()
+                .collect(Collectors.toList());
+
+        signatures.clear();
+        signatures.addAll(distinctSignatures);
+
+        List<Signature> signaturesToSave = new ArrayList<>();
+
+        for (int i = 0; i < signatures.size(); i++) {
+            Signature signature = new Signature();
+            signature.setId(signatures.get(i).getId());
+            signature.setBookId(bookId);
+            signature.setBookSignature(adminSignatureDTOList.get(i).getBookSignature());
+            signature.setBorrowedBookList(signatures.get(i).getBorrowedBookList());
+            signaturesToSave.add(signature);
+            signatureRepository.save(signature);
+        }
     }
 
     public void saveOrUpdateAuthors(Set<AuthorDTO> authorDTOs) {
