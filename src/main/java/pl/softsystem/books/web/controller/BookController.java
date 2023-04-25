@@ -64,8 +64,15 @@ public class BookController {
         System.out.println(bookId);
         borrowedRepository.deleteById(borrowedIdToDelete);
         signatureRepository.deleteById(signatureId);
-        bookAuthorService.removeBookAuthor(bookId);
-        bookRepository.deleteById(bookId);
+
+        Book book = bookRepository.findBookById(bookId); // error here
+
+        if(book.getSignatures().size() < 1) {
+
+            bookAuthorService.removeBookAuthor(bookId);
+            bookRepository.deleteById(bookId);
+        }
+
     }
 
 
