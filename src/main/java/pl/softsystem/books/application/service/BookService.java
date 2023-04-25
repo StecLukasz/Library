@@ -644,5 +644,9 @@ public class BookService {
         }
         return latestBorrowed.getStatus();
     }
+
+    public void removeBook(Long bookId){
+        bookRepository.deleteById(bookId);
+    }
 }
 
