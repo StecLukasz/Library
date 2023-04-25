@@ -21,7 +21,7 @@ public class BookService {
     private final AuthorRepository authorRepository;
     private final SignatureRepository signatureRepository;
     private final BorrowedRepository borrowedRepository;
-    private final SignatureService signatureService;
+    private final BookAuthorService bookAuthorService;
     private BookSender bookSender;
     private final UserService userService;
 
@@ -141,7 +141,6 @@ public class BookService {
         }
     }
 
-
     public List<BookDTO> getBooksBorrowedByUserDto(String login) {
         List<Book> allBooks = bookRepository.findAllByOrderByTitle();
         List<BookDTO> borrowedBooks = new ArrayList<>();
@@ -168,7 +167,6 @@ public class BookService {
         return cal.getTime();
     }
 
-
     public List<Book> countAvailableBooks(List<Book> books) {
         for (Book book : books) {
             int count = 0;
@@ -191,19 +189,14 @@ public class BookService {
 
     public List<Book> getBooksBorrowedByUser(String login) {
         List<Book> allBooks = bookRepository.findAllByOrderByTitle();
-        return allBooks.stream()
-                .filter(book -> {
-                    Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, login);
-                    return latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("borrowed");
-                })
-                .collect(Collectors.toList());
+        return allBooks.stream().filter(book -> {
+            Optional<Borrowed> latestBorrowed = getLatestBorrowed(book, login);
+            return latestBorrowed.isPresent() && latestBorrowed.get().getStatus().equals("borrowed");
+        }).collect(Collectors.toList());
     }
 
     private Optional<Borrowed> getLatestBorrowed(Book book, String login) {
-        return book.getSignatures().stream()
-                .flatMap(signature -> signature.getBorrowedBookList().stream())
-                .filter(borrowed -> borrowed.getLogin().equals(login))
-                .max(Comparator.comparing(Borrowed::getStatusDate));
+        return book.getSignatures().stream().flatMap(signature -> signature.getBorrowedBookList().stream()).filter(borrowed -> borrowed.getLogin().equals(login)).max(Comparator.comparing(Borrowed::getStatusDate));
     }
 
     public List<ReservedSignaturesForUserDTO> getBooksReservedByUser(String login) {
@@ -211,8 +204,7 @@ public class BookService {
         List<Book> filteredBooks = new ArrayList<>();
         for (Book book : books) {
             Optional<Borrowed> latestReserved = getLatestReserved(book, login);
-            if (latestReserved.isPresent() && (latestReserved.get().getStatus().equals("reserved") ||
-                    latestReserved.get().getStatus().equals("ready"))) {
+            if (latestReserved.isPresent() && (latestReserved.get().getStatus().equals("reserved") || latestReserved.get().getStatus().equals("ready"))) {
                 filteredBooks.add(book);
             }
         }
@@ -221,10 +213,7 @@ public class BookService {
     }
 
     private Optional<Borrowed> getLatestReserved(Book book, String login) {
-        return book.getSignatures().stream()
-                .flatMap(signature -> signature.getBorrowedBookList().stream())
-                .filter(borrowed -> borrowed.getLogin().equals(login))
-                .max(Comparator.comparing(Borrowed::getStatusDate));
+        return book.getSignatures().stream().flatMap(signature -> signature.getBorrowedBookList().stream()).filter(borrowed -> borrowed.getLogin().equals(login)).max(Comparator.comparing(Borrowed::getStatusDate));
     }
 
     public List<ReservedSignaturesForUserDTO> reservedUserBookMapper(List<Book> books, String login) {
@@ -301,8 +290,7 @@ public class BookService {
         Book book = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
         for (Signature signature : book.getSignatures()) {
             int end = signature.getBorrowedBookList().size() - 1;
-            if (signature.getBorrowedBookList().get(end).getStatus().equals(lastStatus)
-                    && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
+            if (signature.getBorrowedBookList().get(end).getStatus().equals(lastStatus) && signature.getBorrowedBookList().get(end).getLogin().equals(login)) {
                 result = false;
             }
         }
@@ -317,8 +305,7 @@ public class BookService {
         for (Signature signature : book.getSignatures()) {
             for (Borrowed borrowed : signature.getBorrowedBookList()) {
                 if (borrowed.getStatus().equals("reserved") && borrowed.getLogin().equals(login)) {
-                    if (reservedSignatureByUser == null ||
-                            borrowed.getStatusDate().compareTo(reservedSignatureByUser.getBorrowedBookList().get(0).getStatusDate()) > 0) {
+                    if (reservedSignatureByUser == null || borrowed.getStatusDate().compareTo(reservedSignatureByUser.getBorrowedBookList().get(0).getStatusDate()) > 0) {
                         reservedSignatureByUser = signature;
                     }
                 }
@@ -335,24 +322,21 @@ public class BookService {
     }
 
     public Long getAvailableSignaturesQuantity(List<Book> books, String title) {
-        Book bookByTitle = books.stream()
-                .filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+        Book bookByTitle = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
         Long result = 0L;
         for (Signature signature : bookByTitle.getSignatures()) {
-            if (signature.getBorrowedBookList().get(signature.getBorrowedBookList()
-                    .size() - 1).getStatus().equals("available")) result++;
+            if (signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1).getStatus().equals("available"))
+                result++;
         }
         return result;
     }
 
 
     public Long firstAvailableSignatureId(List<Book> books, String title, Long availableSignatureIndex) {
-        Book bookByTitle = books.stream()
-                .filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
+        Book bookByTitle = books.stream().filter(b -> b.getTitle().equals(title)).findFirst().orElse(null);
         Long result = -1L;
         for (Signature signature : bookByTitle.getSignatures()) {
-            if (signature.getBorrowedBookList().get(signature.getBorrowedBookList()
-                    .size() - 1).getStatus().equals("available")) {
+            if (signature.getBorrowedBookList().get(signature.getBorrowedBookList().size() - 1).getStatus().equals("available")) {
                 result = signature.getId();
                 break;
             }
@@ -435,8 +419,7 @@ public class BookService {
 
     @Transactional
     public void editBook(Long bookId, BookDTO bookDTO) {
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookId));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookId));
 
         bookDTO.setBookId(bookId);
         /** Edytuj atrybuty książki */
@@ -505,8 +488,7 @@ public class BookService {
     }
 
     public BookDTO getBookDTOById(Long bookId) {
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
 
         BookDTO bookDTO = new BookDTO();
         bookDTO.setBookId(book.getId());
@@ -537,53 +519,10 @@ public class BookService {
         return bookDTO;
     }
 
-//    public List<BookDTO> getSignaturesForAdminList() {
-//        List<BookDTO> adminBookDTO = new ArrayList<>();
-//        List<Book> books = bookRepository.findAllByOrderByTitle();
-//
-//        for (int i = 0; i < books.size(); i++) {
-//            BookDTO bookDTO = new BookDTO();
-//            bookDTO.setBookId(books.get(i).getId());
-//            bookDTO.setTitle(books.get(i).getTitle());
-//            bookDTO.setPages(books.get(i).getPages());
-//            bookDTO.setGenre(books.get(i).getGenre());
-//
-//            List<AdminSignatureDTO> adminSignatureDTOs = new ArrayList<>();
-//            for (Signature signature : books.get(i).getSignatures()) {
-//                AdminSignatureDTO adminSignatureDTO = new AdminSignatureDTO();
-//                adminSignatureDTO.setBookSignature(signature.getBookSignature());
-//
-//                List<AuthorDTO> authorDTOS = new ArrayList<>();
-//                for (Author author : books.get(i).getAuthors()) {
-//                    AuthorDTO authorDTO = new AuthorDTO();
-//                    authorDTO.setFirstName(author.getFirstName());
-//                    authorDTO.setLastName(author.getLastName());
-//                    authorDTO.setGender(author.getGender());
-//                    authorDTO.setBirthDate(author.getBirthDate());
-//                    authorDTOS.add(authorDTO);
-//                }
-//                adminSignatureDTOs.add(adminSignatureDTO);
-//            }
-//            bookDTO.setAdminSignatureDTO(adminSignatureDTOs);
-//
-//            adminBookDTO.add(bookDTO);
-//        }
-//
-//        return adminBookDTO;
-//    }
-
-//    public boolean inOneMinute(Date date) {
-//        Calendar now = Calendar.getInstance();
-//        Calendar other = Calendar.getInstance();
-//        other.setTime(date);
-//        other.add(Calendar.MINUTE, 1);
-//        return now.after(other);
-//    }
-
-    public Set<ResponseGenreDTO> getGenreDTOList(){
+    public Set<ResponseGenreDTO> getGenreDTOList() {
         List<Book> books = bookRepository.findAllByOrderByTitle();
         HashSet<ResponseGenreDTO> genreDTOs = new HashSet<>();
-        for(Book book : books){
+        for (Book book : books) {
             ResponseGenreDTO genreDTO = new ResponseGenreDTO();
             genreDTO.setGenre(book.getGenre());
             genreDTOs.add(genreDTO);
@@ -610,6 +549,7 @@ public class BookService {
         }
         return adminSignatureDTOS;
     }
+
     public String getTitleBySignatureId(Set<Book> books, Long signatureId) {
         for (Book book : books) {
             for (Signature signature : book.getSignatures()) {
@@ -645,8 +585,21 @@ public class BookService {
         return latestBorrowed.getStatus();
     }
 
-    public void removeBook(Long bookId){
-        bookRepository.deleteById(bookId);
+    public void removeBook(Long signatureId) {
+        Signature signature = signatureRepository.findSignatureById(signatureId);
+        Long borrowedIdToDelete = signature.getBorrowedBookList().get(0).getId();
+        Long bookId = signature.getBookId();
+
+        borrowedRepository.deleteById(borrowedIdToDelete);
+        signatureRepository.deleteById(signatureId);
+
+        Book book = bookRepository.findBookById(bookId);
+
+        if (book.getSignatures().size() < 1) {
+
+            bookAuthorService.removeBookAuthor(bookId);
+            bookRepository.deleteById(bookId);
+        }
     }
 }
 
