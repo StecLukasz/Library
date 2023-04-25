@@ -3,6 +3,7 @@ package pl.softsystem.books.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.softsystem.books.application.service.BookAuthorService;
 import pl.softsystem.books.application.service.BookService;
 import pl.softsystem.books.domain.Book;
 import pl.softsystem.books.domain.ReservedSignaturesForUserDTO;
@@ -14,11 +15,9 @@ import pl.softsystem.books.web.controller.constant.ApiUrl;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class BookController {
     private final SignatureService signatureService;
     private final BorrowedRepository borrowedRepository;
     private final SignatureRepository signatureRepository;
-
+    private final BookAuthorService bookAuthorService;
 
     @GetMapping()
     public List<Book> getBooks() {
@@ -61,9 +60,22 @@ public class BookController {
         System.out.println(signatureId);
         Signature signature = signatureRepository.findSignatureById(signatureId);
         Long borrowedIdToDelete = signature.getBorrowedBookList().get(0).getId();
+        Long bookId = signature.getBookId();
+        System.out.println(bookId);
         borrowedRepository.deleteById(borrowedIdToDelete);
         signatureRepository.deleteById(signatureId);
+
+        Book book = bookRepository.findBookById(bookId); // error here
+
+        if(book.getSignatures().size() < 1) {
+
+            bookAuthorService.removeBookAuthor(bookId);
+            bookRepository.deleteById(bookId);
+        }
+
     }
+
+
 
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {

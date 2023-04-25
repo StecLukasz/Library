@@ -14,7 +14,7 @@ import java.util.Set;
 
 
 
-@Transactional
+//@Transactional
 @Getter
 @Setter
 @NoArgsConstructor
