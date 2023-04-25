@@ -47,8 +47,7 @@ export class AdminPanelComponent implements OnInit {
 
   private async getListBookForAdmin(): Promise<void> {
     this.adminPanelDTOs = await firstValueFrom(this.api.getSignaturesForAdminPanel());
-
-    // this.sortByStatus(); // sort by status after fetching the data
+    this.sortByTitle();
   }
 
   sortByStatus(): void {
@@ -79,6 +78,26 @@ export class AdminPanelComponent implements OnInit {
         return 0;
       }
     });
+  }
+
+  sortByTitle(): void {
+    this.adminPanelDTOs.sort((a, b) => {
+      const titleA = a.title.toLowerCase();
+      const titleB = b.title.toLowerCase();
+      if (titleA < titleB) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      } else if (titleA > titleB) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  toggleSortDirectionByTitle(): void {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    this.sortByTitle();
+    // this.sortByUser();
   }
 
   toggleSortDirectionByStatus(): void {

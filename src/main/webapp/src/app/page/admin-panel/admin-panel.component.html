@@ -30,7 +30,17 @@
 <table class="w-full">
   <tr class="border-b-2 border-gray-400">
     <th class="font-medium p-2 text-left">Signature</th>
-    <th class="font-medium p-2 text-left">Title</th>
+    <th
+      class="font-medium p-2 text-left"
+      class="font-medium p-2 text-left"
+      (click)="toggleSortDirectionByTitle()"
+      [style.cursor]="sortDirection ? 'pointer' : 'auto'"
+      (mouseleave)="sortDirection ? (sortDirection = sortDirection) : ''"
+    >
+      Title
+      <span *ngIf="sortDirection === 'asc'">&#x25B2;</span>
+      <span *ngIf="sortDirection === 'desc'">&#x25BC;</span>
+    </th>
     <th
       class="font-medium p-2 text-left"
       class="font-medium p-2 text-left"
@@ -58,8 +68,6 @@
   <tr class="border-b hover:bg-gray-50" *ngFor="let DTO of adminPanelDTOs">
     <td class="p-2">{{ DTO.bookSignature }}</td>
     <td class="p-2">{{ DTO.title }}</td>
-    <!--    TODO: dodaj do signeture DTO jeszcze zapis tytułu-->
-
     <td class="p-2">{{ DTO.username }}</td>
     <td
       class="p-2"
