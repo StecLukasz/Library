@@ -482,22 +482,6 @@ public class BookService {
         }
     }
 
-    public Long getSignatureIdByTitle(List<Book> books, String title) {
-        for (Book book : books) {
-            if (book.getTitle().equals(title)) {
-                for (Signature signature : book.getSignatures()) {
-                    return signature.getId(); // zwracamy pierwsze znalezione id sygnatury
-                }
-            }
-        }
-        return null; // zwracamy null jeśli nie udało się znaleźć sygnatury o określonym tytule
-    }
-
-
-    public Book findById(Long bookId) {
-        return bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
-    }
-
     public BookDTO getBookDTOById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found with id " + bookId));
 
