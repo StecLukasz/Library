@@ -44,8 +44,6 @@ public class BookController {
 
     @PatchMapping(ApiUrl.Book.EDIT_BOOK)
     public void editBookAdmin(@PathVariable Long bookId, @RequestBody BookDTO bookDTO) {
-        System.out.println(bookDTO);
-
         bookService.editBook(bookId, bookDTO);
     }
 
