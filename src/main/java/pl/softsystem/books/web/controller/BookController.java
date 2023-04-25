@@ -56,26 +56,9 @@ public class BookController {
     }
 
     @DeleteMapping(ApiUrl.Book.DELETE_SIGNATURE)
-    public void deleteOneSignature(@PathVariable Long signatureId) {
-        System.out.println(signatureId);
-        Signature signature = signatureRepository.findSignatureById(signatureId);
-        Long borrowedIdToDelete = signature.getBorrowedBookList().get(0).getId();
-        Long bookId = signature.getBookId();
-        System.out.println(bookId);
-        borrowedRepository.deleteById(borrowedIdToDelete);
-        signatureRepository.deleteById(signatureId);
-
-        Book book = bookRepository.findBookById(bookId); // error here
-
-        if(book.getSignatures().size() < 1) {
-
-            bookAuthorService.removeBookAuthor(bookId);
-            bookRepository.deleteById(bookId);
-        }
-
+    public void deleteSignature(@PathVariable Long signatureId) {
+        bookService.removeBook(signatureId);
     }
-
-
 
     @GetMapping(ApiUrl.Book.FOR_USER)
     public List<Book> getBooksBorrowedByUser(@RequestParam String login) {
