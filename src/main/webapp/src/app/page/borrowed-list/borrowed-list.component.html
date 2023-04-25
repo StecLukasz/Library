@@ -15,6 +15,6 @@
     <td class="p-2">{{ book.title }}</td>
     <td class="p-2">{{ book.borrowedDate | date : 'dd-MM-yyyy' }}</td>
     <td class="p-2">{{ book.returnDate | date : 'dd-MM-yyyy' }}</td>
-    <td class="p-2">{{ book.status }}</td>
+    <td class="p-2" [style.color]="book.status === 'borrowed' ? 'red' : 'inherit'">{{ book.status }}</td>
   </tr>
 </table>
