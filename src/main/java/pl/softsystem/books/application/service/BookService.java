@@ -428,7 +428,6 @@ public class BookService {
 
         Set<AuthorDTO> authorDTOs = bookDTO.getAuthorDTO();
         saveOrUpdateAuthors(authorDTOs);
-        // pobierz aktualne encje Author z bazy danych na podstawie informacji z DTO
         Set<Author> updatedAuthors = new HashSet<>();
         for (AuthorDTO authorDTO : authorDTOs) {
             Author author = authorRepository.findByFirstNameAndLastName(authorDTO.getFirstName(), authorDTO.getLastName());
@@ -452,12 +451,9 @@ public class BookService {
         }
 
         List<Signature> signatures = book.getSignatures();
-        List<Signature> distinctSignatures = signatures.stream()
-                .distinct()
-                .collect(Collectors.toList());
-
+        Set<Signature> distinctSet = new HashSet<>(signatures);
         signatures.clear();
-        signatures.addAll(distinctSignatures);
+        signatures.addAll(distinctSet);
 
         List<Signature> signaturesToSave = new ArrayList<>();
 
