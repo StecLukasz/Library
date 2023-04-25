@@ -10,6 +10,4 @@ import java.util.Optional;
 public interface SignatureRepository extends JpaRepository<Signature, Long> {
     Signature findSignatureById(Long signatureId);
 
-
-
 }
