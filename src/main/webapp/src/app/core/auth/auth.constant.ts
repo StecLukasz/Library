@@ -1,1 +1,1 @@
-export const EMPLOYEE_PHOTO = `https://intranet.softsystem.pl/newhr/api/photo/get`;
+export const EMPLOYEE_PHOTO = `https://intranet.apibooks.pl/newhr/api/photo/get`;

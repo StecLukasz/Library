@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pl.softsystem</groupId>
+    <groupId>pl.apibooks</groupId>
     <artifactId>books</artifactId>
     <version>0.0.2</version>
     <name>Books</name>
@@ -65,13 +65,13 @@
 
         <!-- Intranet -->
         <dependency>
-            <groupId>pl.softsystem.oauth</groupId>
+            <groupId>pl.apibooks.oauth</groupId>
             <artifactId>security</artifactId>
             <version>8.0.3</version>
         </dependency>
 
         <dependency>
-            <groupId>pl.softsystem</groupId>
+            <groupId>pl.apibooks</groupId>
             <artifactId>notifications</artifactId>
             <version>4.1</version>
         </dependency>
@@ -226,12 +226,12 @@
     <repositories>
         <repository>
             <id>research-maven-public</id>
-            <url>http://rndnexus.softsystem.pl/repository/maven-public/</url>
+            <url>http://rndnexus.apibooks.pl/repository/maven-public/</url>
         </repository>
     </repositories>
 
     <scm>
-        <connection>scm:git:https://gitlab.softsystem.pl/intranet/books.git</connection>
-        <url>https://gitlab.softsystem.pl/intranet/books.git</url>
+        <connection>scm:git:https://gitlab.apibooks.pl/intranet/books.git</connection>
+        <url>https://gitlab.apibooks.pl/intranet/books.git</url>
     </scm>
 </project>

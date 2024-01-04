@@ -1,5 +1,5 @@
 export enum Domains {
-  SOFTSYSTEM = 'softsystem.pl',
+  SOFT = 'soft.pl',
   SOFTCOMPUTER = 'softcomputer.com',
   ISD = 'isd.dp.ua',
 }

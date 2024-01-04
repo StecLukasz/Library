@@ -22,7 +22,7 @@ deploy-demo:
     - intranet3
   environment:
     name: demo
-    url: http://intranet3.softsystem.pl
+    url: http://intranet3.pl
   except:
     - master
   script:
@@ -52,7 +52,7 @@ deploy-prod:
     - intranet3
   environment:
     name: production
-    url: http://intranet.softsystem.pl
+    url: http://intranet.apibooks.pl
   only:
     - master
   script:

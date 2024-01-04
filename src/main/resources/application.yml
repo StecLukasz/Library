@@ -32,7 +32,7 @@ spring:
 
 
 app:
-  url: https://intranet.softsystem.pl@baseHref@
+  url: https://intranet.apibooks.pl@baseHref@
   build:
     name: '@project.name@'
     version: '@project.version@'
@@ -40,8 +40,8 @@ app:
     time: '@buildTime@'
     by: '@buildBy@'
   info:
-    company-name: SoftSystem
-    company-full-name: SoftSystem Sp. z o.o.
+    company-name: apibooks
+    company-full-name: apibooks Sp. z o.o.
     company-address-1: Leszka Czarnego 6A
     company-address-2: 35-615 Rzeszow, Poland
 
